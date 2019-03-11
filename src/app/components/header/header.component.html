@@ -1,0 +1,21 @@
+<nav class="navbar navbar-light bg-light fixed-top">
+    <div class="container">
+        <div class="col-auto">
+            <a class="navbar-brand" href="#">
+                <img src="assets/logo20.png" width="20" height="20" class="d-inline-block align-top mr-1" alt="">
+                POCKETNET Explorer
+            </a>
+        </div>
+        <div class="col col-xl-4 col-lg-5 col-md-6">
+            <form class="form-inline">
+                <input #searchBox
+                    name="serachBox"
+                    (keydown.enter)="$event.preventDefault(); searchEnter(searchBox.value);" 
+                    class="form-control w-100" 
+                    type="search" 
+                    placeholder="Search for block, transaction or address"
+                    [(ngModel)]="searchValue">
+            </form>
+        </div>
+    </div>
+</nav>

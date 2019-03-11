@@ -1,0 +1,48 @@
+<app-loader *ngIf="!address"></app-loader>
+
+<div class="col" *ngIf="address">
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <div class="row">
+                <h1>Address</h1>
+            </div>
+            <div class="row">
+                <div>{{address.address}}</div>
+            </div>
+            <!-- <div class="row">
+                <div>{{address.unspent | poc}}</div>
+            </div> -->
+        </div>
+        <div class="col-md-auto">
+            <div>{{address.unspent | poc}}</div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <h2>Summary</h2>
+        <table class="table table-sm" style="table-layout: fixed">
+            <tr>
+                <td>Total Received</td>
+                <td class="text-right text-muted">{{address.spent + address.unspent | poc}}</td>
+            </tr>
+            <tr>
+                <td>Total Sent</td>
+                <td class="text-right text-muted">{{address.spent | poc}}</td>
+            </tr>
+            <tr>
+                <td>Final Balance</td>
+                <td class="text-right text-muted">{{address.unspent | poc}}</td>
+            </tr>
+            <tr>
+                <td>No. Transactions</td>
+                <td class="text-right text-muted">{{address.txids.length}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <app-tx-list *ngIf="address" [in_txids]="address.txids"></app-tx-list>
+        </div>
+    </div>
+</div>

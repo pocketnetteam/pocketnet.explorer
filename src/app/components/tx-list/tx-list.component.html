@@ -1,0 +1,7 @@
+<div class="row">
+    <h2>Transactions</h2>
+</div>
+<app-tx class="row" *ngFor="let tx of txs" [tx]="tx"></app-tx>
+<div class="row">
+    <app-loader *ngIf="loading"></app-loader>
+</div>

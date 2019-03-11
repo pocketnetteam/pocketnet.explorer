@@ -1,0 +1,20 @@
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Height</th>
+            <th>Hash</th>
+            <th>Age </th>
+            <th>Transactions</th>
+            <th>Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bc of blocks">
+            <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
+            <td><a href="block/{{bc.hash}}">{{bc.hash}}</a></td>
+            <td>{{bc.time * 1000 | date:'medium'}}</td>
+            <td>{{bc.ntx}}</td>
+            <td>{{bc.size}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+<div class="col rounded bg-light py-2 mb-3 border">
+    <div class="row">
+        <div class="col border-bottom pb-2"><a href="transaction/{{tx.txid}}">{{tx.txid}}</a></div>
+        <div class="col-md-auto text-right border-bottom pb-2 text-muted pointer" (click)="extend = !extend">
+            {{tx.nTime * 1000 | date:'medium'}}
+            <i *ngIf="!extend" class="fas fa-angle-down pl-2"></i>
+            <i *ngIf="extend" class="fas fa-angle-up pl-2"></i>
+        </div>
+    </div>
+
+    <div class="row my-2">
+        <div *ngIf="tx.coinbase" class="col">
+            No Inputs
+        </div>
+        <div *ngIf="!tx.coinbase" class="col">
+            <app-vin class="" *ngFor="let vin of tx.vin" [vin]="vin"></app-vin>
+        </div>
+        <div class="col">
+            <app-vout class="" *ngFor="let vout of tx.vout" [vout]="vout"></app-vout>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col pt-2">
+            <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="!tx.coinstake && !tx.coinbase">Fee: {{tx.fee | poc}}</div>
+            <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinstake">PoS transaction</div>
+            <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinbase">Coinbase transaction</div>
+            <div class="border-top ml-1 mr-n2 float-right txvalues txvalues-amount">{{tx.amount | poc}}</div>
+            <div class="border-top float-right txvalues txvalues-conf"> Confirmations</div>
+        </div>
+    </div>
+</div>

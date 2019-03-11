@@ -1,0 +1,90 @@
+<app-loader *ngIf="!block"></app-loader>
+
+<div class="col" *ngIf="block">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="row">
+                <h1>Block #{{block.height}}</h1>
+            </div>
+            <div class="row">
+                <div>{{block.hash}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="row">
+            <div class="col">
+                <h2>Summary</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <table class="table table-sm" style="table-layout: fixed">
+                    <tr>
+                        <td>Number Of Transactions</td>
+                        <td class="text-right text-muted">{{block.nTx}}</td>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td class="text-right text-muted">{{block.height}}</td>
+                    </tr>
+                    <tr>
+                        <td>Block Reward</td>
+                        <td class="text-right text-muted">?</td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td class="text-right text-muted">{{block.time * 1000 | date:'medium'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Merkle Root</td>
+                        <td class="text-right text-muted">
+                            <div class="ellipsis">
+                                <span>{{block.merkleroot}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="block.previousblockhash">
+                        <td>Previous Block</td>
+                        <td class="text-right"><a href="block/{{block.previousblockhash}}">{{block.height-1}}</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <table class="table table-sm" style="table-layout: fixed">
+                    <tr>
+                        <td>Difficulty</td>
+                        <td class="text-right text-muted">{{block.difficulty}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bits</td>
+                        <td class="text-right text-muted">{{block.bits}}</td>
+                    </tr>
+                    <tr>
+                        <td>Size (bytes)</td>
+                        <td class="text-right text-muted">{{block.size}}</td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+                        <td class="text-right text-muted">{{block.version}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nonce</td>
+                        <td class="text-right text-muted">{{block.nonce}}</td>
+                    </tr>
+                    <tr *ngIf="block.nextblockhash">
+                        <td>Next block</td>
+                        <td class="text-right"><a href="block/{{block.nextblockhash}}">{{block.height+1}}</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <app-tx-list *ngIf="block" [in_txids]="block.tx"></app-tx-list>
+        </div>
+    </div>
+</div>
