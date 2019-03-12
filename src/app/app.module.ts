@@ -21,6 +21,7 @@ import { VoutComponent } from './components/tx/vout/vout.component';
 import { VinComponent } from './components/tx/vin/vin.component';
 import { PocPipe } from './pipes/poc.pipe';
 import { BlockListComponent } from './components/block-list/block-list.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { BlockListComponent } from './components/block-list/block-list.component
         VoutComponent,
         VinComponent,
         PocPipe,
-        BlockListComponent
+        BlockListComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,

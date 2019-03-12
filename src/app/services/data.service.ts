@@ -8,6 +8,7 @@ import { HexService } from './hex.service'
 })
 export class DataService {
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
+    private node = '0';
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -18,7 +19,7 @@ export class DataService {
             params: {
                 method: 'getblock',
                 parameters: this.hex.Encode(JSON.stringify([ hash, (verbose ? 1 : 0) ])),
-                node: '1'
+                node: this.node
             }
         });
     }

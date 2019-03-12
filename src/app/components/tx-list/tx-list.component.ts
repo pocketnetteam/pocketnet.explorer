@@ -48,7 +48,12 @@ export class TxListComponent implements OnInit {
 
     @HostListener("window:scroll", [])
     onScroll(): void {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        console.log(window.innerHeight);
+        console.log(window.scrollY);
+        console.log(document.body.offsetHeight);
+        console.log('-----------');
+
+        if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 150)) {
             this.loadMore();
         }
     }
