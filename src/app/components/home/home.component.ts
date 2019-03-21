@@ -9,13 +9,22 @@ import { BlockCompact } from 'src/app/types/Block';
 })
 export class HomeComponent implements OnInit {
     blocks: BlockCompact[];
+    loading = false;
 
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
+        this.updateLastBlocks();
+        setInterval(() => {
+            this.updateLastBlocks();
+        }, 60000);
+    }
+
+    updateLastBlocks(this: any) {
+        this.loading = true;
         this.dataService.getLastBlocks(10).subscribe(data => {
+            this.loading = false;
             this.blocks = data['data']['result'];
         });
     }
-
 }

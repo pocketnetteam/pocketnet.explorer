@@ -24,3 +24,7 @@ a {
 .pointer {
   cursor: pointer;
 }
+.loading_spinner {
+  font-size: 2rem;
+  color: #cacaca;
+}

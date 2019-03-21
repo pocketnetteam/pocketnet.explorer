@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { Globals } from 'src/app/globals';
 
 @Component({
     selector: 'app-header',
@@ -10,7 +11,15 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit {
     searchValue: string = '';
     
-    constructor(private dataService: DataService, private router: Router) { }
+    constructor(
+        private dataService: DataService,
+        private router: Router,
+        private global: Globals
+    ) {}
+
+    get Global() : Globals {
+        return this.global;
+    }
 
     ngOnInit() {
         this.router.routeReuseStrategy.shouldReuseRoute = function(){

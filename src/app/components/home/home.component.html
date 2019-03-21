@@ -3,7 +3,8 @@
 <div class="col" *ngIf="blocks">
     <div class="row mb-4">
         <div class="col">
-            <h1>Latest blocks</h1>
+            <h1>Latest blocks <i *ngIf="loading" class="fas fa-spinner fa-spin loading_spinner"></i></h1>
+            
         </div>
     </div>
 

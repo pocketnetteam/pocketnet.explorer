@@ -29,7 +29,7 @@ export class DataService {
             params: {
                 method: 'getaddressinfo',
                 parameters: this.hex.Encode(JSON.stringify([ hash ])),
-                node: '1'
+                node: this.node
             }
         });
     }
@@ -39,7 +39,7 @@ export class DataService {
             params: {
                 method: 'gettransactions',
                 parameters: this.hex.Encode(JSON.stringify([ tx ])),
-                node: '1'
+                node: this.node
             }
         });
     }
@@ -49,7 +49,7 @@ export class DataService {
             params: {
                 method: 'getlastblocks',
                 parameters: this.hex.Encode(JSON.stringify([ count ])),
-                node: '1'
+                node: this.node
             }
         });
     }
@@ -59,7 +59,17 @@ export class DataService {
             params: {
                 method: 'checkstringtype',
                 parameters: this.hex.Encode(JSON.stringify([ value ])),
-                node: '1'
+                node: this.node
+            }
+        });
+    }
+
+    getBlockchainInfo() {
+        return this.http.get(this.proxyUrl, {
+            params: {
+                method: 'getblockchaininfo',
+                parameters: this.hex.Encode(JSON.stringify([])),
+                node: this.node
             }
         });
     }

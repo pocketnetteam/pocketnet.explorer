@@ -43,8 +43,7 @@ export class Transaction {
     public vout: Vout[];
     public hex: string;
     public blockhash: string;
-    public confirmations: number;
-    public blocktime: number;
+    public height: number;
 }
 
 /*
