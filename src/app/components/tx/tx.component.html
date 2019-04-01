@@ -1,7 +1,11 @@
 <div class="col rounded bg-light py-2 mb-3 border">
     <div class="row">
-        <div class="col border-bottom pb-2"><a href="transaction/{{tx.txid}}">{{tx.txid}}</a></div>
-        <div class="col-md-auto text-right border-bottom pb-2 text-muted pointer" (click)="extend = !extend">
+        <div class="col-lg-auto col-md-8 col-sm-7 border-bottom pb-2 ">
+            <div class="ellipsis">
+                <a href="transaction/{{tx.txid}}">{{tx.txid}}</a>
+            </div>
+        </div>
+        <div class="col align-self-end text-right border-bottom pb-2 text-muted pointer" (click)="extend = !extend">
             {{tx.nTime * 1000 | date:'medium'}}
             <i *ngIf="!extend" class="fas fa-angle-down pl-2"></i>
             <i *ngIf="extend" class="fas fa-angle-up pl-2"></i>
