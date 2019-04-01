@@ -1,0 +1,6 @@
+{
+    "less.compile": {
+        "compress":  false,
+        "out":       false, // false => DON'T output .css files (overridable per-file, see below)
+    }
+}

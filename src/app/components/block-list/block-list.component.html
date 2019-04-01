@@ -1,8 +1,8 @@
-<table class="table table-sm">
-    <thead>
+<table class="table table-sm table-hover">
+    <thead class="thead-light">
         <tr>
             <th>Height</th>
-            <th>Hash</th>
+            <th class="d-none d-lg-table-cell">Hash</th>
             <th>Age</th>
             <th class="text-right">Transactions</th>
             <th class="text-right">Size</th>
@@ -11,7 +11,11 @@
     <tbody>
         <tr *ngFor="let bc of blocks">
             <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
-            <td><a href="block/{{bc.hash}}">{{bc.hash}}</a></td>
+            <td class="d-none d-lg-table-cell">
+                <div class="ellipsis">
+                    <a href="block/{{bc.hash}}">{{bc.hash}}</a>
+                </div>
+            </td>
             <td>{{ bc.time * 1000 | timeAgo }}</td>
             <td class="text-right">{{bc.ntx}}</td>
             <td class="text-right">{{bc.size}}</td>

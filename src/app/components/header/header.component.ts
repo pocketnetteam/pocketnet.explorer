@@ -10,6 +10,7 @@ import { Globals } from 'src/app/globals';
 })
 export class HeaderComponent implements OnInit {
     searchValue: string = '';
+    search_full: boolean = false;
     
     constructor(
         private dataService: DataService,
@@ -46,7 +47,9 @@ export class HeaderComponent implements OnInit {
 
         this.searchValue = '';
     }
-
     
+    searchFull() {
+        this.search_full = true;
+    }
 
 }

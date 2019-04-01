@@ -1,32 +1,32 @@
 <nav class="navbar navbar-light bg-light fixed-top">
     <div class="container">
-        <div class="col-4">
+        <div class="col-auto">
             <div class="row">
                 <div class="col-auto">
                     <a class="navbar-brand" href="#">
                         <img src="assets/logo20.png" width="20" height="20" class="d-inline-block align-top mr-1" alt="">
-                        POCKETNET Explorer
+                        <div class="d-inline-block">POCKETNET Explorer</div>
                     </a>
                 </div>
-                <div class="col-auto status rounded text-right" *ngIf="Global.blockchainInfo">
-                    <i class="fas fa-check"></i> Height: {{Global.blockchainInfo.blocks}}
+                <div *ngIf="Global.blockchainInfo" class="col-auto status rounded text-right">
+                    <a href="block/{{Global.blockchainInfo.bestblockhash}}"><i class="fas fa-database"></i> {{Global.blockchainInfo.blocks}}</a>
                 </div>
             </div>
             
         </div>
 
-        
-
-        <div class="col-8 col-xl-4 col-lg-5 col-md-6">
+        <div class="d-none d-md-inline-block col-xl-4 col-lg-5 col-md-6 col-sm-10 searchBox">
             <form class="form-inline">
-                <input #searchBox
-                    name="serachBox"
-                    (keydown.enter)="$event.preventDefault(); searchEnter(searchBox.value);" 
+                <input #searchInput
+                    name="searchInput"
+                    (keydown.enter)="$event.preventDefault(); searchEnter(searchInput.value);" 
                     class="form-control w-100" 
                     type="search" 
                     placeholder="Search for block, transaction or address"
                     [(ngModel)]="searchValue">
             </form>
         </div>
+
+        <!-- <button *ngIf="search_full" class="searchBtn btn btn-light" (click)="searchFull();"><i class="fas fa-search"></i></button> -->
     </div>
 </nav>
