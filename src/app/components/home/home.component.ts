@@ -10,6 +10,7 @@ import { BlockCompact } from 'src/app/types/Block';
 export class HomeComponent implements OnInit {
     blocks: BlockCompact[];
     loading = false;
+    private updateInterval = 60 * 1000;
 
     constructor(private dataService: DataService) { }
 
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
         this.updateLastBlocks();
         setInterval(() => {
             this.updateLastBlocks();
-        }, 60000);
+        }, this.updateInterval);
     }
 
     updateLastBlocks(this: any) {

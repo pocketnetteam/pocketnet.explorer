@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Globals } from 'src/app/globals';
 
@@ -33,4 +33,11 @@ export class AppComponent implements OnInit {
             localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
         });
     }
+
+    @HostListener('window:scroll', ['$event']) onScrollEvent($event) {
+        // let head_fix = window.pageYOffset >= 15;
+        // $('.scrolled_head').toggleClass('fixed_head', head_fix);
+        // $('.body').toggleClass('fixed_head_on', head_fix);
+    }
 }
+

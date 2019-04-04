@@ -1,13 +1,15 @@
 <app-loader *ngIf="!block"></app-loader>
 
-<div class="col" *ngIf="block">
-    <div class="row mb-4">
+<div class="col" *ngIf="block" style="padding-top: 95px;">
+    <div class="row py-3 scrolled_head">
         <div class="col">
             <div class="row">
                 <h1>Block #{{block.height}}</h1>
             </div>
             <div class="row">
-                <div>{{block.hash}}</div>
+                <div class="ellipsis mw-100">
+                    <span class="">{{block.hash}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -18,11 +20,11 @@
                 <h2>Summary</h2>
             </div>
         </div>
-        <div class="row">
+        <div class="row d-none d-md-flex">
             <div class="col-6">
                 <table class="table table-sm" style="table-layout: fixed">
                     <tr>
-                        <td>Number Of Transactions</td>
+                        <td>Transactions</td>
                         <td class="text-right text-muted">{{block.nTx}}</td>
                     </tr>
                     <tr>
@@ -30,12 +32,8 @@
                         <td class="text-right text-muted">{{block.height}}</td>
                     </tr>
                     <tr>
-                        <td>Block Reward</td>
-                        <td class="text-right text-muted">?</td>
-                    </tr>
-                    <tr>
                         <td>Time</td>
-                        <td class="text-right text-muted">{{block.time * 1000 | date:'medium'}}</td>
+                        <td class="text-right text-muted">{{block.time * 1000 | date:'MM/dd/yyyy HH:mm:ss'}}</td>
                     </tr>
                     <tr>
                         <td>Merkle Root</td>
@@ -63,15 +61,63 @@
                     </tr>
                     <tr>
                         <td>Size (bytes)</td>
-                        <td class="text-right text-muted">{{block.size}}</td>
+                        <td class="text-right text-muted">{{ block.size | number }}</td>
                     </tr>
                     <tr>
                         <td>Version</td>
                         <td class="text-right text-muted">{{block.version}}</td>
                     </tr>
+                    <tr *ngIf="block.nextblockhash">
+                        <td>Next block</td>
+                        <td class="text-right"><a href="block/{{block.nextblockhash}}">{{block.height+1}}</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row d-sm-flex d-md-none">
+            <div class="col">
+                <table class="table table-sm" style="table-layout: fixed">
                     <tr>
-                        <td>Nonce</td>
-                        <td class="text-right text-muted">{{block.nonce}}</td>
+                        <td>Transactions</td>
+                        <td class="text-right text-muted">{{block.nTx}}</td>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td class="text-right text-muted">{{block.height}}</td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td class="text-right text-muted">{{block.time * 1000 | date:'MM/dd/yyyy HH:mm:ss'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Merkle Root</td>
+                        <td class="text-right text-muted">
+                            <div class="ellipsis">
+                                <span>{{block.merkleroot}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Difficulty</td>
+                        <td class="text-right text-muted">{{block.difficulty}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bits</td>
+                        <td class="text-right text-muted">{{block.bits}}</td>
+                    </tr>
+                    <tr>
+                        <td>Size (bytes)</td>
+                        <td class="text-right text-muted">{{ block.size | number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+                        <td class="text-right text-muted">{{block.version}}</td>
+                    </tr>
+                    
+                    <tr *ngIf="block.previousblockhash">
+                        <td>Previous Block</td>
+                        <td class="text-right"><a href="block/{{block.previousblockhash}}">{{block.height-1}}</a></td>
                     </tr>
                     <tr *ngIf="block.nextblockhash">
                         <td>Next block</td>

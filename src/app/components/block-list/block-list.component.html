@@ -1,9 +1,9 @@
-<table class="table table-sm table-hover">
-    <thead class="thead-light">
+<table class="table table-sm table-borderless">
+    <thead class="">
         <tr>
             <th>Height</th>
             <th class="d-none d-lg-table-cell">Hash</th>
-            <th>Age</th>
+            <th class="text-right">Age</th>
             <th class="text-right">TXs</th>
             <th class="text-right">Size</th>
         </tr>
@@ -13,12 +13,12 @@
             <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
             <td class="d-none d-lg-table-cell">
                 <div class="ellipsis">
-                    <a href="block/{{bc.hash}}">{{bc.hash}}</a>
+                    <a href="block/{{bc.hash}}" class="">{{bc.hash}}</a>
                 </div>
             </td>
-            <td>{{ bc.time * 1000 | timeAgo }}</td>
-            <td class="text-right">{{bc.ntx}}</td>
-            <td class="text-right">{{bc.size}}</td>
+            <td class="text-right">{{ bc.time * 1000 | timeAgo }}</td>
+            <td class="text-right">{{ bc.ntx }}</td>
+            <td class="text-right">{{ bc.size | number }}</td>
         </tr>
     </tbody>
 </table>
