@@ -8,7 +8,7 @@ import { HexService } from './hex.service'
 })
 export class DataService {
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
-    // private proxyUrl = 'https://216.108.237.11:8888/rpc';
+    //private proxyUrl = 'https://192.168.0.11:8888/rpc';
     private node = '2';
 
     constructor(private http: HttpClient, private hex: HexService) { }

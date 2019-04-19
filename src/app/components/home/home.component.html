@@ -2,7 +2,7 @@
 
 <div class="col" *ngIf="blocks" style="padding-top: 65px;">
     <div class="row py-2 scrolled_head">
-        <h1>Latest blocks <i *ngIf="loading" class="fas fa-spinner fa-spin loading_spinner"></i></h1>
+        <h1>Latest blocks <app-loader *ngIf="true || !loading"></app-loader></h1>
     </div>
 
     <div class="row py-3">
