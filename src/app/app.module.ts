@@ -24,6 +24,9 @@ import { BlockListComponent } from './components/block-list/block-list.component
 import { FooterComponent } from './components/footer/footer.component';
 import { Globals } from 'src/app/globals';
 
+import { HighchartsChartModule } from 'highcharts-angular';
+import { StatDaysCountComponent } from './components/statistic/stat-days-count/stat-days-count.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -40,13 +43,15 @@ import { Globals } from 'src/app/globals';
         PocPipe,
         BlockListComponent,
         FooterComponent,
-        TimeAgoPipe
+        TimeAgoPipe,
+        StatDaysCountComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        HighchartsChartModule
     ],
     bootstrap: [AppComponent],
     providers: [Globals]

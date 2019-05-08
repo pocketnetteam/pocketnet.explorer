@@ -39,5 +39,6 @@ export class AppComponent implements OnInit {
         // $('.scrolled_head').toggleClass('fixed_head', head_fix);
         // $('.body').toggleClass('fixed_head_on', head_fix);
     }
+    
 }
 
