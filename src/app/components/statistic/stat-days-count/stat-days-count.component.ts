@@ -51,15 +51,19 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             for (let y in _x) {
                 // Create lines
                 if (!(y in _datasets)) {
+                    let _caption = y;
+                    if (_caption == 'Users') _caption = 'New users';
+                    if (_caption == 'Subscribes') _caption = 'Follows';
+
                     _datasets[y] = {
-                        name: y,
+                        name: _caption,
                         data: []
                     };
                 }
 
                 _datasets[y].data.push({
                     x: new Date(+x * 1000),
-                    y: _x[y] || 0.0001
+                    y: _x[y]
                 });
             }
         }
@@ -78,7 +82,6 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             yAxis: {
                 type: 'logarithmic',
-                min: 0.0001,
                 title: {
                     text: ''
                 }
@@ -100,7 +103,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 formatter: function() {
-                    return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%e %b %Y', this.x) }<br/><b>${ this.y == 0.0001 ? 0 : this.y }</b> tx(s)`;
+                    return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%b %e, %Y', this.x) }<br/><b>${ this.y }</b> tx(s)`;
                 },
             },
             plotOptions: {
@@ -110,6 +113,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     }
                 },
                 series: {
+                    connectNulls: true,
                     label: {
                         connectorAllowed: true
                     },
