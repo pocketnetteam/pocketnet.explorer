@@ -3,14 +3,6 @@ import * as Highcharts from 'highcharts';
 import { DataService } from 'src/app/services/data.service';
 
 Highcharts.setOptions({
-    title: {
-        style: {
-            color: 'tomato'
-        }
-    },
-    legend: {
-        enabled: false
-    }
 });
 
 @Component({
@@ -42,14 +34,13 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
     fillChart(data) {
         let _datasets = {};
-        let _labels = [];
+        let categories = [];
 
         for (let x in data) {
             let _x = data[x];
-            _labels.push(x);
+            categories.push(new Date(+x * 1000));
 
             for (let y in _x) {
-                // Create lines
                 if (!(y in _datasets)) {
                     let _caption = y;
                     if (_caption == 'Users') _caption = 'New users';
@@ -61,10 +52,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     };
                 }
 
-                _datasets[y].data.push({
-                    x: new Date(+x * 1000),
-                    y: _x[y]
-                });
+                _datasets[y].data.push(_x[y]);
             }
         }
 
@@ -81,15 +69,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 type: 'spline'
             },
             yAxis: {
-                type: 'logarithmic',
                 title: {
                     text: ''
                 }
             },
             xAxis: {
+                categories: categories,
                 type: 'datetime',
                 labels: {
-                    format: '{value:%e. %b}',
+                    format: '{value:%e %b}',
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -102,9 +90,23 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 verticalAlign: 'bottom'
             },
             tooltip: {
-                formatter: function() {
-                    return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%b %e, %Y', this.x) }<br/><b>${ this.y }</b> tx(s)`;
-                },
+                shared: true,
+                crosshairs: true,
+                // formatter: function() {
+                //     return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%b %e, %Y', this.x) }<br/><b>${ this.y }</b> tx(s)`;
+                // },
+                formatter: function () {
+                    var points = this.points;
+                    var pointsLength = points.length;
+                    var tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat('%b %e, %Y', points[0].key) }</b></span><br/>` : ``;
+                    var index;
+
+                    for (index = 0; index < pointsLength; index += 1) {
+                        tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
+                    }
+
+                    return tooltipMarkup;
+                }
             },
             plotOptions: {
                 spline: {
@@ -113,10 +115,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     }
                 },
                 series: {
-                    connectNulls: true,
-                    label: {
-                        connectorAllowed: true
-                    },
+                    connectNulls: true
                 }
             },
             series: datasets,
@@ -134,7 +133,6 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     }
                 }]
             }
-
         });
     }
 
