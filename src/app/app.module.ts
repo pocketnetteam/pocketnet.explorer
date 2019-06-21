@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 
@@ -27,6 +27,8 @@ import { Globals } from 'src/app/globals';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { StatDaysCountComponent } from './components/statistic/stat-days-count/stat-days-count.component';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -51,6 +53,8 @@ import { StatDaysCountComponent } from './components/statistic/stat-days-count/s
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
+        NgSelectModule,
         HighchartsChartModule
     ],
     bootstrap: [AppComponent],

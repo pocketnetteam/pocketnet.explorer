@@ -15,6 +15,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     canvas: any;
     ctx: any;
     statisticData: any;
+    statPeriod: any = 1;
 
     constructor(private dataService: DataService) { }
 
@@ -22,11 +23,18 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.getData();
+        this.loadData();
     }
 
-    getData() {
-        this.dataService.getStatistic().subscribe(data => {
+    loadData() {
+        let cur_date: Date = new Date();
+        let end_time: Number = Math.floor(+cur_date / 1000);
+
+        cur_date.setMonth(cur_date.getMonth() - this.statPeriod)
+        let beg_time: Number = Math.floor(+cur_date / 1000);
+
+
+        this.dataService.getStatistic(end_time, beg_time).subscribe(data => {
             this.statisticData = data['data']['result'];
             this.fillChart(this.statisticData);
         });

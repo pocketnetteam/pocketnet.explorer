@@ -1,1 +1,8 @@
+
+<ng-select [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod" (ngModelChange)="loadData()">
+    <ng-option [value]="1">Show statistics for 1 month</ng-option>
+    <ng-option [value]="2">Show statistics for 2 months</ng-option>
+    <ng-option [value]="3">Show statistics for 3 months</ng-option>
+</ng-select>
+
 <div id="stat_days_count_canvas" style="width: 100%; height: 400px; display: block;"></div>
