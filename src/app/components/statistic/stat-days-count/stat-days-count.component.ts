@@ -53,7 +53,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 if (!(y in _datasets)) {
                     let _caption = y;
                     if (_caption != 'UsersAcc') continue;
-                    if (_caption == 'UsersAcc') _caption = 'Users count';
+                    if (_caption == 'UsersAcc') _caption = 'Registered users';
 
                     _datasets[y] = {
                         name: _caption,
