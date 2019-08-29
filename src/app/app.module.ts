@@ -29,6 +29,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { StatDaysCountComponent } from './components/statistic/stat-days-count/stat-days-count.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { RoundPipe } from './pipes/round.pipe';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         BlockListComponent,
         FooterComponent,
         TimeAgoPipe,
-        StatDaysCountComponent
+        StatDaysCountComponent,
+        RoundPipe
     ],
     imports: [
         BrowserModule,

@@ -10,7 +10,7 @@
                 <div class="address_hash">{{address.address}}</div>
             </div>
             <div class="row">
-                <div class="address_balance_row">{{address.unspent | poc}}</div>
+                <div class="address_balance_row">{{address.unspent/100000000 | round:3 | poc:0:3}}</div>
             </div>
         </div>
     </div>
@@ -20,15 +20,15 @@
         <table class="table table-sm" style="table-layout: fixed">
             <tr>
                 <td>Total Received</td>
-                <td class="text-right text-muted">{{address.spent + address.unspent | poc}}</td>
+                <td class="text-right text-muted">{{(address.spent + address.unspent)/100000000 | poc}}</td>
             </tr>
             <tr>
                 <td>Total Sent</td>
-                <td class="text-right text-muted">{{address.spent | poc}}</td>
+                <td class="text-right text-muted">{{address.spent/100000000 | poc}}</td>
             </tr>
             <tr>
                 <td>Final Balance</td>
-                <td class="text-right text-muted">{{address.unspent | poc}}</td>
+                <td class="text-right text-muted">{{address.unspent/100000000 | poc}}</td>
             </tr>
             <tr>
                 <td>No. Transactions</td>
