@@ -20,6 +20,7 @@ import { AddressComponent } from './components/address/address.component';
 import { VoutComponent } from './components/tx/vout/vout.component';
 import { VinComponent } from './components/tx/vin/vin.component';
 import { PocPipe } from './pipes/poc.pipe';
+import { PocTypePipe } from './pipes/poc_type.pipe';
 import { BlockListComponent } from './components/block-list/block-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { Globals } from 'src/app/globals';
@@ -43,6 +44,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         VoutComponent,
         VinComponent,
         PocPipe,
+        PocTypePipe,
         BlockListComponent,
         FooterComponent,
         TimeAgoPipe,

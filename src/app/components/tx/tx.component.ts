@@ -16,6 +16,7 @@ export class TxComponent implements OnInit {
     get Global() : Globals { return this.global; }
 
     ngOnInit() {
+        
     }
 
 }
