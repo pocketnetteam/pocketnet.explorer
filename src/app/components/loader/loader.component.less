@@ -1,104 +1,71 @@
-.spinner {
-    display: inline-block;
-    margin-right: auto;
-    margin-left: auto;
-    width: 4em;
-    height: 4em;
+.orbit-spinner,
+.orbit-spinner * {
+    box-sizing: border-box;
+}
+
+.orbit-spinner {
+    display      : inline-block;
+    height       : 25px;
+    width        : 25px;
     border-radius: 50%;
-    -webkit-transform: scale(0.7);
-    transform: scale(0.7);
-    vertical-align: -20px;
+    perspective  : 800px;
 }
 
-.medium {
-  transform: scale(1)
-}
-
-.large {
-  margin-top: 4em;
-  transform: scale(1.5)
-}
-
-.spinner-wrapper {
-    position: relative;
-    width: 4em;
-    height: 4em;
-    border-radius: 100%;
-    left: calc(50% - 2em);
-}
-
-.spinner-wrapper::after {
-    content: "";
-    background: #fff;
+.orbit-spinner .orbit {
+    position     : absolute;
+    box-sizing   : border-box;
+    width        : 100%;
+    height       : 100%;
     border-radius: 50%;
-    width: 3em;
-    height: 3em;
-    position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-} 
-
-.rotator {
-    position: relative;
-    width: 4em;
-    border-radius: 4em;
-    overflow: hidden;
-    animation: rotate 2000ms infinite linear;
 }
 
-.rotator:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #007bff;
-    border: 3px solid #fff;
-    border-radius: 100%;
+.orbit-spinner .orbit:nth-child(1) {
+    left         : 0%;
+    top          : 0%;
+    animation    : orbit-spinner-orbit-one-animation 1200ms linear infinite;
+    border-bottom: 3px solid #007bff;
 }
 
-.inner-spin {
-    background: #fff;
-    height: 4em;
-    width: 2em;
+.orbit-spinner .orbit:nth-child(2) {
+    right       : 0%;
+    top         : 0%;
+    animation   : orbit-spinner-orbit-two-animation 1200ms linear infinite;
+    border-right: 3px solid #007bff;
 }
 
-.inner-spin {
-    animation: rotate-left 2500ms infinite cubic-bezier(0.445, 0.050, 0.550, 0.950);
-    border-radius: 2em 0 0 2em;
-    transform-origin: 2em 2em;
+.orbit-spinner .orbit:nth-child(3) {
+    right     : 0%;
+    bottom    : 0%;
+    animation : orbit-spinner-orbit-three-animation 1200ms linear infinite;
+    border-top: 3px solid #007bff;
 }
 
-.inner-spin:last-child {
-    animation: rotate-right 2500ms infinite cubic-bezier(0.445, 0.050, 0.550, 0.950);
-    margin-top: -4em;
-    border-radius: 0 2em 2em 0;
-    float: right;
-    transform-origin: 0 50%;
-}
-
-@keyframes rotate-left {
-    60%, 75%, 100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes rotate {
+@keyframes orbit-spinner-orbit-one-animation {
     0% {
-        transform: rotate(0);
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
     }
+
     100% {
-        transform: rotate(360deg);
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
     }
 }
 
-@keyframes rotate-right {
-    0%, 25%, 45% {
-        transform: rotate(0);
+@keyframes orbit-spinner-orbit-two-animation {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes orbit-spinner-orbit-three-animation {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
     }
 }

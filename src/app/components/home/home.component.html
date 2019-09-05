@@ -5,8 +5,24 @@
         <h1>Latest blocks <app-loader *ngIf="loading"></app-loader></h1>
     </div>
 
-    <div class="row py-3">
+    <div class="row pt-3">
         <app-block-list [blocks]="blocks" class="w-100"></app-block-list>
+    </div>
+
+    <div class="row mb-3 last_blocks_control_back">
+        <div class="col px-0">
+            <div class="float-left">
+                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(-100)" title="Backward at 100 blocks"><i class="fas fa-angle-double-down"></i></button>
+                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(-10)" title="Backward at 10 blocks"><i class="fas fa-angle-down"></i></button>
+            </div>
+        </div>
+        <div class="col px-0">
+            <div class="float-right">
+                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(10)" title="Forward at 10 blocks"><i class="fas fa-angle-up"></i></button>
+                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(100)" title="Forward at 100 blocks"><i class="fas fa-angle-double-up"></i></button>
+                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(0)" title="Show last blocks"><i class="far fa-arrow-alt-circle-up"></i></button>
+            </div>
+        </div>
     </div>
 
     <div class="row py-2">

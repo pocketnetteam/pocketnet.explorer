@@ -7,8 +7,8 @@ import { HexService } from './hex.service'
     providedIn: 'root'
 })
 export class DataService {
-    private proxyUrl = 'https://pocketnet.app:8888/rpc';
-    // private proxyUrl = 'https://localhost:8888/rpc';
+    // private proxyUrl = 'https://pocketnet.app:8888/rpc';
+    private proxyUrl = 'https://localhost:8888/rpc';
     private node = '0';
 
     constructor(private http: HttpClient, private hex: HexService) { }
@@ -45,11 +45,11 @@ export class DataService {
         });
     }
 
-    getLastBlocks(count: number) {
+    getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false) {
         return this.http.get(this.proxyUrl, {
             params: {
                 method: 'getlastblocks',
-                parameters: this.hex.Encode(JSON.stringify([ count ])),
+                parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
                 node: this.node
             }
         });
