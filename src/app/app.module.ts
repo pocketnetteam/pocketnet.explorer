@@ -30,6 +30,7 @@ import { StatDaysCountComponent } from './components/statistic/stat-days-count/s
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RoundPipe } from './pipes/round.pipe';
+import { RplPipe } from './pipes/rpl.pipe';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { RoundPipe } from './pipes/round.pipe';
         FooterComponent,
         TimeAgoPipe,
         StatDaysCountComponent,
-        RoundPipe
+        RoundPipe,
+        RplPipe
     ],
     imports: [
         BrowserModule,

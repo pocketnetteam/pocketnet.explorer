@@ -1,41 +1,39 @@
-<table class="table table-sm table-borderless">
-    <thead class="">
-        <tr>
-            <th class="text-left" title="Block height">Height</th>
-            <th class="text-left d-none d-lg-table-cell" title="Block hash">Hash</th>
+<div class="table-responsive-sm">
+    <table class="table table-sm table-borderless" style="min-width: 350px;">
+        <thead class="">
+            <tr>
+                <th class="text-left" title="Block height">Height</th>
+                <th class="text-left d-none d-lg-table-cell" title="Block hash">Hash</th>
 
-            <th class="text-right d-none d-lg-table-cell" title="Age">Age</th>
-            <th class="text-right" title="Time">Time</th>
-            <th class="text-right" title="Transactions in block">TX</th>
+                <th class="text-right" title="Age">Age</th>
+                <th class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell" title="Time">Time</th>
+                <th class="text-right" title="Transactions in block">TX</th>
 
-            <th class="text-right d-none d-lg-table-cell" title="Users"><i class="fas fa-user-friends"></i></th>
-            <th class="text-right d-none d-lg-table-cell" title="Posts"><i class="far fa-file-alt"></i></th>
-            <th class="text-right d-none d-lg-table-cell" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
-            <th class="text-right d-none d-lg-table-cell" title="Follows"><i class="far fa-address-book"></i></th>
-            <th class="text-right d-none d-lg-table-cell" title="Comments"><i class="fas fa-comments"></i></th>
-            <!-- <th class="text-right" title="Block size">Size</th> -->
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let bc of blocks">
-            <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
-            <td class="d-none d-lg-table-cell">
-                <div class="ellipsis">
-                    <a href="block/{{bc.hash}}" class="">{{bc.hash}}</a>
-                </div>
-            </td>
-            
-            <td class="text-right d-none d-lg-table-cell">{{ bc.time * 1000 | timeAgo }}</td>
-            <td class="text-right">{{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-            <td class="text-right">{{ bc.ntx }}</td>
+                <th class="text-right" title="Users"><i class="fas fa-user-friends"></i></th>
+                <th class="text-right" title="Posts"><i class="far fa-file-alt"></i></th>
+                <th class="text-right" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
+                <th class="text-right" title="Follows"><i class="far fa-address-book"></i></th>
+                <th class="text-right" title="Comments"><i class="fas fa-comments"></i></th>
+                <!-- <th class="text-right" title="Block size">Size</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let bc of blocks">
+                <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
+                <td class="d-none d-lg-table-cell"><div class="ellipsis"><a href="block/{{bc.hash}}" class="">{{bc.hash}}</a></div></td>
+                
+                <td class="text-right nowrap">{{ bc.time * 1000 | timeAgo | rpl:' ago':'' }}</td>
+                <td class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell">{{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td class="text-right">{{ bc.ntx - 2 + (bc.types.comments || 0) }}</td>
 
-            <td class="text-right poc_type d-none d-lg-table-cell">{{ bc.types.users || '-' }}</td>
-            <td class="text-right poc_type d-none d-lg-table-cell">{{ bc.types.posts || '-' }}</td>
-            <td class="text-right poc_type d-none d-lg-table-cell">{{ bc.types.scores || '-' }}</td>
-            <td class="text-right poc_type d-none d-lg-table-cell">{{ bc.types.subscriptions || '-' }}</td>
-            <td class="text-right poc_type d-none d-lg-table-cell">{{ bc.types.comments || '-' }}</td>
+                <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.users}">{{ bc.types.users || '-' }}</td>
+                <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.posts}">{{ bc.types.posts || '-' }}</td>
+                <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.scores}">{{ bc.types.scores || '-' }}</td>
+                <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.subscribes}">{{ bc.types.subscribes || '-' }}</td>
+                <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.comments}">{{ bc.types.comments || '-' }}</td>
 
-            <!-- <td class="text-right">{{ bc.size | number }}</td> -->
-        </tr>
-    </tbody>
-</table>
+                <!-- <td class="text-right">{{ bc.size | number }}</td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>
