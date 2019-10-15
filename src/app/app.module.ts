@@ -32,6 +32,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { RoundPipe } from './pipes/round.pipe';
 import { RplPipe } from './pipes/rpl.pipe';
 
+import { NodesListComponent } from './components/nodes-list/nodes-list.component';
+import { NodeComponent } from './components/nodes-list/node/node.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -52,7 +55,9 @@ import { RplPipe } from './pipes/rpl.pipe';
         TimeAgoPipe,
         StatDaysCountComponent,
         RoundPipe,
-        RplPipe
+        RplPipe,
+        NodesListComponent,
+        NodeComponent
     ],
     imports: [
         BrowserModule,

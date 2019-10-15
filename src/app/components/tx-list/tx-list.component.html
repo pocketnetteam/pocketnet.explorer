@@ -1,5 +1,10 @@
-<div class="row">
-    <h2>Transactions</h2>
+<div class="col">
+
+    <div class="row">
+        <h2>Transactions</h2>
+    </div>
+    
+    <app-tx class="row" *ngFor="let tx of txs" [tx]="tx"></app-tx>
+    <app-loader *ngIf="loading"></app-loader>
+
 </div>
-<app-tx class="row" *ngFor="let tx of txs" [tx]="tx"></app-tx>
-<app-loader *ngIf="loading"></app-loader>

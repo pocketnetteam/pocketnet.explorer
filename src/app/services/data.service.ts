@@ -9,6 +9,8 @@ import { HexService } from './hex.service'
 export class DataService {
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
     // private proxyUrl = 'https://localhost:8888/rpc';
+    // private proxyUrl = 'https://192.168.0.11:8888/rpc';
+    // private proxyUrl = 'https://ironbot:8888/rpc';
     private node = '0';
 
     constructor(private http: HttpClient, private hex: HexService) { }
@@ -80,6 +82,16 @@ export class DataService {
             params: {
                 method: 'getstatistic',
                 parameters: this.hex.Encode(JSON.stringify([end_time, start_time])),
+                node: this.node
+            }
+        });
+    }
+
+    getPeerInfo() {
+        return this.http.get(this.proxyUrl, {
+            params: {
+                method: 'getpeerinfo',
+                parameters: this.hex.Encode(JSON.stringify([])),
                 node: this.node
             }
         });

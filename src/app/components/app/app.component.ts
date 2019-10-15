@@ -20,11 +20,23 @@ export class AppComponent implements OnInit {
             this.global.blockchainInfo = JSON.parse(localStorage.getItem('blockchainInfo'));
         }
 
+        if (localStorage.getItem('peersinfo')) {
+            this.global.peersinfo = JSON.parse(localStorage.getItem('peersinfo'));
+        }
+
         setInterval(() => {
             this.updateBlockchainInfo();
         }, this.updateBCInfo);
 
         this.updateBlockchainInfo();
+        this.updatePeersInfo();
+    }
+
+    updatePeersInfo() {
+        this.dataService.getPeerInfo().subscribe(data => {
+            this.global.peersinfo = data['data']['result'];
+            localStorage.setItem('peersinfo', JSON.stringify(this.global.peersinfo));
+        });
     }
 
     updateBlockchainInfo() {

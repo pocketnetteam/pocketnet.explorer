@@ -8,11 +8,17 @@ import { BlockCompact } from 'src/app/types/Block';
 })
 export class BlockListComponent implements OnInit {
     @Input() blocks: BlockCompact[];
+    @Input() loading: boolean = false;
+    @Output() moveBlocksEvent = new EventEmitter<number>();
 
     constructor() {
     }
 
     ngOnInit() {
+    }
+
+    MoveBlocks(diff: number = 0) {
+        this.moveBlocksEvent.next(diff);
     }
 
 }

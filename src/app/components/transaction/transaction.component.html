@@ -1,29 +1,44 @@
 <app-loader *ngIf="!tx"></app-loader>
 
 <div class="col" *ngIf="tx">
-    <div class="row mb-2">
+
+    <div class="rowBlock">
+        <div class="row">
+            <h1>Transaction</h1>
+        </div>
+
+        <div class="row">
+            {{tx.txid}}
+        </div>
+
+    </div>
+
+    <div class="row rowBlock">
         <div class="col">
+
             <div class="row">
-                <h1>Transaction</h1>
+                <h2>Summary</h2>
             </div>
+
             <div class="row">
-                <div>{{tx.txid}}</div>
+                <table class="table table-sm">
+                    <tr>
+                        <td>Size</td>
+                        <td class="text-right text-muted">{{tx.size}}</td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td class="text-right text-muted">{{tx.nTime * 1000 | date:'medium'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Block</td>
+                        <td class="text-right text-muted"><a href="block/{{tx.blockhash}}">{{tx.blockhash}}</a></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <h2>Summary</h2>
-        <table class="table table-sm">
-            <tr><td>Size</td><td class="text-right text-muted">{{tx.size}}</td></tr>
-            <tr><td>Time</td><td class="text-right text-muted">{{tx.nTime * 1000 | date:'medium'}}</td></tr>
-            <tr><td>Block</td><td class="text-right text-muted"><a href="block/{{tx.blockhash}}">{{tx.blockhash}}</a></td></tr>
-        </table>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <app-tx-list *ngIf="tx" [in_txids]="[tx.txid]"></app-tx-list>
-        </div>
-    </div>
+    <app-tx-list class="row rowBlock" *ngIf="tx" [in_txids]="[tx.txid]"></app-tx-list>
+    
 </div>

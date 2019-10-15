@@ -1,0 +1,31 @@
+<div class="col">
+
+    <!-- Block header -->
+    <div class="row">
+        <h1>Network</h1>
+    </div>
+
+    <!-- List header -->
+    <div class="row"></div>
+
+    <!-- Peers list -->
+    <div class="row">
+        
+        <table class="table table-sm table-borderless" style="min-width: 350px;">
+            <thead class="">
+                <tr>
+                    <th class="text-left" title="Peer address">Addr</th>
+                    <th class="text-left" title="Version">Version</th>
+                    <th class="text-left" title="Synced blocks/headers">Sync</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let peer of Global.peersinfo">
+                    <td>{{ peer.addr }}</td>
+                    <td>{{ peer.subver }}</td>
+                    <td>{{ peer.synced_blocks }} / {{ peer.synced_headers }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

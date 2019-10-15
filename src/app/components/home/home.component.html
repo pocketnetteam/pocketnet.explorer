@@ -1,33 +1,14 @@
 <app-loader *ngIf="!blocks"></app-loader>
 
-<div class="col" *ngIf="blocks" style="padding-top: 65px;">
-    <div class="row py-2 scrolled_head">
-        <h1>Latest blocks <app-loader *ngIf="loading"></app-loader></h1>
-    </div>
+<div class="col" *ngIf="blocks">
 
-    <div class="row pt-3">
-        <app-block-list [blocks]="blocks" class="w-100"></app-block-list>
-    </div>
+    <!-- Latest blocks -->
+    <app-block-list class="row rowBlock" [blocks]="blocks" [loading]="loading" (moveBlocksEvent)="MoveBlocks($event)"></app-block-list>
 
-    <div class="row mb-3 last_blocks_control_back">
-        <div class="col px-0">
-            <div class="float-left">
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(0)" title="Forward at 100 blocks"><i class="fas fa-angle-double-up"></i></button>
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(10)" title="Forward at 10 blocks"><i class="fas fa-angle-up"></i></button>
-            </div>
-        </div>
-        <div class="col px-0">
-            <div class="float-right">
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(-10)" title="Backward at 10 blocks"><i class="fas fa-angle-down"></i></button>
-            </div>
-        </div>
-    </div>
+    <!-- Statistic -->
+    <app-stat-days-count class="row rowBlock"></app-stat-days-count>
 
-    <div class="row py-2">
-        <h2>Statistic</h2>
-    </div>
-
-    <div class="row py-3">
-        <app-stat-days-count class="w-100"></app-stat-days-count>
-    </div>
+    <!-- Network -->
+    <app-nodes-list class="row rowBlock"></app-nodes-list>
+    
 </div>

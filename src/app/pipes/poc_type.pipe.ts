@@ -7,7 +7,7 @@ import { Transaction } from 'src/app/types/Transaction';
 export class PocTypePipe implements PipeTransform {
 
     private types: { [hex: string]: string } = {
-        '7570766f74655368617265': 'Score',
+        '7570766f74655368617265': 'Score to Post',
         '636f6d706c61696e5368617265': 'Complain',
         '7368617265': 'Post',
         '736861726565646974': 'Post Edit',
@@ -17,6 +17,11 @@ export class PocTypePipe implements PipeTransform {
         '75736572496e666f': 'User',
         '626c6f636b696e67': 'Blocking',
         '756e626c6f636b696e67': 'Unblocking',
+
+        '636f6d6d656e74': 'Comment',
+        '636f6d6d656e7445646974': 'Comment Edit',
+        '636f6d6d656e7444656c657465': 'Comment Delete',
+        '6353636f7265': 'Score to Comment'
     }
 
     transform(tx: Transaction, args?: any): string {

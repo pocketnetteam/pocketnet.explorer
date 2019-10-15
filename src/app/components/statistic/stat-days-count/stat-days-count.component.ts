@@ -53,7 +53,6 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 if (!(y in _datasets)) {
                     let _caption = y;
                     if (_caption != 'UsersAcc') continue;
-                    if (_caption == 'UsersAcc') _caption = 'Registered users';
 
                     _datasets[y] = {
                         name: _caption,
@@ -145,6 +144,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         });
     }
 
+    private legendIndexes = {
+        'Users': 1,
+        'Subscribes': 2,
+        'Posts': 3,
+        'Ratings': 4,
+        'Comments': 5,
+        'CommentRatings': 6
+    }
+
     fillChartEvents(data) {
         let _datasets = {};
         let categories = [];
@@ -159,10 +167,13 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     if (_caption == 'UsersAcc') continue;
                     if (_caption == 'Users') _caption = 'New users';
                     if (_caption == 'Subscribes') _caption = 'Follows';
+                    if (_caption == 'CommentRatings') _caption = 'Comments Ratings';
+                    if (_caption == 'Ratings') _caption = 'Posts Ratings';
 
                     _datasets[y] = {
                         name: _caption,
-                        data: []
+                        data: [],
+                        legendIndex: this.legendIndexes[y]
                     };
                 }
 
