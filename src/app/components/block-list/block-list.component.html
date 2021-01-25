@@ -35,7 +35,7 @@
                             <div class="ellipsis"><a href="block/{{bc.hash}}" class="">{{bc.hash}}</a></div>
                         </td>
 
-                        <td class="text-right nowrap">{{ bc.time * 1000 | timeAgo | rpl:' ago':'' }}</td>
+                        <td class="text-right nowrap">{{ bc.time * 1000 }}</td>
                         <td class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell">
                             {{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                         <td class="text-right">{{ bc.ntx }}</td>

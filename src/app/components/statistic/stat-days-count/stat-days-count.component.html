@@ -6,9 +6,11 @@
 
     <div class="row">
         <ng-select class="w-100" [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod" (ngModelChange)="loadData()">
-            <ng-option [value]="1">Show statistics for 1 month</ng-option>
-            <ng-option [value]="2">Show statistics for 2 months</ng-option>
-            <ng-option [value]="3">Show statistics for 3 months</ng-option>
+            <ng-option [value]="1">Show statistics for last day</ng-option>
+            <ng-option [value]="2">Show statistics for last week</ng-option>
+            <ng-option [value]="3">Show statistics for 1 month</ng-option>
+            <ng-option [value]="4">Show statistics for 2 months</ng-option>
+            <ng-option [value]="5">Show statistics for 3 months</ng-option>
         </ng-select>
     </div>
 

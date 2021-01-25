@@ -11,7 +11,7 @@ export class DataService {
     // private proxyUrl = 'https://localhost:8888/rpc';
     // private proxyUrl = 'https://192.168.0.11:8888/rpc';
     // private proxyUrl = 'https://ironbot:8888/rpc';
-    private node = '0';
+    private node = JSON.stringify({"host":"188.187.45.218","port":"38081","ws":"8087"})
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -22,7 +22,7 @@ export class DataService {
             params: {
                 method: 'getblock',
                 parameters: this.hex.Encode(JSON.stringify([ hash, (verbose ? 1 : 0) ])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
@@ -32,7 +32,7 @@ export class DataService {
             params: {
                 method: 'getaddressinfo',
                 parameters: this.hex.Encode(JSON.stringify([ hash ])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
@@ -42,7 +42,7 @@ export class DataService {
             params: {
                 method: 'gettransactions',
                 parameters: this.hex.Encode(JSON.stringify([ tx ])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
@@ -52,7 +52,7 @@ export class DataService {
             params: {
                 method: 'getlastblocks',
                 parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
@@ -62,7 +62,7 @@ export class DataService {
             params: {
                 method: 'checkstringtype',
                 parameters: this.hex.Encode(JSON.stringify([ value ])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
@@ -72,17 +72,17 @@ export class DataService {
             params: {
                 method: 'getblockchaininfo',
                 parameters: this.hex.Encode(JSON.stringify([])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
 
-    getStatistic(end_time: Number = 0, start_time: Number = 0) {
+    getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24) {
         return this.http.get(this.proxyUrl, {
             params: {
                 method: 'getstatistic',
-                parameters: this.hex.Encode(JSON.stringify([end_time, start_time])),
-                node: this.node
+                parameters: this.hex.Encode(JSON.stringify([end_time, start_time, round])),
+                nodelocally: this.node
             }
         });
     }
@@ -92,7 +92,7 @@ export class DataService {
             params: {
                 method: 'getpeerinfo',
                 parameters: this.hex.Encode(JSON.stringify([])),
-                node: this.node
+                nodelocally: this.node
             }
         });
     }
