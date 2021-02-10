@@ -15,7 +15,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     canvas: any;
     ctx: any;
     statisticData: any;
-    statPeriod: any = 1;
+    statPeriod: any = 3;
 
     constructor(private dataService: DataService) { }
 
