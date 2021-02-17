@@ -34,7 +34,13 @@ export class AppComponent implements OnInit {
 
     updatePeersInfo() {
         this.dataService.getPeerInfo().subscribe(data => {
-            this.global.peersinfo = data['data']['result'];
+            let peers = data['data']['result'];
+            this.global.peersinfo = [];
+            peers.forEach(peer => {
+                if (!this.global.peersinfo.find(function(p) { return p.addr.split(":")[0] == peer.addr.split(":")[0];}))
+                    this.global.peersinfo.push(peer);
+            });
+
             localStorage.setItem('peersinfo', JSON.stringify(this.global.peersinfo));
         });
     }

@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let peer of Global.peersinfo" [ngClass]="{'red': peer.synced_blocks < 0 || (Global.blockchainInfo.blocks - peer.synced_blocks) > 10}">
-                    <td>{{ peer.addr }}</td>
+                    <td>{{ peer.addr.split(":")[0] }}</td>
                     <td>{{ peer.subver }}</td>
                     <td *ngIf="peer.synced_blocks < 0"><i class="fas fa-spinner"></i>&nbsp;{{ peer.startingheight }}</td>
                     <td *ngIf="peer.synced_blocks > 0">{{ peer.synced_blocks }}</td>
