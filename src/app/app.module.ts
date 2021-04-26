@@ -34,6 +34,7 @@ import { RplPipe } from './pipes/rpl.pipe';
 
 import { NodesListComponent } from './components/nodes-list/nodes-list.component';
 import { NodeComponent } from './components/nodes-list/node/node.component';
+import { AddressesComponent } from './components/topaddresses/topaddresses.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { NodeComponent } from './components/nodes-list/node/node.component';
         TxListComponent,
         TxComponent,
         AddressComponent,
+        AddressesComponent,
         VoutComponent,
         VinComponent,
         PocPipe,

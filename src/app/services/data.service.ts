@@ -7,10 +7,21 @@ import { HexService } from './hex.service'
     providedIn: 'root'
 })
 export class DataService {
+
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
     private node = "64.235.45.119";
 
     constructor(private http: HttpClient, private hex: HexService) { }
+
+    getTopAddresses() {
+
+        return Promise.resolve({data: {result:[
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'}, 
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+        ]}})
+    }
 
     getBlock(hash: string, verbose: boolean=true) {
         return this.http.get(this.proxyUrl, {

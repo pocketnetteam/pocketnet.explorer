@@ -1,0 +1,31 @@
+<app-loader *ngIf="!addresses"></app-loader>
+
+<div class="col" *ngIf="addresses">
+    <div class="row">
+        <h1>TopAddress </h1>
+    </div>
+    <!-- Header -->
+    <div class="row">
+        <div class="table-responsive-sm w-100">
+            <table class="table table-sm table-borderless" style="min-width: 350px;">
+                <thead class="">
+                    <tr>
+                        <th class="text-left" title="Block height">Address</th>
+                        <th class="text-left d-none d-lg-table-cell" title="Block hash">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bc of addresses">
+                        <td><div class="address">{{bc.address}}</div></td>
+                        <td class="d-none d-lg-table-cell">
+                            <div class="balance">{{bc.balance}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Summary -->
+
+</div>
