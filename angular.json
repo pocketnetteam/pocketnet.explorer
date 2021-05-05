@@ -27,7 +27,7 @@
                         "assets": [
                             "src/.htaccess",
                             "src/web.config",
-                            "src/favicon.ico",
+                            "src/favicon.svg",
                             "src/assets"
                         ],
                         "styles": [
@@ -96,7 +96,7 @@
                         ],
                         "scripts": [],
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon.svg",
                             "src/assets"
                         ]
                     }

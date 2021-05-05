@@ -15,7 +15,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     canvas: any;
     ctx: any;
     statisticData: any;
-    statPeriod: any = 1;
+    statPeriod: any = 3;
 
     constructor(private dataService: DataService) { }
 
@@ -27,27 +27,74 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     loadData() {
-        let cur_date: Date = new Date();
-        let end_time: Number = Math.floor(+cur_date / 1000);
+        let round: Number = 3600;
 
-        cur_date.setMonth(cur_date.getMonth() - this.statPeriod)
-        let beg_time: Number = Math.floor(+cur_date / 1000);
+        let startTime: Date = new Date();
+        startTime.setHours(0, 0, 0, 0);
 
+        let endTime: Date = new Date();
+        endTime.setHours(0, 0, 0, 0);
 
-        this.dataService.getStatistic(end_time, beg_time).subscribe(data => {
+        if (this.statPeriod == 1) {
+            endTime.setHours((new Date()).getHours(), 0, 0, 0);
+            startTime.setHours((new Date()).getHours() - 1, 0, 0, 0);
+            startTime.setDate(startTime.getDate() - 1);
+            round = 3600;
+        }
+
+        if (this.statPeriod == 2) {
+            endTime.setDate((new Date()).getDate());
+            startTime.setDate(startTime.getDate() - 7);
+            round = 24 * 3600;
+        }
+
+        if ([3,4,5].indexOf(this.statPeriod) >= 0) {
+            endTime.setHours(0, 0, 0, 0);
+            startTime.setMonth(startTime.getMonth() - (this.statPeriod - 2));
+            round = 24 * 3600;
+        }
+
+        console.log('startTime', startTime);
+        console.log('endTime', endTime);
+
+        // let beg_time: Number = Math.floor(+cur_date / 1000);
+        this.dataService.getStatistic(Math.floor(+endTime / 1000), Math.floor(+startTime / 1000), round).subscribe(data => {
             this.statisticData = data['data']['result'];
             this.fillChartUsers(this.statisticData);
             this.fillChartEvents(this.statisticData);
         });
     }
 
+    formatTooltip() {
+        if ([1].indexOf(this.statPeriod) >= 0)
+            return '%b %e, %Y %H:00';
+
+        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
+            return '%b %e, %Y';        
+    }
+
+    formatLabel() {
+        if ([1].indexOf(this.statPeriod) >= 0)
+            return '%H:00';
+
+        if ([2].indexOf(this.statPeriod) >= 0)
+            return '%b %e, %Y';
+
+        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
+            return '%b %e';
+    }
+
     fillChartUsers(data) {
         let _datasets = {};
         let categories = [];
+        let self = this;
 
         for (let x in data) {
             let _x = data[x];
-            categories.push(new Date(+x * 1000));
+            let utcDate = new Date(+x * 1000);
+            utcDate.setHours(utcDate.getHours() + 1);
+            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
+            categories.push(utcDate);
 
             for (let y in _x) {
                 if (!(y in _datasets)) {
@@ -85,7 +132,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 type: 'datetime',
                 labels: {
-                    format: '{value:%e %b}',
+                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -99,15 +146,12 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 shared: true,
-                crosshairs: true,
-                // formatter: function() {
-                //     return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%b %e, %Y', this.x) }<br/><b>${ this.y }</b> tx(s)`;
-                // },
+                //crosshairs: true,
                 formatter: function () {
-                    var points = this.points;
-                    var pointsLength = points.length;
-                    var tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat('%b %e, %Y', points[0].key) }</b></span><br/>` : ``;
-                    var index;
+                    let points = this.points;
+                    let pointsLength = points.length;
+                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
+                    let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
                         tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
@@ -156,10 +200,14 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     fillChartEvents(data) {
         let _datasets = {};
         let categories = [];
+        let self = this;
 
         for (let x in data) {
             let _x = data[x];
-            categories.push(new Date(+x * 1000));
+            let utcDate = new Date(+x * 1000);
+            utcDate.setHours(utcDate.getHours() + 1);
+            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
+            categories.push(utcDate);
 
             for (let y in _x) {
                 if (!(y in _datasets)) {
@@ -202,7 +250,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 type: 'datetime',
                 labels: {
-                    format: '{value:%e %b}',
+                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -216,15 +264,12 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 shared: true,
-                crosshairs: true,
-                // formatter: function() {
-                //     return  `<b>${ this.series.name }</b> ${ Highcharts.dateFormat('%b %e, %Y', this.x) }<br/><b>${ this.y }</b> tx(s)`;
-                // },
+                //crosshairs: true,
                 formatter: function () {
-                    var points = this.points;
-                    var pointsLength = points.length;
-                    var tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat('%b %e, %Y', points[0].key) }</b></span><br/>` : ``;
-                    var index;
+                    let points = this.points;
+                    let pointsLength = points.length;
+                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
+                    let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
                         tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;

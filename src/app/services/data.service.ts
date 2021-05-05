@@ -8,16 +8,11 @@ import { HexService } from './hex.service'
 })
 export class DataService {
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
-    // private proxyUrl = 'https://localhost:8888/rpc';
-    // private proxyUrl = 'https://192.168.0.11:8888/rpc';
-    // private proxyUrl = 'https://ironbot:8888/rpc';
-    private node = '0';
+    private node = "64.235.45.119";
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
     getBlock(hash: string, verbose: boolean=true) {
-        // https://pocketnet.app:8888/rpc?method=getmissedinfo&parameters=5b22505138416943484a61545a4154687232546e706b515944795664314869647134504d222c33373138345d&node=3
-
         return this.http.get(this.proxyUrl, {
             params: {
                 method: 'getblock',
@@ -77,11 +72,11 @@ export class DataService {
         });
     }
 
-    getStatistic(end_time: Number = 0, start_time: Number = 0) {
+    getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24) {
         return this.http.get(this.proxyUrl, {
             params: {
                 method: 'getstatistic',
-                parameters: this.hex.Encode(JSON.stringify([end_time, start_time])),
+                parameters: this.hex.Encode(JSON.stringify([end_time, start_time, round])),
                 node: this.node
             }
         });
