@@ -7,10 +7,19 @@ import { HexService } from './hex.service'
     providedIn: 'root'
 })
 export class DataService {
+
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
+    private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node = "64.235.45.119";
 
     constructor(private http: HttpClient, private hex: HexService) { }
+
+    async getTopAddresses() {
+
+        const data = await fetch(this.explorerUrl + 'topaddresses/30.json');
+        const result = await data.json();
+        return result
+    }
 
     getBlock(hash: string, verbose: boolean=true) {
         return this.http.get(this.proxyUrl, {

@@ -8,7 +8,7 @@ import { Globals } from 'src/app/globals';
     styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-    title = 'POCKETNET Explorer';
+    title = 'Pocketcoin (PKOIN) Explorer';
     updateBCInfo = 60000;
 
     constructor(private dataService: DataService, private global: Globals) {

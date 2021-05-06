@@ -1,0 +1,43 @@
+<app-loader *ngIf="!addresses"></app-loader>
+
+<div class="col" *ngIf="addresses">
+    <div class="row caption">
+        <h1>TopAddress </h1>
+    </div>
+    <!-- Header -->
+    <div class="row">
+        <div class="table-responsive-sm w-100">
+
+            <table>
+                <thead>
+                    <tr class="addressesGroup">
+                        <th>
+                            Address
+                        </th>
+                        <th class="th-balance">
+                            Balance
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bc of addresses" class="addressesGroup">
+                        <td class="name addresscode">
+                            <span class="copyaddress">
+                                <span class="adr">{{bc.address}}</span>
+                            </span>
+                            <a href="address/{{bc.address}}"> 	
+                                <i class="fas fa-th toblockexplorer"></i>                            
+                            </a>
+                        </td>
+                        <td class="balance">
+                            {{bc.balance / 100000000 | round:3 | poc:0:3}} PKOIN
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Summary -->
+
+</div>
