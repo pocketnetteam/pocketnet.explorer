@@ -17,7 +17,7 @@ export class AddressesComponent implements OnInit {
 
     ngOnInit() {
         this.dataService.getTopAddresses().then(data => {
-            this.addresses = data['data']['result'];
+            this.addresses = data;
         });
     }
 

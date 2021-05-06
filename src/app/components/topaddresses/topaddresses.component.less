@@ -1,3 +1,53 @@
-.address{
-    color: #2FA4D7
+@color-gray-slight: #e4ddde;
+@color-main: #4AC6F9;
+
+.caption{
+    margin-top: 2em;
+}
+
+table{
+
+    margin-top: 1.5em;
+
+
+    tbody{
+        margin-top: 1em;
+    }
+    
+    th{
+        text-align: start;
+    }
+
+    th, .name{
+        width: 600px;
+        padding: 1.5em .5em;
+    }
+
+    .balance{
+        font-weight: 100;
+    }
+
+    .toblockexplorer{
+        font-size: 0.8em;
+        color : @color-gray-slight;
+        cursor: pointer;
+        width: 30px;
+        text-align: center;
+
+        &:hover{
+            color : @color-main;
+        }
+    }
+
+    .addressesGroup{
+        border-bottom: 1px solid #D9D9D9;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    table{
+        .balance, .th-balance{
+            display: none;
+        }
+    }    
 }
