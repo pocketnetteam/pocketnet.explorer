@@ -13,6 +13,16 @@ export class DataService {
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
+    getTopAddresses() {
+
+        return Promise.resolve({data: {result:[
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'}, 
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+            {address: '7ef0cbcc1f75336afd4930717b9b22f95e70134a1952b02db7174d1c51fa086f', balance: '112232424'},
+        ]}})
+    }
+    
     getBlock(hash: string, verbose: boolean=true) {
         return this.http.get(this.proxyUrl, {
             params: {
