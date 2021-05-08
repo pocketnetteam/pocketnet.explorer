@@ -13,6 +13,11 @@
                         </div>
                     </a>
                 </div>
+                
+                <div class="col-auto node rounded text-right">
+                    <a href="#"><i class="fas fa-server"></i> 185.148.147.15</a>
+                </div>
+
                 <div *ngIf="Global.blockchainInfo" class="col-auto status rounded text-right">
                     <a href="block/{{Global.blockchainInfo.bestblockhash}}"><i class="fas fa-database"></i> {{Global.blockchainInfo.blocks}}</a>
                 </div>

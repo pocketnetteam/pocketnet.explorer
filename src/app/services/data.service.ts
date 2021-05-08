@@ -10,7 +10,7 @@ export class DataService {
 
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = "185.148.147.15";
+    private node = "216.108.231.28";
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
