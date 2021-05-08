@@ -27,7 +27,7 @@ jobs:
       - name: Prepare
         run: |
           npm ci --only-production
-          npm run build.prod
+          ng build --prod --base-href https://test.pocketnet.app/blockexplorer
 
       # Runs a set of commands using the runners shell
       - name: Deploy
