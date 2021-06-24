@@ -10,7 +10,7 @@ export class DataService {
 
     private proxyUrl = 'https://pocketnet.app:8888/rpc';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = "185.148.147.15";
+    private node = "192.168.0.16:31011";
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -47,6 +47,7 @@ export class DataService {
                 method: 'gettransactions',
                 parameters: this.hex.Encode(JSON.stringify([ tx ])),
                 node: this.node
+
             }
         });
     }
@@ -57,6 +58,7 @@ export class DataService {
                 method: 'getlastblocks',
                 parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
                 node: this.node
+
             }
         });
     }
@@ -67,6 +69,7 @@ export class DataService {
                 method: 'checkstringtype',
                 parameters: this.hex.Encode(JSON.stringify([ value ])),
                 node: this.node
+
             }
         });
     }
@@ -77,6 +80,7 @@ export class DataService {
                 method: 'getblockchaininfo',
                 parameters: this.hex.Encode(JSON.stringify([])),
                 node: this.node
+
             }
         });
     }
@@ -87,6 +91,7 @@ export class DataService {
                 method: 'getstatistic',
                 parameters: this.hex.Encode(JSON.stringify([end_time, start_time, round])),
                 node: this.node
+
             }
         });
     }
@@ -97,6 +102,7 @@ export class DataService {
                 method: 'getpeerinfo',
                 parameters: this.hex.Encode(JSON.stringify([])),
                 node: this.node
+
             }
         });
     }
