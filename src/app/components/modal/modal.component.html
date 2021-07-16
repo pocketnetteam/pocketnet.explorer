@@ -1,0 +1,35 @@
+<div class="modal-back">
+    <div 
+        class="roundclosebutton"
+        (click)="close()"
+    >
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="modal-window">
+        <div class="content">
+            <ng-content
+            ></ng-content>
+        </div>
+        <div class="buttons">
+            <div class="button success">
+                <span class="icon">
+                    <i class="fa fa-plus"></i>
+                </span>
+                <span class="txt">
+                    {{txtSuccess}}
+                </span>
+            </div>
+            <div 
+                (click)="close()"
+                class="button closer"
+            >
+                <span class="icon">
+                    <i class="fa fa-times"></i>
+                </span>
+                <span class="txt">
+                    {{txtClose}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -36,6 +36,12 @@ import { NodesListComponent } from './components/nodes-list/nodes-list.component
 import { NodeComponent } from './components/nodes-list/node/node.component';
 import { AddressesComponent } from './components/topaddresses/topaddresses.component';
 
+import { ProxyserversComponent } from './components/proxyservers/proxyservers.component';
+import { NodesRadioComponent } from './components/nodes-radio/nodes-radio.component';
+
+import { ModalComponent } from './components/modal/modal.component';
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -59,7 +65,10 @@ import { AddressesComponent } from './components/topaddresses/topaddresses.compo
         RoundPipe,
         RplPipe,
         NodesListComponent,
-        NodeComponent
+        NodeComponent,
+        ProxyserversComponent,
+        NodesRadioComponent,
+        ModalComponent
     ],
     imports: [
         BrowserModule,

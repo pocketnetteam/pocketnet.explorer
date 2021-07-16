@@ -1,0 +1,67 @@
+<div class="col">
+
+    <!-- Block header -->
+    <div class="row">
+        <h1>Proxy servers</h1>
+    </div>
+
+    <!-- List header -->
+    <div class="row">
+        <div class="column label">
+            Use proxy: 
+        </div>
+        <div 
+            class="column value"
+            (click)="openModal('selectedUse')"
+        >
+            {{value}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="column label">
+            Watch: 
+        </div>
+        <div 
+            class="column value"
+            (click)="openModal('selectedWatch')"
+        >
+            {{value}}
+        </div>
+    </div>
+    <!-- Peers list -->
+    <app-modal
+        *ngIf="displayModal"
+        (closeModal)="closeModal()"
+        [txtSuccess]="txtSuccess"
+    >
+        <div class="select-proxy-content">
+            <div class="proxies-header">Select proxy that using Interface</div>
+            <div class="proxies">
+                <div 
+                    class="proxy"
+                    *ngFor="let proxy of proxies"
+                >
+                    <div 
+                        class="address"
+                        [class.selected]="proxy.selected"
+                    >
+                        <span>
+                            {{proxy.host + ':' + proxy.port}} 
+                        </span>
+                        <i 
+                            *ngIf="proxy.selected"
+                            class="fa fa-check"
+                        >
+                        </i>
+                    </div>
+                    <div class="panel">
+                             
+                        <div class="item pn">
+                            <i class="fas fa-certificate"></i>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-modal>
+</div>
