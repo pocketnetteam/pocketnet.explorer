@@ -1,4 +1,7 @@
 
+@color-text-second : #00a4ff;
+@color-bad : #FF0C39;
+
 .row{
     margin-top: 1em;
 
@@ -31,18 +34,34 @@
             .address{
                 width: 100%;
                 cursor: pointer;
-                
+
                 &.selected{
-                    color: #00a4ff;
+                    color: @color-text-second;
                 }
             }
 
             .panel{
-                width: 88px;
+
                 .pn{
                     padding: 1em;
                     color: #b2abac;
                     text-align: right;
+
+                    &.change{
+                        cursor: pointer;
+
+                        &:hover{
+                            color: @color-text-second;
+                        }
+                    }
+
+                    &.remove{
+                        cursor: pointer;
+
+                        &:hover{
+                            color: @color-bad;
+                        }
+                    }
                 }
         
             }
@@ -50,7 +69,42 @@
 
     }
 
-
 }
 
+.add-proxy-content{
+    .add-header{
+        font-size: 15px;
+        font-weight: 700;
+        height: 55px;
+        line-height: 55px;
+    }
 
+    .fields{
+        .field{
+            display: flex;
+
+            .label{
+                display: flex;
+                align-items: center;
+                padding-right: .5em;
+                width: 35%;
+            }
+            .input-wrapper{
+                width: 100%;
+                padding: .5em 0;
+
+                input{
+                    width: 100%;
+                    padding: .5em;
+                    border: 1px solid #d0c9ca;
+                    border-radius: 2px;
+                    background: #fff;
+                    &:focus{
+                        outline: none;
+                    }
+                }
+            }
+            
+        }
+    }
+}

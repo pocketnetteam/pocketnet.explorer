@@ -11,7 +11,10 @@
             ></ng-content>
         </div>
         <div class="buttons">
-            <div class="button success">
+            <div 
+                (click)="success()"
+                class="button success"
+            >
                 <span class="icon">
                     <i class="fa fa-plus"></i>
                 </span>

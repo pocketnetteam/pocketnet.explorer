@@ -18,9 +18,14 @@ export class ModalComponent implements OnInit {
     ) { }
 
     @Output() closeModal = new EventEmitter<string>();
+    @Output() successModal = new EventEmitter<string>();
 
     close() {
       this.closeModal.emit();
+    }
+
+    success() {
+        this.successModal.emit();
     }
 
     get Global() : Globals {

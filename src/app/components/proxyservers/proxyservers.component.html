@@ -12,7 +12,7 @@
         </div>
         <div 
             class="column value"
-            (click)="openModal('selectedUse')"
+            (click)="openModalSelect('selectedUse')"
         >
             {{value}}
         </div>
@@ -23,19 +23,21 @@
         </div>
         <div 
             class="column value"
-            (click)="openModal('selectedWatch')"
+            (click)="openModalSelect('selectedWatch')"
         >
             {{value}}
         </div>
     </div>
-    <!-- Peers list -->
     <app-modal
-        *ngIf="displayModal"
-        (closeModal)="closeModal()"
-        [txtSuccess]="txtSuccess"
+        *ngIf="displayModalSelect"
+        (closeModal)="closeModalSelect()"
+        (successModal)="addProxy()"
+        [txtSuccess]="txtSuccessSelect"
     >
         <div class="select-proxy-content">
-            <div class="proxies-header">Select proxy that using Interface</div>
+            <div class="proxies-header">
+                Select proxy that using Interface
+            </div>
             <div class="proxies">
                 <div 
                     class="proxy"
@@ -54,14 +56,95 @@
                         >
                         </i>
                     </div>
-                    <div class="panel">
-                             
-                        <div class="item pn">
+                    
+                    <div 
+                        class="panel"
+                        *ngIf="proxy.default; else elseBlock"
+                    >
+                        <div 
+                            class="item pn"
+                        >
                             <i class="fas fa-certificate"></i>
                         </div>   
+                    </div>
+                    <ng-template
+                        #elseBlock
+                    >
+                        <div class="panel">
+                            <div 
+                                class="item pn remove"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </div>  
+                        </div>
+                        <div class="panel">
+                            <div 
+                                class="item pn change"
+                            >
+                                <i class="fas fa-cog"></i>
+                            </div>  
+                        </div>
+
+                    </ng-template> 
+                </div>
+            </div>
+        </div>
+    </app-modal>
+    <app-modal
+        *ngIf="displayModalAdd"
+        (closeModal)="closeModalAdd()"
+        (successModal)="addProxyItem()"
+        [txtSuccess]="txtSuccessAdd"
+    >
+        <div class="add-proxy-content">
+            <div class="add-header">
+                Add proxy
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <div class="label">
+                        <span>
+                            Node host
+                        </span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text"
+                            placeholder="0.0.0.0"
+                            [(ngModel)]="host" #ctrl="ngModel"
+                        >
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="label">
+                        <span>
+                            RPC Port
+                        </span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text"
+                            placeholder="8899"
+                            [(ngModel)]="port" #ctrl="ngModel"
+                        >
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="label">
+                        <span>
+                            WS Port                            
+                        </span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text"
+                            placeholder="8099"
+                            [(ngModel)]="wss" #ctrl="ngModel"
+                        >
                     </div>
                 </div>
             </div>
         </div>
+        
     </app-modal>
 </div>

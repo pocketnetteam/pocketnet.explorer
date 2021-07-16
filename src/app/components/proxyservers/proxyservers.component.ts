@@ -16,10 +16,11 @@ type Proxy = {
 })
 export class ProxyserversComponent implements OnInit {
 
-    txtSuccess: string = 'Add proxy';
+    txtSuccessSelect: string = 'Add proxy';
+    txtSuccessAdd: string = 'Add';
 
     value: string = 'https://pocketnet.app:8899';
-    displayModal: boolean = false;
+    displayModalSelect: boolean = false;
     defaultProxies: Proxy[] = [
         {
             host: 'https://pocketnet.app', 
@@ -39,6 +40,12 @@ export class ProxyserversComponent implements OnInit {
     selectedUse = 'https://pocketnet.app:8899';
     selectedWatch: string = 'https://pocketnet.app:8899';
     selectedType = 'selectedUse';
+
+    displayModalAdd: boolean = false;
+
+    host: string = '';
+    port: string = '8899';
+    wss: string = '8099';
 
     
 
@@ -65,16 +72,45 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
-    openModal(type: string){
+    openModalSelect(type: string){
 
         this.selectedType = type
-        this.displayModal = true;
+        this.displayModalSelect = true;
     }
 
-    closeModal(){
-        this.displayModal = false;
+    closeModalSelect(){
+        this.displayModalSelect = false;
     }
 
+    closeModalAdd(){
+        this.displayModalSelect = true;
+        this.displayModalAdd = false;
+    }
+
+    addProxy(){
+
+        this.displayModalSelect = false;
+        this.displayModalAdd = true;
+
+
+    }
+
+    addProxyItem(){
+
+        console.log('item',  this.host, this.port, this.wss);
+
+        this.addedProxies.push({
+            host: this.host,
+            port: this.port,
+            wss: this.wss
+        })
+
+        this.host = '';
+        this.port = '8899';
+        this.wss = '8099';
+
+        this.closeModalAdd();
+    }
     
     ngOnInit() {
     }
