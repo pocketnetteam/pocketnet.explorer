@@ -41,6 +41,8 @@ import { NodesRadioComponent } from './components/nodes-radio/nodes-radio.compon
 
 import { ModalComponent } from './components/modal/modal.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
     declarations: [
@@ -77,7 +79,9 @@ import { ModalComponent } from './components/modal/modal.component';
         FormsModule,
         ReactiveFormsModule,
         NgSelectModule,
-        HighchartsChartModule
+        HighchartsChartModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
     ],
     bootstrap: [AppComponent],
     providers: [Globals]

@@ -34,14 +34,16 @@
         (successModal)="addProxy()"
         [txtSuccess]="txtSuccessSelect"
     >
-        <div class="select-proxy-content">
+        <div 
+            class="select-proxy-content"
+        >
             <div class="proxies-header">
                 Select proxy that using Interface
             </div>
             <div class="proxies">
                 <div 
                     class="proxy"
-                    *ngFor="let proxy of proxies"
+                    *ngFor="let proxy of proxies; index as idx; trackBy: trackByFn"
                 >
                     <div 
                         class="address"
@@ -73,6 +75,7 @@
                         <div class="panel">
                             <div 
                                 class="item pn remove"
+                                (click)="removeProxy(idx)"
                             >
                                 <i class="fas fa-trash-alt"></i>
                             </div>  
@@ -80,6 +83,7 @@
                         <div class="panel">
                             <div 
                                 class="item pn change"
+                                (click)="setProxy(idx)"
                             >
                                 <i class="fas fa-cog"></i>
                             </div>  

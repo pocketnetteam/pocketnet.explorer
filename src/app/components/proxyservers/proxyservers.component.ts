@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
+import { ToastrService } from 'ngx-toastr';
 
 type Proxy = {
     host: string,
@@ -15,6 +16,10 @@ type Proxy = {
     styleUrls: ['./proxyservers.component.less']
 })
 export class ProxyserversComponent implements OnInit {
+    constructor(
+        private global: Globals,
+        private toastr: ToastrService
+    ) {}
 
     txtSuccessSelect: string = 'Add proxy';
     txtSuccessAdd: string = 'Add';
@@ -47,14 +52,6 @@ export class ProxyserversComponent implements OnInit {
     port: string = '8899';
     wss: string = '8099';
 
-    
-
-    constructor(
-        private global: Globals
-       
-    ) { 
-
-    }
 
     get Global() : Globals {
         return this.global;
@@ -70,6 +67,10 @@ export class ProxyserversComponent implements OnInit {
             selected: proxy.host + ':' + proxy.port === this[this.selectedType]
         }));
 
+    }
+
+    showError(err) {
+        this.toastr.error(err);
     }
 
     openModalSelect(type: string){
@@ -95,24 +96,63 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
+    removeProxy(idx) {
+
+        idx -= this.defaultProxies.length
+        console.log('remvoeProxy', idx);
+        this.addedProxies.splice(idx, 1);
+        localStorage.setItem('listofproxies', JSON.stringify(this.addedProxies));
+    }
+
+    setProxy(idx){
+
+        idx -= this.defaultProxies.length
+    }
+
     addProxyItem(){
 
         console.log('item',  this.host, this.port, this.wss);
 
-        this.addedProxies.push({
+        const newProxy = {
             host: this.host,
             port: this.port,
             wss: this.wss
-        })
+        };
 
-        this.host = '';
-        this.port = '8899';
-        this.wss = '8099';
+        if (this.addedProxies.find(proxy => JSON.stringify(proxy) === JSON.stringify(newProxy))){
 
-        this.closeModalAdd();
+            this.showError('You already have this proxy in list.');
+
+        } else {
+
+            this.addedProxies.push({
+                host: this.host,
+                port: this.port,
+                wss: this.wss
+            })
+    
+            localStorage.setItem('listofproxies', JSON.stringify(this.addedProxies))
+    
+            this.host = '';
+            this.port = '8899';
+            this.wss = '8099';
+    
+            this.closeModalAdd();
+        }
+
+
     }
+
+    trackByFn(index, item) {    
+        return item.address + ':' + item.port; 
+     }
     
     ngOnInit() {
+        const listofproxies = localStorage.getItem('listofproxies');
+
+        if (listofproxies){
+            this.addedProxies = JSON.parse(listofproxies);
+        }
     }
 
 }
