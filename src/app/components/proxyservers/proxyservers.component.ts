@@ -30,24 +30,24 @@ export class ProxyserversComponent implements OnInit {
     displayModalSelect: boolean = false;
     defaultProxies: Proxy[] = [
         {
-            host: 'https://pocketnet.app', 
+            host: 'pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: 'https://pocketnet.app:8899:8099',
+            key: 'pocketnet.app:8899:8099',
             default: true
         }, 
         {
-            host: 'https://1.pocketnet.app', 
+            host: '1.pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: 'https://1.pocketnet.app:8899:8099',
+            key: '1.pocketnet.app:8899:8099',
             default: true
         }
     ];
 
     addedProxies: Proxy[] = [];
-    selectedUse = 'https://pocketnet.app:8899';
-    selectedWatch: string = 'https://pocketnet.app:8899';
+    selectedUse = 'pocketnet.app:8899';
+    selectedWatch: string = 'pocketnet.app:8899';
     selectedType = 'selectedUse';
 
     displayModalAdd: boolean = false;
@@ -116,7 +116,7 @@ export class ProxyserversComponent implements OnInit {
 
         if (idx > -1){
 
-            this.newProxy = this.addedProxies[idx]
+            this.newProxy = {...this.addedProxies[idx]}
 
             this.openModalAdd();
 
@@ -129,51 +129,69 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
-    addProxyItem(){
+    async addProxyItem(){  
+
 
         const key = this.createKey(this.newProxy);
 
-
-        if (this.addedProxies.find(proxy => proxy.key === key && proxy.key !== this.newProxy.key)){
+        if (this.proxies.find(proxy => proxy.key === key && proxy.key !== this.newProxy.key)){
 
             this.showError('You already have this proxy in list.');
 
         } else {
 
-            if (this.newProxy.key){
+            try{
 
-                const idx = this.addedProxies.findIndex(proxy => proxy.key === this.newProxy.key);
-
-                if (idx > -1){
-
-                    this.addedProxies.splice(idx, 1, {...this.newProxy, key});
-
-                } else {
-
-                    this.addedProxies.push({...this.newProxy, key});
-                }
-
-            } else {
-
-                this.newProxy.key = key;
-
-                this.addedProxies.push(this.newProxy)
-                        
-            }
-
-            localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies))
-
-            this.newProxy = {
-                host: '',
-                port: '8899',
-                wss: '8099'
-            }
+                const res = await fetch('https://' + this.newProxy.host + ':' + this.newProxy.port + '/ping');
+                const data = await res.json();
     
-            this.closeModalAdd();
+                if (data.result === 'success'){
+    
+                    if (this.newProxy.key){
+    
+                        const idx = this.addedProxies.findIndex(proxy => proxy.key === this.newProxy.key);
+        
+                        if (idx > -1){
+        
+                            this.addedProxies.splice(idx, 1, {...this.newProxy, key});
+        
+                        } else {
+        
+                            this.addedProxies.push({...this.newProxy, key});
+                        }
+        
+                    } else {
+        
+                        this.newProxy.key = key;
+        
+                        this.addedProxies.push({...this.newProxy})
+                                
+                    }
+        
+                    localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies))
+        
+                    this.newProxy = {
+                        host: '',
+                        port: '8899',
+                        wss: '8099'
+                    }
+            
+
+                    this.closeModalAdd();
+
+                } 
+
+            } catch(err){
+
+                this.showError("You can't use this proxy");
+
+            }
+
         }
 
 
     }
+
 
     createKey(proxy){
 

@@ -50,7 +50,7 @@
                         [class.selected]="proxy.selected"
                     >
                         <span>
-                            {{proxy.host + ':' + proxy.port}} 
+                            {{'https://' + proxy.host + ':' + proxy.port}} 
                         </span>
                         <i 
                             *ngIf="proxy.selected"
