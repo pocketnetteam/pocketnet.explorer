@@ -31,7 +31,7 @@
     <app-modal
         *ngIf="displayModalSelect"
         (closeModal)="closeModalSelect()"
-        (successModal)="addProxy()"
+        (successModal)="openModalAdd()"
         [txtSuccess]="txtSuccessSelect"
     >
         <div 
@@ -98,7 +98,7 @@
         *ngIf="displayModalAdd"
         (closeModal)="closeModalAdd()"
         (successModal)="addProxyItem()"
-        [txtSuccess]="txtSuccessAdd"
+        [txtSuccess]="newProxy.key ? txtSuccessSave : txtSuccessAdd"
     >
         <div class="add-proxy-content">
             <div class="add-header">
@@ -115,7 +115,7 @@
                         <input 
                             type="text"
                             placeholder="0.0.0.0"
-                            [(ngModel)]="host" #ctrl="ngModel"
+                            [(ngModel)]="newProxy.host" #ctrl="ngModel"
                         >
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         <input 
                             type="text"
                             placeholder="8899"
-                            [(ngModel)]="port" #ctrl="ngModel"
+                            [(ngModel)]="newProxy.port" #ctrl="ngModel"
                         >
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                         <input 
                             type="text"
                             placeholder="8099"
-                            [(ngModel)]="wss" #ctrl="ngModel"
+                            [(ngModel)]="newProxy.wss" #ctrl="ngModel"
                         >
                     </div>
                 </div>

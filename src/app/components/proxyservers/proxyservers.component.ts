@@ -7,7 +7,8 @@ type Proxy = {
     port: string,
     wss: string, 
     default?: boolean, 
-    selected?: boolean
+    selected?: boolean,
+    key?: string
 };
 
 @Component({
@@ -23,6 +24,7 @@ export class ProxyserversComponent implements OnInit {
 
     txtSuccessSelect: string = 'Add proxy';
     txtSuccessAdd: string = 'Add';
+    txtSuccessSave: string = 'Save';
 
     value: string = 'https://pocketnet.app:8899';
     displayModalSelect: boolean = false;
@@ -31,12 +33,14 @@ export class ProxyserversComponent implements OnInit {
             host: 'https://pocketnet.app', 
             port: '8899',
             wss: '8099',
+            key: 'https://pocketnet.app:8899:8099',
             default: true
         }, 
         {
             host: 'https://1.pocketnet.app', 
             port: '8899',
             wss: '8099',
+            key: 'https://1.pocketnet.app:8899:8099',
             default: true
         }
     ];
@@ -48,9 +52,11 @@ export class ProxyserversComponent implements OnInit {
 
     displayModalAdd: boolean = false;
 
-    host: string = '';
-    port: string = '8899';
-    wss: string = '8099';
+    newProxy: Proxy = {
+        host: '',
+        port: '8899',
+        wss: '8099'
+    }
 
 
     get Global() : Globals {
@@ -88,7 +94,7 @@ export class ProxyserversComponent implements OnInit {
         this.displayModalAdd = false;
     }
 
-    addProxy(){
+    openModalAdd(){
 
         this.displayModalSelect = false;
         this.displayModalAdd = true;
@@ -101,41 +107,67 @@ export class ProxyserversComponent implements OnInit {
         idx -= this.defaultProxies.length
         console.log('remvoeProxy', idx);
         this.addedProxies.splice(idx, 1);
-        localStorage.setItem('listofproxies', JSON.stringify(this.addedProxies));
+        localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies));
     }
 
     setProxy(idx){
 
-        idx -= this.defaultProxies.length
+        idx -= this.defaultProxies.length;
+
+        if (idx > -1){
+
+            this.newProxy = this.addedProxies[idx]
+
+            this.openModalAdd();
+
+        } else {
+
+            console.log('This proxy doesnt exsist');
+        }
+
+
+
     }
 
     addProxyItem(){
 
-        console.log('item',  this.host, this.port, this.wss);
+        const key = this.createKey(this.newProxy);
 
-        const newProxy = {
-            host: this.host,
-            port: this.port,
-            wss: this.wss
-        };
 
-        if (this.addedProxies.find(proxy => JSON.stringify(proxy) === JSON.stringify(newProxy))){
+        if (this.addedProxies.find(proxy => proxy.key === key && proxy.key !== this.newProxy.key)){
 
             this.showError('You already have this proxy in list.');
 
         } else {
 
-            this.addedProxies.push({
-                host: this.host,
-                port: this.port,
-                wss: this.wss
-            })
-    
-            localStorage.setItem('listofproxies', JSON.stringify(this.addedProxies))
-    
-            this.host = '';
-            this.port = '8899';
-            this.wss = '8099';
+            if (this.newProxy.key){
+
+                const idx = this.addedProxies.findIndex(proxy => proxy.key === this.newProxy.key);
+
+                if (idx > -1){
+
+                    this.addedProxies.splice(idx, 1, {...this.newProxy, key});
+
+                } else {
+
+                    this.addedProxies.push({...this.newProxy, key});
+                }
+
+            } else {
+
+                this.newProxy.key = key;
+
+                this.addedProxies.push(this.newProxy)
+                        
+            }
+
+            localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies))
+
+            this.newProxy = {
+                host: '',
+                port: '8899',
+                wss: '8099'
+            }
     
             this.closeModalAdd();
         }
@@ -143,15 +175,20 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
+    createKey(proxy){
+
+        return proxy.host + ':' + proxy.port + ':' + proxy.wss;
+    }
+
     trackByFn(index, item) {    
-        return item.address + ':' + item.port; 
+        return item.key;
      }
     
     ngOnInit() {
-        const listofproxies = localStorage.getItem('listofproxies');
+        const listofproxies_explorer = localStorage.getItem('listofproxies_explorer');
 
-        if (listofproxies){
-            this.addedProxies = JSON.parse(listofproxies);
+        if (listofproxies_explorer){
+            this.addedProxies = JSON.parse(listofproxies_explorer);
         }
     }
 
