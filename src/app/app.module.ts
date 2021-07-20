@@ -33,6 +33,8 @@ import { RoundPipe } from './pipes/round.pipe';
 import { RplPipe } from './pipes/rpl.pipe';
 
 import { NodesListComponent } from './components/nodes-list/nodes-list.component';
+import { NodesListComponent2 } from './components/nodes-list2/nodes-list.component';
+
 import { NodeComponent } from './components/nodes-list/node/node.component';
 import { AddressesComponent } from './components/topaddresses/topaddresses.component';
 
@@ -67,6 +69,7 @@ import { ToastrModule } from 'ngx-toastr';
         RoundPipe,
         RplPipe,
         NodesListComponent,
+        NodesListComponent2,
         NodeComponent,
         ProxyserversComponent,
         NodesRadioComponent,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
+import {DataService} from 'src/app/services/data.service';
 
 type Proxy = {
     host: string,
@@ -13,13 +14,15 @@ type Proxy = {
 
 @Component({
     selector: 'app-proxyservers',
+    providers: [DataService],
     templateUrl: './proxyservers.component.html',
     styleUrls: ['./proxyservers.component.less']
 })
 export class ProxyserversComponent implements OnInit {
     constructor(
         private global: Globals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private dataService: DataService
     ) {}
 
     txtSuccessSelect: string = 'Add proxy';
@@ -107,7 +110,7 @@ export class ProxyserversComponent implements OnInit {
         idx -= this.defaultProxies.length
         console.log('remvoeProxy', idx);
         this.addedProxies.splice(idx, 1);
-        localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies));
+        localStorage.setItem('explorerListofproxies', JSON.stringify(this.addedProxies));
     }
 
     setProxy(idx){
@@ -126,7 +129,6 @@ export class ProxyserversComponent implements OnInit {
         }
 
 
-
     }
 
     async addProxyItem(){  
@@ -142,10 +144,10 @@ export class ProxyserversComponent implements OnInit {
 
             try{
 
-                const res = await fetch('https://' + this.newProxy.host + ':' + this.newProxy.port + '/ping');
-                const data = await res.json();
+                // const res = await fetch('https://' + this.newProxy.host + ':' + this.newProxy.port + '/ping');
+                // const data = await res.json();
     
-                if (data.result === 'success'){
+                // if (data.result === 'success'){
     
                     if (this.newProxy.key){
     
@@ -168,7 +170,7 @@ export class ProxyserversComponent implements OnInit {
                                 
                     }
         
-                    localStorage.setItem('listofproxies_explorer', JSON.stringify(this.addedProxies))
+                    localStorage.setItem('explorerListofproxies', JSON.stringify(this.addedProxies))
         
                     this.newProxy = {
                         host: '',
@@ -179,7 +181,7 @@ export class ProxyserversComponent implements OnInit {
 
                     this.closeModalAdd();
 
-                } 
+                // } 
 
             } catch(err){
 
@@ -190,6 +192,11 @@ export class ProxyserversComponent implements OnInit {
         }
 
 
+    }
+
+    selectProxyUrl(proxy){
+
+        this.dataService.selectProxyUrl('https://' + proxy.host + ':' + proxy.port);
     }
 
 
@@ -203,10 +210,10 @@ export class ProxyserversComponent implements OnInit {
      }
     
     ngOnInit() {
-        const listofproxies_explorer = localStorage.getItem('listofproxies_explorer');
+        const explorerListofproxies = localStorage.getItem('explorerListofproxies');
 
-        if (listofproxies_explorer){
-            this.addedProxies = JSON.parse(listofproxies_explorer);
+        if (explorerListofproxies){
+            this.addedProxies = JSON.parse(explorerListofproxies);
         }
     }
 

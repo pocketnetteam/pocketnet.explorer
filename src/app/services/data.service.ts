@@ -8,7 +8,7 @@ import { HexService } from './hex.service'
 })
 export class DataService {
 
-    private proxyUrl = 'https://pocketnet.app:8888/rpc';
+    private proxyUrl = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8888/rpc';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node = "192.168.0.16:31011";
 
@@ -105,5 +105,12 @@ export class DataService {
 
             }
         });
+    }
+
+    selectProxyUrl(url){
+
+        this.proxyUrl = url + '/rpc';
+        localStorage.setItem('explorerProxyUrl', this.proxyUrl);
+        location.reload()
     }
 }

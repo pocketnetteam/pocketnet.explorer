@@ -1,0 +1,63 @@
+@color-text-second :#00a4ff;
+
+
+thead{
+
+    tr{
+
+        background: #fafafa;
+
+        th{
+            width: 40px;
+            text-align: center;
+            color: #e4ddde;
+            padding-right: 0;
+            vertical-align: middle;
+            padding: 2.5em .3em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+        }
+        
+    
+    }
+
+}
+
+
+td{
+    vertical-align: middle;
+        
+    .use{
+        width: 40px;
+        cursor: pointer;
+        text-align: center;
+        color: #e4ddde;
+        padding-right: 0;
+        vertical-align: middle;
+        padding: 1.5em 1em;
+        overflow: hidden;
+
+        &:hover{
+            color: @color-text-second;
+        }
+    }
+}
+
+.red {
+    * {
+        color: brown;
+    }
+}
+
+.inbound::after {
+    content: '\f30a';
+}
+.outbound::after {
+    content: '\f30b';
+}
+.bothbound::after {
+    content: '\f362';
+}
+
