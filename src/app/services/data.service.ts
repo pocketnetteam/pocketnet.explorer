@@ -8,9 +8,9 @@ import { HexService } from './hex.service'
 })
 export class DataService {
 
-    private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8888';
+    private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8899';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = localStorage.getItem("explorerNode" ) || "192.168.0.16:31011";
+    private node = localStorage.getItem("explorerNode" ) || "81.166.74.173:38081";
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -35,88 +35,66 @@ export class DataService {
     }
 
     getBlock(hash: string, verbose: boolean=true) {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'getblock',
-                parameters: this.hex.Encode(JSON.stringify([ hash, (verbose ? 1 : 0) ])),
-                node: this.node
-            }
+        return this.http.post(this.proxyUrl + '/getblock', {
+            method: 'getblock',
+            parameters: this.hex.Encode(JSON.stringify([ hash, (verbose ? 1 : 0) ])),
+            node: this.node
         });
     }
 
     getAddressInfo(hash: string) {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'getaddressinfo',
-                parameters: this.hex.Encode(JSON.stringify([ hash ])),
-                node: this.node
-            }
+        return this.http.post(this.proxyUrl + '/getaddressinfo', {
+            method: 'getaddressinfo',
+            parameters: this.hex.Encode(JSON.stringify([ hash ])),
+            node: this.node
         });
     }
 
     getTransactions(tx: string[]) {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'gettransactions',
-                parameters: this.hex.Encode(JSON.stringify([ tx ])),
-                node: this.node
-
-            }
+        return this.http.post(this.proxyUrl + '/gettransactions', {
+            method: 'gettransactions',
+            parameters: this.hex.Encode(JSON.stringify([ tx ])),
+            node: this.node
         });
     }
 
     getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false) {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'getlastblocks',
-                parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
-                node: this.node
-
-            }
+        return this.http.post(this.proxyUrl + '/getlastblocks', {
+            method: 'getlastblocks',
+            parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
+            node: this.node
         });
     }
 
     checkStringType(value: string) {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'checkstringtype',
-                parameters: this.hex.Encode(JSON.stringify([ value ])),
-                node: this.node
-
-            }
+        return this.http.post(this.proxyUrl + '/checkstringtype', {
+            method: 'checkstringtype',
+            parameters: this.hex.Encode(JSON.stringify([ value ])),
+            node: this.node
         });
     }
 
     getBlockchainInfo() {
-        return this.http.get(this.proxyUrl, {
-            params: {
-                method: 'getblockchaininfo',
-                parameters: this.hex.Encode(JSON.stringify([])),
-                node: this.node
-
-            }
+        return this.http.post(this.proxyUrl + '/getblockchaininfo', {
+            method: 'getblockchaininfo',
+            parameters: this.hex.Encode(JSON.stringify([])),
+            node: this.node
         });
     }
 
     getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24) {
-        return this.http.get(this.proxyUrl, {
-            params: {
+        return this.http.post(this.proxyUrl  + '/getstatistic', {
                 method: 'getstatistic',
                 parameters: this.hex.Encode(JSON.stringify([end_time, start_time, round])),
                 node: this.node
-
-            }
         });
     }
 
     getPeerInfo() {
-        return this.http.get(this.proxyUrl, {
-            params: {
+        return this.http.post(this.proxyUrl + '/getpeerinfo', {
                 method: 'getpeerinfo',
                 parameters: this.hex.Encode(JSON.stringify([])),
                 node: this.node
-
-            }
         });
     }
 

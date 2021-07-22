@@ -1,11 +1,13 @@
 
 <!-- Toggle proxy servers -->
-<app-proxyservers class="row rowBlock"></app-proxyservers>
+
+<div class="col">
+    <app-proxyservers class="row rowBlock"></app-proxyservers>
+</div>
 
 <app-loader *ngIf="!blocks"></app-loader>
 
-
-<div class="col" *ngIf="blocks">
+<div class="col" >
 
     <!-- Nodes -->
     <app-nodes-list2 class="row rowBlock"></app-nodes-list2>
