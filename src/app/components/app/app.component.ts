@@ -17,11 +17,19 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if (localStorage.getItem('blockchainInfo')) {
-            this.global.blockchainInfo = JSON.parse(localStorage.getItem('blockchainInfo'));
+            const blockchainInfo = localStorage.getItem('blockchainInfo')
+            if (blockchainInfo){
+                this.global.blockchainInfo = JSON.parse(blockchainInfo);
+
+            }
         }
 
         if (localStorage.getItem('peersinfo')) {
-            this.global.peersinfo = JSON.parse(localStorage.getItem('peersinfo'));
+            const peersinfo = localStorage.getItem('peersinfo');
+            if (peersinfo){
+                this.global.peersinfo = JSON.parse(peersinfo);
+
+            }
         }
 
         setInterval(() => {
@@ -34,7 +42,7 @@ export class AppComponent implements OnInit {
 
     updatePeersInfo() {
         this.dataService.getPeerInfo().subscribe(data => {
-            let peers = data['data']['result'];
+            let peers = data['data'];
             this.global.peersinfo = [];
             console.log('this.gloabl', this.global.peersinfo)
             peers.forEach(peer => {
@@ -48,7 +56,7 @@ export class AppComponent implements OnInit {
 
     updateBlockchainInfo() {
         this.dataService.getBlockchainInfo().subscribe(data => {
-            this.global.blockchainInfo = data['data']['result'];
+            this.global.blockchainInfo = data['data']
             localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
         });
     }

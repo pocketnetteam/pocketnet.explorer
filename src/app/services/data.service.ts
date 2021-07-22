@@ -10,7 +10,7 @@ export class DataService {
 
     private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8899';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = localStorage.getItem("explorerNode" ) || "81.166.74.173:38081";
+    private node = "185.148.147.15" || localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -61,7 +61,7 @@ export class DataService {
     getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false) {
         return this.http.post(this.proxyUrl + '/getlastblocks', {
             method: 'getlastblocks',
-            parameters: this.hex.Encode(JSON.stringify([ count, last_height, verbose ])),
+            parameters: [ count, last_height, verbose ],
             node: this.node
         });
     }
@@ -75,26 +75,35 @@ export class DataService {
     }
 
     getBlockchainInfo() {
-        return this.http.post(this.proxyUrl + '/getblockchaininfo', {
-            method: 'getblockchaininfo',
-            parameters: this.hex.Encode(JSON.stringify([])),
-            node: this.node
+        return this.http.post(this.proxyUrl + '/getnodeinfo', {
+            method: 'getnodeinfo',
+            parameters: [],
+            options: {
+                node: this.node
+            }
+            
         });
     }
 
     getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24) {
         return this.http.post(this.proxyUrl  + '/getstatistic', {
                 method: 'getstatistic',
-                parameters: this.hex.Encode(JSON.stringify([end_time, start_time, round])),
-                node: this.node
+                parameters: [end_time, start_time, round],
+                options: {
+                    node: this.node    
+                }
+                
         });
     }
 
     getPeerInfo() {
         return this.http.post(this.proxyUrl + '/getpeerinfo', {
                 method: 'getpeerinfo',
-                parameters: this.hex.Encode(JSON.stringify([])),
-                node: this.node
+                parameters: [],
+                options: {
+                    node: this.node
+                }
+                
         });
     }
 

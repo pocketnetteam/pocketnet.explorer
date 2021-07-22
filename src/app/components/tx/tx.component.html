@@ -31,7 +31,7 @@
             <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinstake">PoS transaction</div>
             <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinbase">Coinbase transaction</div>
             <div class="border-top ml-1 mr-n2 float-right txvalues txvalues-amount">{{ tx.amount/100000000 | poc }}</div>
-            <div *ngIf="Global.blockchainInfo" class="border-top float-right txvalues txvalues-conf">{{ Global.blockchainInfo.blocks - tx.height }} Confirmations</div>
+            <div *ngIf="Global.blockchainInfo" class="border-top float-right txvalues txvalues-conf">{{ (Global.blockchainInfo ? Global.blockchainInfo.blocks : 0)- tx.height }} Confirmations</div>
         </div>
     </div>
 </div>
