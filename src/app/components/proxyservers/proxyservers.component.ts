@@ -29,7 +29,6 @@ export class ProxyserversComponent implements OnInit {
     txtSuccessAdd: string = 'Add';
     txtSuccessSave: string = 'Save';
 
-    value: string = 'https://pocketnet.app:8899';
     displayModalSelect: boolean = false;
     defaultProxies: Proxy[] = [
         {
@@ -65,6 +64,12 @@ export class ProxyserversComponent implements OnInit {
     get Global() : Globals {
         return this.global;
     }
+
+    get selectedProxy(): string {
+
+        return this.dataService.selectedProxy;
+    }
+
 
     get proxies() : Proxy[]{
 

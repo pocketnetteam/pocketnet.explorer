@@ -8,17 +8,30 @@ import { HexService } from './hex.service'
 })
 export class DataService {
 
-    private proxyUrl = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8888/rpc';
+    private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8888';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = "192.168.0.16:31011";
+    private node = localStorage.getItem("explorerNode" ) || "192.168.0.16:31011";
 
     constructor(private http: HttpClient, private hex: HexService) { }
+
+    get selectedProxy(){
+        return this.proxy;
+    }
+
+    get selectedNode(){
+        return this.node
+    }
+
+    get proxyUrl(){
+        return this.proxy + '/rpc';
+    }
 
     async getTopAddresses() {
 
         const data = await fetch(this.explorerUrl + 'topaddresses/30.json');
         const result = await data.json();
         return result
+
     }
 
     getBlock(hash: string, verbose: boolean=true) {
@@ -109,8 +122,14 @@ export class DataService {
 
     selectProxyUrl(url){
 
-        this.proxyUrl = url + '/rpc';
-        localStorage.setItem('explorerProxyUrl', this.proxyUrl);
+        this.proxy = url;
+        localStorage.setItem('explorerProxyUrl', this.proxy);
         location.reload()
+    }
+
+    selectProxyProxy(node){
+
+        this.node = node;
+        localStorage.setItem('explorerNode', this.node);
     }
 }

@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
         this.dataService.getPeerInfo().subscribe(data => {
             let peers = data['data']['result'];
             this.global.peersinfo = [];
+            console.log('this.gloabl', this.global.peersinfo)
             peers.forEach(peer => {
                 if (!this.global.peersinfo.find(function(p) { return p.addr.split(":")[0] == peer.addr.split(":")[0];}))
                     this.global.peersinfo.push(peer);

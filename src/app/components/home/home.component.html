@@ -1,12 +1,14 @@
+
+<!-- Toggle proxy servers -->
+<app-proxyservers class="row rowBlock"></app-proxyservers>
+
 <app-loader *ngIf="!blocks"></app-loader>
+
 
 <div class="col" *ngIf="blocks">
 
-    <!-- Toggle proxy servers -->
-    <app-proxyservers class="row rowBlock"></app-proxyservers>
-
-    <!-- Toggle nodes -->
-    <app-nodes-radio class="row rowBlock"></app-nodes-radio>
+    <!-- Nodes -->
+    <app-nodes-list2 class="row rowBlock"></app-nodes-list2>
 
     <!-- Latest blocks -->
     <app-block-list class="row rowBlock" [blocks]="blocks" [loading]="loading" (moveBlocksEvent)="MoveBlocks($event)"></app-block-list>
@@ -17,6 +19,5 @@
     <!-- Network -->
     <app-nodes-list class="row rowBlock"></app-nodes-list>
     
-    <app-nodes-list2 class="row rowBlock"></app-nodes-list2>
 
 </div>

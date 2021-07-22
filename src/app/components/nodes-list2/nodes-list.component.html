@@ -14,23 +14,47 @@
         <table class="table table-sm table-borderless" style="min-width: 350px;">
             <thead class="">
                 <tr>
+                    <th class="text-left th-checkbox"></th>
+                    <th class="text-left th-name" title="Name"><span>Name</span></th>
+                    <th class="text-left th-address" title="Address"><span>Address</span></th>
+                    <th class="text-left th-status" title="Status"><span>Status</span></th>
                     <th class="text-left"></th>
-                    <th class="text-left" title="Peer address"><span>Name</span></th>
-                    <th class="text-left" title="Version"><span>Address</span></th>
-                    <th class="text-left" title="Synced blocks/headers"><span>Status</span></th>
+                    <th class="text-left"></th>
+                    <th class="text-left"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let peer of Global.peersinfo" [ngClass]="{'red': peer.synced_blocks < 0 || (Global.blockchainInfo.blocks - peer.synced_blocks) > 10}">
-                    <td>
-                        <div class="use">
-                            <i class="far fa-circle"></i>    
+                <tr *ngFor="let peer of Global.peersinfo">
+                    <td
+                        (click)="selectProxyProxy(peer.addr)"
+                    >
+                        <div 
+                            *ngIf="selectedNode !== peer.addr" 
+                            class="use"
+                        >
+                            <i
+                                class="far fa-circle"
+                            ></i>    
+                        </div>
+                        <div 
+                            *ngIf="selectedNode === peer.addr" 
+                            class="use using"
+                        >
+                            <i class="fa fa-check-circle"></i>
                         </div>
                     </td>
                     <td><span>Pocketnet Node</span></td>
                     <td><span>{{ peer.addr }}</span></td>
                     <td *ngIf="peer.synced_blocks < 0"><i class="fas fa-spinner"></i><span>&nbsp;{{ peer.startingheight }}</span></td>
                     <td *ngIf="peer.synced_blocks > 0"><span>{{ peer.synced_blocks }}</span></td>
+                    <td><span></span></td>
+                    <td><span></span></td>
+                    <td>   
+                        <div class="item stable good">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                    </td>
+
                 </tr>
             </tbody>
         </table>

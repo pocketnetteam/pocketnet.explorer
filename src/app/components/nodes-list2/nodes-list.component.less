@@ -1,10 +1,10 @@
 @color-text-second :#00a4ff;
+@color-good : #068222;
 
 
 thead{
 
     tr{
-
         background: #fafafa;
 
         th{
@@ -18,6 +18,22 @@ thead{
             text-overflow: ellipsis;
             white-space: nowrap;
 
+            &.th-checkbox{
+                width: 7%;
+            }
+
+            &.th-name{
+                width: 20%;
+            }
+
+            &.th-address{
+                width: 20%;
+            }
+
+            th.status {
+                width: 15%
+            }
+
         }
         
     
@@ -25,39 +41,47 @@ thead{
 
 }
 
+tbody{
 
-td{
-    vertical-align: middle;
+    tr{
+        border-bottom: 1px solid #e4ddde;
+
+        td{
+            vertical-align: middle;
+
+            .stable{
+                &.good{
+                    color: @color-good;
+
+                }
+            }
+                
+            .use{
+                margin-left: auto;
+                width: 40px;
+                cursor: pointer;
+                text-align: center;
+                color: #e4ddde;
+                padding-right: 0;
+                vertical-align: middle;
+                padding: 1.5em 1em;
+                overflow: hidden;
+
+
+                &.using{
+                    color: @color-good;
+                }
         
-    .use{
-        width: 40px;
-        cursor: pointer;
-        text-align: center;
-        color: #e4ddde;
-        padding-right: 0;
-        vertical-align: middle;
-        padding: 1.5em 1em;
-        overflow: hidden;
-
-        &:hover{
-            color: @color-text-second;
+                &:hover{
+                    color: @color-text-second;
+                }
+                
+            }
         }
+
     }
 }
 
-.red {
-    * {
-        color: brown;
-    }
-}
 
-.inbound::after {
-    content: '\f30a';
-}
-.outbound::after {
-    content: '\f30b';
-}
-.bothbound::after {
-    content: '\f362';
-}
+
 
