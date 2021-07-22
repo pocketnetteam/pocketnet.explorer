@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         this.dataService.getLastBlocks(10, last, true).subscribe(data => {
             this.loading = false;
-            console.log(data['data'], 'there')
             this.blocks = data['data'].map(block => ({...block, types: block.types || {}}));
         });
     }

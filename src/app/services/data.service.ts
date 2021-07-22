@@ -10,7 +10,9 @@ export class DataService {
 
     private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8899';
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = "185.148.147.15" || localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private node =  localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+
+    public nodes: any[] = []
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -107,6 +109,25 @@ export class DataService {
         });
     }
 
+    getNodes() {
+        return this.http.get(this.proxy + '/info').subscribe((res: any) => {
+            
+            try {
+
+                const nodes = res.data.info.nodeManager.nodes
+
+                if (nodes){
+                    this.nodes = Object.values(nodes);
+                }
+
+            } catch(err){
+
+                console.log('err', err);
+            }
+
+        });
+    }
+
     selectProxyUrl(url){
 
         this.proxy = url;
@@ -114,7 +135,7 @@ export class DataService {
         location.reload()
     }
 
-    selectProxyProxy(node){
+    selectNode(node){
 
         this.node = node;
         localStorage.setItem('explorerNode', this.node);

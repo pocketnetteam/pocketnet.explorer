@@ -22,7 +22,13 @@ export class HeaderComponent implements OnInit {
         return this.global;
     }
 
+    get lastblock(){
+
+        return this.Global.blockchainInfo.lastblock;
+    }
+
     ngOnInit() {
+        console.log('Global', this.Global.blockchainInfo)
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;
         };

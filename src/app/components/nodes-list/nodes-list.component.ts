@@ -16,9 +16,4 @@ export class NodesListComponent implements OnInit {
         return this.global;
     }
 
-    ngOnInit() {
-
-        console.log('Global.peersinfo', this.Global.peersinfo);
-    }
-
 }

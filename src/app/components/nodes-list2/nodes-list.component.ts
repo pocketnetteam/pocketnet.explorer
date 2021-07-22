@@ -13,7 +13,7 @@ export class NodesListComponent2 implements OnInit {
         private global: Globals,
         private dataService: DataService
     ) { }
-
+    
     get Global() : Globals {
         return this.global;
     }
@@ -22,13 +22,22 @@ export class NodesListComponent2 implements OnInit {
         return this.dataService.selectedNode;
     }
 
-    selectProxyProxy(addr){
-        this.dataService.selectProxyProxy(addr);
+    get nodes(){
+
+        return this.dataService.nodes;
+
     }
 
-    ngOnInit() {
+    trackByFn(index, item) {    
+        return item.node.key;
+     }
 
-        console.log('Global.peersinfo', this.Global.peersinfo);
+     selectNode(addr){
+        this.dataService.selectNode(addr);
     }
+    
 
+    ngOnInit(){
+        this.dataService.getNodes()
+    }
 }

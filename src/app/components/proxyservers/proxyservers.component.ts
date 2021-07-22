@@ -78,7 +78,7 @@ export class ProxyserversComponent implements OnInit {
             ...this.addedProxies
         ].map(proxy => ({
             ...proxy, 
-            selected: proxy.host + ':' + proxy.port === this[this.selectedType]
+            selected: 'https://' + proxy.host + ':' + proxy.port === this.selectedProxy
         }));
 
     }

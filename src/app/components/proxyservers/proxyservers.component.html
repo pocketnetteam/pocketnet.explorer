@@ -17,17 +17,6 @@
             {{selectedProxy}}
         </div>
     </div>
-    <div class="row">
-        <div class="column label">
-            Watch: 
-        </div>
-        <div 
-            class="column value"
-            (click)="openModalSelect('selectedWatch')"
-        >
-            {{selectedProxy}}
-        </div>
-    </div>
     <app-modal
         *ngIf="displayModalSelect"
         (closeModal)="closeModalSelect()"

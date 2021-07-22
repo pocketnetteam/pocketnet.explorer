@@ -26,12 +26,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let peer of Global.peersinfo">
+                <tr 
+                    *ngFor="let node of nodes; trackBy: trackByFn"
+                    [class]="!node.statistic.percent ? 'cantuse' : ''"
+                >
                     <td
-                        (click)="selectProxyProxy(peer.addr)"
+                        (click)="selectNode(node.node.key)"
                     >
                         <div 
-                            *ngIf="selectedNode !== peer.addr" 
+                            *ngIf="selectedNode !== node.node.key" 
                             class="use"
                         >
                             <i
@@ -39,16 +42,26 @@
                             ></i>    
                         </div>
                         <div 
-                            *ngIf="selectedNode === peer.addr" 
+                            *ngIf="selectedNode === node.node.key" 
                             class="use using"
                         >
                             <i class="fa fa-check-circle"></i>
                         </div>
                     </td>
-                    <td><span>Pocketnet Node</span></td>
-                    <td><span>{{ peer.addr }}</span></td>
-                    <td *ngIf="peer.synced_blocks < 0"><i class="fas fa-spinner"></i><span>&nbsp;{{ peer.startingheight }}</span></td>
-                    <td *ngIf="peer.synced_blocks > 0"><span>{{ peer.synced_blocks }}</span></td>
+                    <td><span>{{ node.node.name }}</span></td>
+                    <td><span>{{ node.node.key + '/' + node.node.ws }}</span></td>
+                    <td>
+                        <span
+                            *ngIf="node.statistic.percent"
+                        >
+                            {{ node.statistic.time.toFixed(0) + 'ms, ' + node.statistic.percent.toFixed(0) + ' %'}}
+                        </span>
+                        <span
+                            *ngIf="!node.statistic.percent"
+                        >
+                            —
+                        </span>
+                    </td>
                     <td><span></span></td>
                     <td><span></span></td>
                     <td>   

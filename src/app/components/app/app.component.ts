@@ -54,6 +54,7 @@ export class AppComponent implements OnInit {
         });
     }
 
+
     updateBlockchainInfo() {
         this.dataService.getBlockchainInfo().subscribe(data => {
             this.global.blockchainInfo = data['data']
