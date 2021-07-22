@@ -39,7 +39,7 @@
                         <td class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell">
                             {{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                         <td class="text-right">{{ bc.ntx }}</td>
-
+                            
                         <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.users}">
                             {{ bc.types.users || '-' }}</td>
                         <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.posts}">

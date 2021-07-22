@@ -15,10 +15,13 @@ export class BlockListComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('this.blocks', this.blocks);
     }
 
     MoveBlocks(diff: number = 0) {
         this.moveBlocksEvent.next(diff);
+        console.log('this.blocks', this.blocks);
+
     }
 
 }
