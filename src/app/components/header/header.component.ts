@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit {
     }
 
     get lastblock(){
-
         return this.Global.blockchainInfo.lastblock;
     }
 
@@ -45,8 +44,8 @@ export class HeaderComponent implements OnInit {
         if (value.length == 34 || value.length == 64) {
             // Address
             this.dataService.checkStringType(value).subscribe(data => {
-                if (data['statusCode'] == 200 && data['data']['result']['type'] != 'notfound') {
-                    this.router.navigate([`${data['data']['result']['type']}`, value])
+                if (data && data['data'] && data['data']['type'] != 'notfound') {
+                    this.router.navigate([`${data['data']['type']}`, value])
                 }
             });
         }

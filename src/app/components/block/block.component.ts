@@ -20,7 +20,7 @@ export class BlockComponent implements OnInit {
 
     ngOnInit() {
         this.dataService.getBlock(this.blockhash).subscribe(data => {
-            this.block = data['data']['result'];
+            this.block = data['data']
         });
     }
 

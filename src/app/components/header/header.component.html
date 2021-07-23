@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <div *ngIf="Global.blockchainInfo" class="col-auto status rounded text-right">
-                    <a href="block/{{Global.blockchainInfo.bestblockhash}}"><i class="fas fa-database"></i> {{lastblock.height}}</a>
+                    <a href="block/{{lastblock.hash}}"><i class="fas fa-database"></i> {{lastblock.height}}</a>
                 </div>
             </div>
             

@@ -28,35 +28,39 @@ export class DataService {
         return this.proxy + '/rpc';
     }
 
-    async getTopAddresses() {
+    getTopAddresses() {
 
-        const data = await fetch(this.explorerUrl + 'topaddresses/30.json');
-        const result = await data.json();
-        return result
+        return this.http.get(this.explorerUrl + 'topaddresses/30.json');
 
     }
 
     getBlock(hash: string, verbose: boolean=true) {
         return this.http.post(this.proxyUrl + '/getblock', {
             method: 'getblock',
-            parameters: this.hex.Encode(JSON.stringify([ hash, (verbose ? 1 : 0) ])),
-            node: this.node
+            parameters: [ hash, (verbose ? 1 : 0) ],
+            options: {
+                node: this.node
+            }
         });
     }
 
     getAddressInfo(hash: string) {
         return this.http.post(this.proxyUrl + '/getaddressinfo', {
             method: 'getaddressinfo',
-            parameters: this.hex.Encode(JSON.stringify([ hash ])),
-            node: this.node
+            parameters: [ hash ],
+            options: {
+                node: this.node
+            }
         });
     }
 
     getTransactions(tx: string[]) {
         return this.http.post(this.proxyUrl + '/gettransactions', {
             method: 'gettransactions',
-            parameters: this.hex.Encode(JSON.stringify([ tx ])),
-            node: this.node
+            parameters: [ tx ],
+            options: {
+                node: this.node
+            }
         });
     }
 
@@ -64,15 +68,19 @@ export class DataService {
         return this.http.post(this.proxyUrl + '/getlastblocks', {
             method: 'getlastblocks',
             parameters: [ count, last_height, verbose ],
-            node: this.node
+            options: {
+                node: this.node
+            }
         });
     }
 
     checkStringType(value: string) {
         return this.http.post(this.proxyUrl + '/checkstringtype', {
             method: 'checkstringtype',
-            parameters: this.hex.Encode(JSON.stringify([ value ])),
-            node: this.node
+            parameters: [ value ],
+            options: {
+                node: this.node
+            }
         });
     }
 
