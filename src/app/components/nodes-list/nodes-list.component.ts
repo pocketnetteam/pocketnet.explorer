@@ -12,8 +12,14 @@ export class NodesListComponent implements OnInit {
         private global: Globals
     ) { }
 
+    show: boolean = false;
+
     get Global() : Globals {
         return this.global;
+    }
+
+    toggleShow(){
+        this.show = !this.show;
     }
 
     ngOnInit(){}

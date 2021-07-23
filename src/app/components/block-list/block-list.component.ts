@@ -14,6 +14,12 @@ export class BlockListComponent implements OnInit {
     constructor() {
     }
 
+    show: boolean = false;
+
+    toggleShow(){
+        this.show = !this.show;
+    }
+
     ngOnInit() {
         console.log('this.blocks', this.blocks);
     }

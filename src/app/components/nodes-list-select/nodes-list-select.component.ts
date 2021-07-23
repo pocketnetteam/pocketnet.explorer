@@ -4,15 +4,17 @@ import { DataService } from 'src/app/services/data.service';
 
 @Component({
     selector: 'app-nodes-list2',
-    templateUrl: './nodes-list.component.html',
-    styleUrls: ['./nodes-list.component.less']
+    templateUrl: './nodes-list-select.component.html',
+    styleUrls: ['./nodes-list-select.component.less']
 })
-export class NodesListComponent2 implements OnInit {
+export class NodesListSelectComponent implements OnInit {
 
     constructor(
         private global: Globals,
         private dataService: DataService
     ) { }
+
+    show: boolean = true;
     
     get Global() : Globals {
         return this.global;
@@ -23,9 +25,12 @@ export class NodesListComponent2 implements OnInit {
     }
 
     get nodes(){
-        console.log('nodes', this.dataService.nodes)
         return this.dataService.nodes;
 
+    }
+
+    toggleShow(){
+        this.show = !this.show;
     }
 
     trackByFn(index, item) {    

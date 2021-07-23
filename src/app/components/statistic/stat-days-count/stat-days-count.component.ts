@@ -16,10 +16,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     ctx: any;
     statisticData: any;
     statPeriod: any = 3;
+    show: boolean = false;
 
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
+    }
+
+    toggleShow(){
+        this.show = !this.show;
     }
 
     ngAfterViewInit() {

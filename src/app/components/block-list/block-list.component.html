@@ -2,12 +2,30 @@
 
     <!-- Header -->
     <div class="row">
-        <h1>Latest blocks <app-loader *ngIf="loading"></app-loader>
-        </h1>
+        <div 
+            class="section-top pointer"
+            (click)="toggleShow()"
+        >
+            <span class="title">
+                Latest block
+            </span>
+            <span 
+                class="icon"
+            >
+                <i 
+                    [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"
+                >
+                </i>
+            </span>
+        </div>
     </div>
 
     <!-- Blocks table -->
-    <div class="row">
+    <div 
+        [hidden]="!show"
+        class="row"
+    >
+        <app-loader *ngIf="loading"></app-loader>
         <div class="table-responsive-sm w-100">
             <table class="table table-sm table-borderless" style="min-width: 350px;">
                 <thead class="">
@@ -64,7 +82,10 @@
     </div>
 
     <!-- Blocks control -->
-    <div class="row last_blocks_control_back">
+    <div 
+        [hidden]="!show"
+        class="row last_blocks_control_back"
+    >
         <div class="col px-0">
             <div class="float-left">
                 <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(0)"
