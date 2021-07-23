@@ -21,7 +21,7 @@ export class BlockListComponent implements OnInit {
     }
 
     trackByBlock(idx, block){
-        return block.hash
+        return block.hash;
     }
 
     MoveBlocks(diff: number = 0) {
@@ -31,7 +31,6 @@ export class BlockListComponent implements OnInit {
     }
     
     ngOnInit() {
-        console.log('this.blocks', this.blocks);
     }
 
 

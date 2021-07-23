@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
 import {DataService} from 'src/app/services/data.service';
-import {Proxy} from 'src/app/services/data.service';
+import {Proxy} from 'src/app/types/Proxy';
 
 @Component({
     selector: 'app-proxyservers',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HexService } from './hex.service'
 
-import {Proxy} from '../types/Proxy';
+import { Proxy } from '../types/Proxy';
 
 const proxy = localStorage.getItem('explorerProxy');
 
