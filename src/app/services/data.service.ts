@@ -28,6 +28,11 @@ export class DataService {
         return this.proxy + '/rpc';
     }
 
+    checkProxy(url: string){
+
+        return this.http.get(url + '/ping');
+    }
+
     getTopAddresses() {
 
         return this.http.get(this.explorerUrl + 'topaddresses/30.json');

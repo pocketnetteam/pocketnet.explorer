@@ -14,7 +14,6 @@ export class TxComponent implements OnInit {
     constructor(private global: Globals) { }
 
     get Global() : Globals { 
-        console.log('this.block', this.global.blockchainInfo)
 
         return this.global; 
     }

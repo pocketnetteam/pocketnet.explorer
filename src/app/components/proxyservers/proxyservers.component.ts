@@ -147,13 +147,11 @@ export class ProxyserversComponent implements OnInit {
 
         } else {
 
-            try{
 
-                // const res = await fetch('https://' + this.newProxy.host + ':' + this.newProxy.port + '/ping');
-                // const data = await res.json();
-    
-                // if (data.result === 'success'){
-    
+            this.dataService.checkProxy('https://' + this.newProxy.host + ':' + this.newProxy.port).subscribe((data: any) => {
+
+                if (data.result === 'success'){
+
                     if (this.newProxy.key){
     
                         const idx = this.addedProxies.findIndex(proxy => proxy.key === this.newProxy.key);
@@ -186,14 +184,17 @@ export class ProxyserversComponent implements OnInit {
 
                     this.closeModalAdd();
 
-                // } 
+                } else {
 
-            } catch(err){
+                    this.showError("You can't use this proxy")
+                }
 
-                this.showError("You can't use this proxy");
-
-            }
-
+            }, err => {
+                
+                console.log('err', err); 
+                this.showError("You can't use this proxy")
+            
+            });
         }
 
 
