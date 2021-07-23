@@ -26,8 +26,11 @@ export class HeaderComponent implements OnInit {
         return this.Global.blockchainInfo.lastblock;
     }
 
+    get selectedNode(){
+        return this.dataService.selectedNode;
+    }
+
     ngOnInit() {
-        console.log('Global', this.Global.blockchainInfo)
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;
         };
