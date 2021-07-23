@@ -14,7 +14,7 @@ export class NodesListSelectComponent implements OnInit {
         private dataService: DataService
     ) { }
 
-    show: boolean = true;
+    show: boolean = false;
     
     get Global() : Globals {
         return this.global;

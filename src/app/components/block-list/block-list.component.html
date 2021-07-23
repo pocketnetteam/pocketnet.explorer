@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let bc of blocks">
+                    <tr *ngFor="let bc of blocks; trackBy: trackByBlock">
                         <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
                         <td class="d-none d-lg-table-cell">
                             <div class="ellipsis"><a href="block/{{bc.hash}}" class="">{{bc.hash}}</a></div>

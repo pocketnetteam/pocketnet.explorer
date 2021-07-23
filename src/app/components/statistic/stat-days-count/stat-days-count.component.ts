@@ -16,7 +16,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     ctx: any;
     statisticData: any;
     statPeriod: any = 3;
-    show: boolean = false;
+    show: boolean = true;
 
     constructor(private dataService: DataService) { }
 

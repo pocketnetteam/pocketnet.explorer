@@ -1,20 +1,19 @@
 
-<!-- Toggle proxy servers -->
 
 <div class="col">
-    <app-proxyservers class="row rowBlock"></app-proxyservers>
-</div>
 
-<div class="col" >
-
-    <!-- Nodes -->
-    <app-nodes-list2 class="row rowBlock"></app-nodes-list2>
 
     <!-- Latest blocks -->
     <app-block-list class="row rowBlock" [blocks]="blocks" [loading]="loading" (moveBlocksEvent)="MoveBlocks($event)"></app-block-list>
 
     <!-- Statistic -->
     <app-stat-days-count class="row rowBlock"></app-stat-days-count>
+
+    <!-- Toggle proxy servers -->
+    <app-proxyservers class="row rowBlock"></app-proxyservers>
+
+    <!-- Nodes -->
+    <app-nodes-list2 class="row rowBlock"></app-nodes-list2>
 
     <!-- Network -->
     <app-nodes-list class="row rowBlock"></app-nodes-list>

@@ -4,6 +4,8 @@ import { HexService } from './hex.service'
 
 import {Proxy} from '../types/Proxy';
 
+const proxy = localStorage.getItem('explorerProxy');
+
 @Injectable({
     providedIn: 'root'
 })
@@ -26,7 +28,7 @@ export class DataService {
         }
     ];
 
-    public proxy = localStorage.getItem('explorerProxy') ? JSON.parse(localStorage.getItem('explorerProxy')) : this.defaultProxies[0]
+    public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node =  localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
 
