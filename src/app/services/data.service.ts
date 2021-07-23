@@ -141,29 +141,44 @@ export class DataService {
     }
 
     getNodes() {
-        return this.http.get(this.selectedProxy + '/info').subscribe((res: any) => {
-            
-            try {
+        return this.http.get(this.selectedProxy + '/info')
+    }
 
+    setNodes(nodes) {
+
+        this.nodes = nodes;
+    }
+    
+
+    async selectProxy(proxy){
+
+        this.proxy = proxy;
+        this.getNodes().subscribe((res: any) => {
+
+            try {
+                
                 const nodes = res.data.info.nodeManager.nodes
 
                 if (nodes){
-                    this.nodes = Object.values(nodes);
+                    console.log('nodes', nodes)
+                    const keys = Object.keys(nodes); 
+
+                    if (keys.length && keys.indexOf(this.node) === -1){
+                        this.selectNode(keys[0]);
+                    }
                 }
 
-            } catch(err){
+            }  catch (err){
 
                 console.log('err', err);
             }
 
-        });
-    }
+            localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
+            location.reload()
+    
 
-    selectProxy(proxy){
+        })
 
-        this.proxy = proxy;
-        localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
-        location.reload()
     }
 
     selectNode(node){
