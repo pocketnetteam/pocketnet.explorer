@@ -29,7 +29,7 @@ thead{
                 width: 25%;
             }
 
-            th.status {
+            &.th.status {
                 width: 15%
             }
 
@@ -97,6 +97,38 @@ tbody{
     }
 }
 
+
+@media only screen and (max-width: 768px) {
+
+table{
+    table-layout: fixed;    
+}
+
+thead{
+    .th-empty, .th-status{
+        display: none
+    }
+
+    .th-address{
+        width: 15%!important;
+    }
+}
+
+tbody{
+
+    .td-empty, .td-percent, .td-difference, .td-stable{
+        display: none;
+    }
+
+    .td-address{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+}
+}
 
 
 
