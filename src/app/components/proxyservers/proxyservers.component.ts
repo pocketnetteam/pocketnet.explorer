@@ -2,15 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
 import {DataService} from 'src/app/services/data.service';
-
-type Proxy = {
-    host: string,
-    port: string,
-    wss: string, 
-    default?: boolean, 
-    selected?: boolean,
-    key?: string
-};
+import {Proxy} from 'src/app/services/data.service';
 
 @Component({
     selector: 'app-proxyservers',
@@ -30,22 +22,6 @@ export class ProxyserversComponent implements OnInit {
     txtSuccessSave: string = 'Save';
 
     displayModalSelect: boolean = false;
-    defaultProxies: Proxy[] = [
-        {
-            host: 'pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: 'pocketnet.app:8899:8099',
-            default: true
-        }, 
-        {
-            host: '1.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '1.pocketnet.app:8899:8099',
-            default: true
-        }
-    ];
 
     addedProxies: Proxy[] = [];
     selectedUse = 'pocketnet.app:8899';
@@ -60,9 +36,17 @@ export class ProxyserversComponent implements OnInit {
         wss: '8099'
     }
 
+    get defaultProxies(){
+        return this.dataService.defaultProxies
+    }
+
 
     get Global() : Globals {
         return this.global;
+    }
+
+    get proxy() {
+        return this.dataService.proxy;
     }
 
     get selectedProxy(): string {
@@ -78,7 +62,7 @@ export class ProxyserversComponent implements OnInit {
             ...this.addedProxies
         ].map(proxy => ({
             ...proxy, 
-            selected: 'https://' + proxy.host + ':' + proxy.port === this.selectedProxy
+            selected: proxy.key === this.proxy.key
         }));
 
     }
@@ -112,10 +96,22 @@ export class ProxyserversComponent implements OnInit {
 
     removeProxy(idx) {
 
-        idx -= this.defaultProxies.length
-        console.log('remvoeProxy', idx);
-        this.addedProxies.splice(idx, 1);
+        const defaultIdx = idx - this.defaultProxies.length;
+
+        const lastProxies = [...this.proxies]
+
+        this.addedProxies.splice(defaultIdx, 1);
         localStorage.setItem('explorerListofproxies', JSON.stringify(this.addedProxies));
+
+        console.log('idx', idx, lastProxies)
+        
+        if (lastProxies[idx].key === this.proxy.key){
+
+            this.dataService.selectProxy(this.proxies[0]);
+            
+        }
+
+
     }
 
     setProxy(idx){
@@ -200,9 +196,9 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
-    selectProxyUrl(proxy){
+    selectProxy(proxy){
 
-        this.dataService.selectProxyUrl('https://' + proxy.host + ':' + proxy.port);
+        this.dataService.selectProxy(proxy);
     }
 
 

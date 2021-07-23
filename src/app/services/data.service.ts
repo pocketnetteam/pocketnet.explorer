@@ -1,14 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { HexService } from './hex.service'
+
+import {Proxy} from '../types/Proxy';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
 
-    private proxy = localStorage.getItem('explorerProxyUrl') || 'https://pocketnet.app:8899';
+    public defaultProxies: Proxy[] = [
+        {
+            host: 'pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: 'pocketnet.app:8899:8099',
+            default: true
+        }, 
+        {
+            host: '1.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '1.pocketnet.app:8899:8099',
+            default: true
+        }
+    ];
+
+    public proxy = localStorage.getItem('explorerProxy') ? JSON.parse(localStorage.getItem('explorerProxy')) : this.defaultProxies[0]
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node =  localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
 
@@ -16,16 +34,16 @@ export class DataService {
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
-    get selectedProxy(){
-        return this.proxy;
-    }
-
     get selectedNode(){
         return this.node
     }
+    
+    get selectedProxy(){
+        return 'https://' + this.proxy.host + ':' + this.proxy.port
+    }
 
     get proxyUrl(){
-        return this.proxy + '/rpc';
+        return this.selectedProxy + '/rpc';
     }
 
     checkProxy(url: string){
@@ -123,7 +141,7 @@ export class DataService {
     }
 
     getNodes() {
-        return this.http.get(this.proxy + '/info').subscribe((res: any) => {
+        return this.http.get(this.selectedProxy + '/info').subscribe((res: any) => {
             
             try {
 
@@ -141,10 +159,10 @@ export class DataService {
         });
     }
 
-    selectProxyUrl(url){
+    selectProxy(proxy){
 
-        this.proxy = url;
-        localStorage.setItem('explorerProxyUrl', this.proxy);
+        this.proxy = proxy;
+        localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
         location.reload()
     }
 
