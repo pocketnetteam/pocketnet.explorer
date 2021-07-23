@@ -12,4 +12,7 @@ export class BlockchainInfo {
     public size_on_disk : number;
     public pruned : boolean;
     public coin : number;
+    public lastblock : {
+        height: number
+    }
 }

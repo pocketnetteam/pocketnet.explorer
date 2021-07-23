@@ -40,7 +40,7 @@ export class TxListComponent implements OnInit {
 
         this.loading = true;
         this.dataService.getTransactions(_txids).subscribe(data => {
-            let _txs: Transaction[] = data['data']['result'];
+            let _txs: Transaction[] = data['data']
             this.txs.push.apply(this.txs, _txs);
             this.loading = false;
         });

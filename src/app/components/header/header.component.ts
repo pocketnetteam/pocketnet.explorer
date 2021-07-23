@@ -22,6 +22,14 @@ export class HeaderComponent implements OnInit {
         return this.global;
     }
 
+    get lastblock(){
+        return this.Global.blockchainInfo.lastblock;
+    }
+
+    get selectedNode(){
+        return this.dataService.selectedNode;
+    }
+
     ngOnInit() {
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;
@@ -39,8 +47,8 @@ export class HeaderComponent implements OnInit {
         if (value.length == 34 || value.length == 64) {
             // Address
             this.dataService.checkStringType(value).subscribe(data => {
-                if (data['statusCode'] == 200 && data['data']['result']['type'] != 'notfound') {
-                    this.router.navigate([`${data['data']['result']['type']}`, value])
+                if (data && data['data'] && data['data']['type'] != 'notfound') {
+                    this.router.navigate([`${data['data']['type']}`, value])
                 }
             });
         }

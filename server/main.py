@@ -31,8 +31,8 @@ class Core():
         blockcount = self.redis.zcard("nblocks")
 
         # Have more than a half data - start from top
-        if (blockcount >= 0 and data['blocks'] < (blockcount * 2)):
-            self.get_block_recursive(data['bestblockhash'])
+        if (blockcount >= 0 and data['lastblock']['height'] < (blockcount * 2)):
+            self.get_block_recursive(data['lastblock']['hash'])
         else:
             # No data or less than a half - start from beginning
             genesis_block_id = self.rpc.get_block_hash(0)

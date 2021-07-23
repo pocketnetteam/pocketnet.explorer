@@ -33,8 +33,17 @@ import { RoundPipe } from './pipes/round.pipe';
 import { RplPipe } from './pipes/rpl.pipe';
 
 import { NodesListComponent } from './components/nodes-list/nodes-list.component';
+import { NodesListSelectComponent } from './components/nodes-list-select/nodes-list-select.component';
+
 import { NodeComponent } from './components/nodes-list/node/node.component';
 import { AddressesComponent } from './components/topaddresses/topaddresses.component';
+
+import { ProxyserversComponent } from './components/proxyservers/proxyservers.component';
+
+import { ModalComponent } from './components/modal/modal.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
     declarations: [
@@ -59,7 +68,10 @@ import { AddressesComponent } from './components/topaddresses/topaddresses.compo
         RoundPipe,
         RplPipe,
         NodesListComponent,
-        NodeComponent
+        NodesListSelectComponent,
+        NodeComponent,
+        ProxyserversComponent,
+        ModalComponent
     ],
     imports: [
         BrowserModule,
@@ -68,7 +80,9 @@ import { AddressesComponent } from './components/topaddresses/topaddresses.compo
         FormsModule,
         ReactiveFormsModule,
         NgSelectModule,
-        HighchartsChartModule
+        HighchartsChartModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
     ],
     bootstrap: [AppComponent],
     providers: [Globals]

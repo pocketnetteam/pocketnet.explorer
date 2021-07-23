@@ -13,7 +13,10 @@ export class TxComponent implements OnInit {
     
     constructor(private global: Globals) { }
 
-    get Global() : Globals { return this.global; }
+    get Global() : Globals { 
+
+        return this.global; 
+    }
 
     ngOnInit() {
         

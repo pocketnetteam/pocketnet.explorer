@@ -6,4 +6,5 @@ import { PeerInfo } from './types/PeerInfo';
 export class Globals {
     blockchainInfo: BlockchainInfo;
     peersinfo: PeerInfo[];
+    nodes: any[]
 }

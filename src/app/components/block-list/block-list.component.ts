@@ -14,11 +14,23 @@ export class BlockListComponent implements OnInit {
     constructor() {
     }
 
-    ngOnInit() {
+    show: boolean = true;
+
+    toggleShow(){
+        this.show = !this.show;
+    }
+
+    trackByBlock(idx, block){
+        return block.hash;
     }
 
     MoveBlocks(diff: number = 0) {
         this.moveBlocksEvent.next(diff);
     }
+    
+    ngOnInit() {
+    }
+
+
 
 }

@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         this.dataService.getLastBlocks(10, last, true).subscribe(data => {
             this.loading = false;
-            this.blocks = data['data']['result'];
+            this.blocks = data['data'].map(block => ({...block, types: block.types || {}}));
         });
     }
 
@@ -48,7 +48,8 @@ export class HomeComponent implements OnInit {
         if (diff != 0) {
             last = Math.max.apply(Math, this.blocks.map(function(b) { return b.height; })) + diff;
 
-            if (last >= this.global.blockchainInfo.blocks) {
+            
+            if (last >= (this.global.blockchainInfo ? this.global.blockchainInfo.blocks : 0)) {
                 last = this.global.blockchainInfo.blocks;
                 this.start_update();
             }
