@@ -26,8 +26,6 @@ export class BlockListComponent implements OnInit {
 
     MoveBlocks(diff: number = 0) {
         this.moveBlocksEvent.next(diff);
-        console.log('this.blocks', this.blocks);
-
     }
     
     ngOnInit() {
