@@ -1,29 +1,20 @@
 <div class="col">
 
     <div class="row">
-        <div 
-            class="section-top pointer"
-            (click)="toggleShow()"
-        >
+        <div class="section-top pointer" (click)="toggleShow()">
             <span class="title">
                 Statistic
             </span>
-            <span 
-                class="icon"
-            >
-                <i 
-                    [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"
-                >
-                </i>
+            <span class="icon">
+                <i [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"> </i>
             </span>
         </div>
     </div>
 
-    <div
-        [hidden]="!show"
-    >
+    <div [hidden]="!show">
         <div class="row">
-            <ng-select class="w-100" [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod" (ngModelChange)="loadData()">
+            <ng-select class="w-100" [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod"
+                (ngModelChange)="loadData()">
                 <ng-option [value]="1">Show statistics for last day</ng-option>
                 <ng-option [value]="2">Show statistics for last week</ng-option>
                 <ng-option [value]="3">Show statistics for 1 month</ng-option>

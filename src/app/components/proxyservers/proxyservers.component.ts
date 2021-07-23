@@ -17,6 +17,7 @@ export class ProxyserversComponent implements OnInit {
         private dataService: DataService
     ) {}
 
+    show: boolean = false;
     txtSuccessSelect: string = 'Add proxy';
     txtSuccessAdd: string = 'Add';
     txtSuccessSave: string = 'Save';
@@ -34,6 +35,10 @@ export class ProxyserversComponent implements OnInit {
         host: '',
         port: '8899',
         wss: '8099'
+    }
+
+    toggleShow() {
+        this.show = !this.show;
     }
 
     get defaultProxies(){

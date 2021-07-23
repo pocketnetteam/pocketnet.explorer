@@ -23,12 +23,12 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     ngOnInit() {
     }
 
-    toggleShow(){
-        this.show = !this.show;
-    }
-
     ngAfterViewInit() {
         this.loadData();
+    }
+    
+    toggleShow() {
+        this.show = !this.show;
     }
 
     loadData() {

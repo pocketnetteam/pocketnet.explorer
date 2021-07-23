@@ -2,99 +2,69 @@
 
     <!-- Block header -->
     <div class="row">
-        <div 
-            class="section-top"            >
+        <div class="section-top pointer" (click)="toggleShow()">
             <span class="title">
                 Proxy servers
+            </span>
+            <span class="icon">
+                <i [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"> </i>
             </span>
         </div>
     </div>
 
     <!-- List header -->
-    <div class="row">
-        <div class="column label">
-            Use proxy: 
-        </div>
-        <div 
-            class="column value"
-            (click)="openModalSelect('selectedUse')"
-        >
-            {{selectedProxy}}
+    <div [hidden]="!show">
+        <div class="row">
+            <div class="column label">
+                Use proxy:
+            </div>
+            <div class="column value" (click)="openModalSelect('selectedUse')">
+                {{selectedProxy}}
+            </div>
         </div>
     </div>
-    <app-modal
-        *ngIf="displayModalSelect"
-        (closeModal)="closeModalSelect()"
-        (successModal)="openModalAdd()"
-        [txtSuccess]="txtSuccessSelect"
-    >
-        <div 
-            class="select-proxy-content"
-        >
+
+    <app-modal *ngIf="displayModalSelect" (closeModal)="closeModalSelect()" (successModal)="openModalAdd()"
+        [txtSuccess]="txtSuccessSelect">
+        <div class="select-proxy-content">
             <div class="proxies-header">
                 Select proxy that using Interface
             </div>
             <div class="proxies">
-                <div 
-                    class="proxy"
-                    *ngFor="let proxy of proxies; index as idx; trackBy: trackByFn"
-                    (click)="selectProxy(proxy)"
-                >
-                    <div 
-                        class="address"
-                        [class.selected]="proxy.selected"
-                    >
+                <div class="proxy" *ngFor="let proxy of proxies; index as idx; trackBy: trackByFn"
+                    (click)="selectProxy(proxy)">
+                    <div class="address" [class.selected]="proxy.selected">
                         <span>
-                            {{'https://' + proxy.host + ':' + proxy.port}} 
+                            {{'https://' + proxy.host + ':' + proxy.port}}
                         </span>
-                        <i 
-                            *ngIf="proxy.selected"
-                            class="fa fa-check"
-                        >
+                        <i *ngIf="proxy.selected" class="fa fa-check">
                         </i>
                     </div>
-                    
-                    <div 
-                        class="panel"
-                        *ngIf="proxy.default; else elseBlock"
-                    >
-                        <div 
-                            class="item pn"
-                        >
+
+                    <div class="panel" *ngIf="proxy.default; else elseBlock">
+                        <div class="item pn">
                             <i class="fas fa-certificate"></i>
-                        </div>   
+                        </div>
                     </div>
-                    <ng-template
-                        #elseBlock
-                    >
+                    <ng-template #elseBlock>
                         <div class="panel">
-                            <div 
-                                class="item pn remove"
-                                (click)="removeProxy(idx)"
-                            >
+                            <div class="item pn remove" (click)="removeProxy(idx)">
                                 <i class="fas fa-trash-alt"></i>
-                            </div>  
+                            </div>
                         </div>
                         <div class="panel">
-                            <div 
-                                class="item pn change"
-                                (click)="setProxy(idx)"
-                            >
+                            <div class="item pn change" (click)="setProxy(idx)">
                                 <i class="fas fa-cog"></i>
-                            </div>  
+                            </div>
                         </div>
 
-                    </ng-template> 
+                    </ng-template>
                 </div>
             </div>
         </div>
     </app-modal>
-    <app-modal
-        *ngIf="displayModalAdd"
-        (closeModal)="closeModalAdd()"
-        (successModal)="addProxyItem()"
-        [txtSuccess]="newProxy.key ? txtSuccessSave : txtSuccessAdd"
-    >
+    <app-modal *ngIf="displayModalAdd" (closeModal)="closeModalAdd()" (successModal)="addProxyItem()"
+        [txtSuccess]="newProxy.key ? txtSuccessSave : txtSuccessAdd">
         <div class="add-proxy-content">
             <div class="add-header">
                 Add proxy
@@ -107,11 +77,7 @@
                         </span>
                     </div>
                     <div class="input-wrapper">
-                        <input 
-                            type="text"
-                            placeholder="0.0.0.0"
-                            [(ngModel)]="newProxy.host" #ctrl="ngModel"
-                        >
+                        <input type="text" placeholder="0.0.0.0" [(ngModel)]="newProxy.host" #ctrl="ngModel">
                     </div>
                 </div>
                 <div class="field">
@@ -121,29 +87,21 @@
                         </span>
                     </div>
                     <div class="input-wrapper">
-                        <input 
-                            type="text"
-                            placeholder="8899"
-                            [(ngModel)]="newProxy.port" #ctrl="ngModel"
-                        >
+                        <input type="text" placeholder="8899" [(ngModel)]="newProxy.port" #ctrl="ngModel">
                     </div>
                 </div>
                 <div class="field">
                     <div class="label">
                         <span>
-                            WS Port                            
+                            WS Port
                         </span>
                     </div>
                     <div class="input-wrapper">
-                        <input 
-                            type="text"
-                            placeholder="8099"
-                            [(ngModel)]="newProxy.wss" #ctrl="ngModel"
-                        >
+                        <input type="text" placeholder="8099" [(ngModel)]="newProxy.wss" #ctrl="ngModel">
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </app-modal>
 </div>
