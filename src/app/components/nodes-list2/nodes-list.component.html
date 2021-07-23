@@ -59,15 +59,28 @@
                         <span
                             *ngIf="!node.statistic.percent"
                         >
-                            —
+                         —
                         </span>
                     </td>
-                    <td><span></span></td>
+                    <td><span>
+                        {{node.status.difference ? node.status.difference : ''}}
+                    </span></td>
                     <td><span></span></td>
                     <td>   
-                        <div class="item stable good">
+                        <div 
+                            *ngIf="node.node.stable; else elseBlock"
+                            class="item stable good"
+                        >
                             <i class="fas fa-certificate"></i>
                         </div>
+                        <ng-template #elseBlock>
+                            <div 
+                                class="item unstable"
+                            >
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                        </ng-template>
+
                     </td>
 
                 </tr>

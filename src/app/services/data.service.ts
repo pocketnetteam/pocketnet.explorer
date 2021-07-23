@@ -139,5 +139,6 @@ export class DataService {
 
         this.node = node;
         localStorage.setItem('explorerNode', this.node);
+        location.reload()
     }
 }

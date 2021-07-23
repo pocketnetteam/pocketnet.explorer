@@ -16,4 +16,6 @@ export class NodesListComponent implements OnInit {
         return this.global;
     }
 
+    ngOnInit(){}
+
 }

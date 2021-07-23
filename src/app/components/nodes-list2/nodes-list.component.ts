@@ -23,7 +23,7 @@ export class NodesListComponent2 implements OnInit {
     }
 
     get nodes(){
-
+        console.log('nodes', this.dataService.nodes)
         return this.dataService.nodes;
 
     }
