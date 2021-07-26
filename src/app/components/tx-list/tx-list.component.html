@@ -5,6 +5,6 @@
     </div>
     
     <app-tx class="row" *ngFor="let tx of txs" [tx]="tx"></app-tx>
-    <app-loader *ngIf="loading"></app-loader>
+    <app-loader class="txExtLoading" *ngIf="loading"></app-loader>
 
 </div>

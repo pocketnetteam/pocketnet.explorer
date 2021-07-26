@@ -2,19 +2,13 @@
 
     <!-- Block header -->
     <div class="row">
-        <div 
-            class="section-top pointer"
-            (click)="toggleShow()"
-        >
+        <div class="section-top pointer" (click)="toggleShow()">
+            <a name=nodeListSection></a>
             <span class="title">
                 Pocketnet nodes
             </span>
-            <span 
-                class="icon"
-            >
-                <i 
-                    [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"
-                >
+            <span class="icon">
+                <i [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'">
                 </i>
             </span>
         </div>
@@ -25,11 +19,8 @@
 
 
     <!-- Peers list -->
-    <div 
-        [hidden]="!show"
-        class="row"
-    >
-        
+    <div [hidden]="!show" class="row">
+
         <table class="table table-sm table-borderless" style="min-width: 350px;">
             <thead>
                 <tr>
@@ -42,46 +33,26 @@
                     <th class="text-left th-empty"></th>
                 </tr>
             </thead>
-            <app-loader 
-                *ngIf="!nodes.length"
-                class="loader"
-            >
+            <app-loader *ngIf="!nodes.length" class="loader">
             </app-loader>
             <tbody>
-                <tr 
-                    *ngFor="let node of nodes; trackBy: trackByFn"
-                    [class]="!node.statistic.percent ? 'cantuse' : ''"
-                >
-                    <td
-                        (click)="selectNode(node.node.key)"
-                    >
-                        <div 
-                            *ngIf="selectedNode !== node.node.key" 
-                            class="use"
-                        >
-                            <i
-                                class="far fa-circle"
-                            ></i>    
+                <tr *ngFor="let node of nodes; trackBy: trackByFn" [class]="!node.statistic.percent ? 'cantuse' : ''">
+                    <td (click)="selectNode(node.node.key)">
+                        <div *ngIf="selectedNode !== node.node.key" class="use">
+                            <i class="far fa-circle"></i>
                         </div>
-                        <div 
-                            *ngIf="selectedNode === node.node.key" 
-                            class="use using"
-                        >
+                        <div *ngIf="selectedNode === node.node.key" class="use using">
                             <i class="fa fa-check-circle"></i>
                         </div>
                     </td>
                     <td><span>{{ node.node.name }}</span></td>
                     <td class="td-address"><span>{{ node.node.key + '/' + node.node.ws }}</span></td>
                     <td class="td-percent">
-                        <span
-                            *ngIf="node.statistic.percent"
-                        >
+                        <span *ngIf="node.statistic.percent">
                             {{ node.statistic.time.toFixed(0) + 'ms, ' + node.statistic.percent.toFixed(0) + ' %'}}
                         </span>
-                        <span
-                            *ngIf="!node.statistic.percent"
-                        >
-                         —
+                        <span *ngIf="!node.statistic.percent">
+                            —
                         </span>
                     </td>
                     <td class="td-difference">
@@ -90,17 +61,12 @@
                         </span>
                     </td>
                     <td class="td-empty"><span></span></td>
-                    <td class="td-stable">   
-                        <div 
-                            *ngIf="node.node.stable; else elseBlock"
-                            class="item stable good"
-                        >
+                    <td class="td-stable">
+                        <div *ngIf="node.node.stable; else elseBlock" class="item stable good">
                             <i class="fas fa-certificate"></i>
                         </div>
                         <ng-template #elseBlock>
-                            <div 
-                                class="item unstable"
-                            >
+                            <div class="item unstable">
                                 <i class="fas fa-bolt"></i>
                             </div>
                         </ng-template>
