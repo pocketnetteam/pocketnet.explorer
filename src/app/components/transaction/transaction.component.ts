@@ -18,7 +18,7 @@ export class TransactionComponent implements OnInit {
 
     ngOnInit() {
         this.dataService.getTransactions([this.txhash]).subscribe(data => {
-            this.tx = data['data']['result'][0];
+            this.tx = data['data'][0];
         });
     }
 
