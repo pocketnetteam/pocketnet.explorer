@@ -23,8 +23,8 @@
 
     <div class="row">
         <div class="col pt-2">
-            <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="(tx | txType) != ''">{{tx | txType}}</div>
-            <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="(tx | txType) == '' && !tx.coinstake && !tx.coinbase">Fee: {{tx | txFee | pkoin}}</div>
+            <div class="border-top ml-n2 mr-1 txvalues txvalues-info" *ngIf="(tx | txType) != ''">{{tx | txType}}</div>
+            <div class="border-top mr-1 txvalues txvalues-info" *ngIf="tx.type > 3">Fee: {{tx | txFee | pkoin}}</div>
             <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinstake">PoS transaction</div>
             <div class="border-top ml-n2 txvalues txvalues-info" *ngIf="tx.coinbase">Coinbase transaction</div>
             <div class="border-top ml-1 mr-n2 float-right txvalues txvalues-amount">{{ tx | txAmount | pkoin }}</div>

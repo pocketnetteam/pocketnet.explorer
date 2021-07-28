@@ -6,39 +6,45 @@ import { Transaction } from 'src/app/types/Transaction';
 })
 export class TxTypePipe implements PipeTransform {
 
-    private types: { [hex: string]: string } = {
-        '7570766f74655368617265': 'Score to Post',
-        '636f6d706c61696e5368617265': 'Complain',
-        '7368617265': 'Post',
-        '736861726565646974': 'Post Edit',
-        '737562736372696265': 'Subscribe',
-        '73756273637269626550726976617465': 'Subscribe Private',
-        '756e737562736372696265': 'Unsubscribe',
-        '75736572496e666f': 'User',
-        '626c6f636b696e67': 'Blocking',
-        '756e626c6f636b696e67': 'Unblocking',
+    private types: { [hex: number]: string } = {
+        0: 'Not Supported',
 
-        '636f6d6d656e74': 'Comment',
-        '636f6d6d656e7445646974': 'Comment Edit',
-        '636f6d6d656e7444656c657465': 'Comment Delete',
-        '6353636f7265': 'Score to Comment'
+        1: 'Money',
+        2: 'Coinbase',
+        3: 'Coinstake',
+
+        100: 'Account (User)',
+        101: 'Account (Video Server)',
+        102: 'Account (Message Server)',
+
+        200: 'Post',
+        201: 'Video',
+        202: 'Translate',
+        203: 'Server Ping',
+
+        204: 'Comment',
+        205: 'Comment (Edit)',
+        206: 'Comment (Delete)',
+
+        300: 'Score',
+        301: 'Score (Comment)',
+
+        302: 'Subscribe',
+        303: 'Subscribe (Private)',
+        304: 'Unsubscribe',
+
+        305: 'Blocking',
+        306: 'Unblocking',
+
+        307: 'Complain'
     }
 
     transform(tx: Transaction, args?: any): string {
-        // TODO (brangr): implement for new types
-        
-        // let asm = tx.vout[0].scriptPubKey.asm.split(' ');
-        // if (asm.length < 2) {
-        //     return '';
-        // } else {
-        //     if (this.types.hasOwnProperty(asm[1])) {
-        //         return this.types[asm[1]];
-        //     } else {
-        //         return '';
-        //     }
-        // }
-
-        return '';
+        if (this.types.hasOwnProperty(tx.type)) {
+            return this.types[tx.type];
+        } else {
+            return '';
+        }
     }
 
 }

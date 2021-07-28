@@ -46,6 +46,11 @@ export class TxListComponent implements OnInit {
     }
 
     loadMore() {
+        if (this.loading) return;
+        if (this.completed) return;
+
+        this.loading = true;
+
         if (this.addressHash != '')
             this.loadMoreAddress();
 
@@ -53,37 +58,28 @@ export class TxListComponent implements OnInit {
             this.loadMoreBlock();
     }
 
-    loadMoreAddress() {
-        if (this.loading) return;
-        if (this.completed) return;
-
-        this.loading = true;
-        this.dataService.getAddressTransactions(this.addressHash, this.pageInit, this.txs.length + 1, this.pageSize, data => {
-            if (data.length <= 0) {
-                this.completed = true;
-                return;
-            }
-
-            let _txs: Transaction[] = data
-            this.txs.push.apply(this.txs, _txs);
+    fillTransactions(data: any) {
+        if (data.length <= 0) {
+            this.completed = true;
             this.loading = false;
+            return;
+        }
+
+        let _txs: Transaction[] = data;
+        _txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 1 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
+        this.txs.push.apply(this.txs, _txs);
+        this.loading = false;
+    }
+
+    loadMoreAddress() {
+        this.dataService.getAddressTransactions(this.addressHash, this.pageInit, this.txs.length + 1, this.pageSize, data => {
+            this.fillTransactions(data);
         });
     }
 
     loadMoreBlock() {
-        if (this.loading) return;
-        if (this.completed) return;
-
-        this.loading = true;
         this.dataService.getBlockTransactions(this.blockHash, this.txs.length + 1, this.pageSize, data => {
-            if (data.length <= 0) {
-                this.completed = true;
-                return;
-            }
-
-            let _txs: Transaction[] = data
-            this.txs.push.apply(this.txs, _txs);
-            this.loading = false;
+            this.fillTransactions(data);
         });
     }
 

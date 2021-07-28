@@ -7,10 +7,17 @@ import { Transaction } from 'src/app/types/Transaction';
 export class TxFeePipe implements PipeTransform {
 
     transform(tx: Transaction): number {
-        // TODO (brangr): implement
-        // .fee/100000000
-        // sum(inp)-sum(out)
-        return 0;
+        let fee = 0;
+        
+        tx.vin.forEach((i) => {
+            fee += i.value;
+        });
+
+        tx.vout.forEach((o) => {
+            fee -= o.value;
+        });
+        
+        return fee/100000000;
     }
 
 }

@@ -7,10 +7,13 @@ import { Transaction } from 'src/app/types/Transaction';
 export class TxAmountPipe implements PipeTransform {
 
     transform(tx: Transaction): number {
-        // TODO (brangr): implement
-        // .amount/100000000
-        // sum(out) ?????? как считать? по инпутам или оутпутам?
-        return 0;
+        let amount = 0;
+        
+        tx.vout.forEach((o) => {
+            amount += o.value;
+        });
+        
+        return amount/100000000;
     }
 
 }
