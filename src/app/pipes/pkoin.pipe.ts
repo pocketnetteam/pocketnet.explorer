@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'poc'
+    name: 'pkoin'
 })
-export class PocPipe implements PipeTransform {
+export class PKoinPipe implements PipeTransform {
 
     transform(value: number, minFraction: number = 0, maxFraction: number = 8): string {
         let options = { minimumFractionDigits: minFraction, maximumFractionDigits: maxFraction };

@@ -17,8 +17,8 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "deployUrl": "/blockexplorer/",
-                        "baseHref": "/blockexplorer/",
+                        "deployUrl": "/explorer/",
+                        "baseHref": "/explorer/",
                         "outputPath": "dist/blockexplorer",
                         "index": "src/index.html",
                         "main": "src/main.ts",

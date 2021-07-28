@@ -63,8 +63,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         console.log('endTime', endTime);
 
         // let beg_time: Number = Math.floor(+cur_date / 1000);
-        this.dataService.getStatistic(Math.floor(+endTime / 1000), Math.floor(+startTime / 1000), round).subscribe(data => {
-            this.statisticData = data['data'];
+        this.dataService.getStatistic(Math.floor(+endTime / 1000), Math.floor(+startTime / 1000), round, data => {
+            this.statisticData = data;
             this.fillChartUsers(this.statisticData);
             this.fillChartEvents(this.statisticData);
         });

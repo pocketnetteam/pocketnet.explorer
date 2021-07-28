@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Transaction } from 'src/app/types/Transaction';
 
 @Pipe({
-    name: 'poc_type'
+    name: 'txType'
 })
-export class PocTypePipe implements PipeTransform {
+export class TxTypePipe implements PipeTransform {
 
     private types: { [hex: string]: string } = {
         '7570766f74655368617265': 'Score to Post',
@@ -25,16 +25,20 @@ export class PocTypePipe implements PipeTransform {
     }
 
     transform(tx: Transaction, args?: any): string {
-        let asm = tx.vout[0].scriptPubKey.asm.split(' ');
-        if (asm.length < 2) {
-            return '';
-        } else {
-            if (this.types.hasOwnProperty(asm[1])) {
-                return this.types[asm[1]];
-            } else {
-                return '';
-            }
-        }
+        // TODO (brangr): implement for new types
+        
+        // let asm = tx.vout[0].scriptPubKey.asm.split(' ');
+        // if (asm.length < 2) {
+        //     return '';
+        // } else {
+        //     if (this.types.hasOwnProperty(asm[1])) {
+        //         return this.types[asm[1]];
+        //     } else {
+        //         return '';
+        //     }
+        // }
+
+        return '';
     }
 
 }

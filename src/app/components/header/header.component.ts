@@ -46,9 +46,9 @@ export class HeaderComponent implements OnInit {
     searchEnter(value: string) {
         if (value.length == 34 || value.length == 64) {
             // Address
-            this.dataService.checkStringType(value).subscribe(data => {
-                if (data && data['data'] && data['data']['type'] != 'notfound') {
-                    this.router.navigate([`${data['data']['type']}`, value])
+            this.dataService.checkStringType(value, data => {
+                if (data && data && data['type'] != 'notfound') {
+                    this.router.navigate([`${data['type']}`, value])
                 }
             });
         }

@@ -43,19 +43,13 @@ export class NodesListSelectComponent implements OnInit {
     
 
     ngOnInit(){
-        this.dataService.getNodes().subscribe((res: any) => {
-            
+        this.dataService.getNodes((res: any) => {
             try {
-
-                const nodes = res.data.info.nodeManager.nodes
-
+                const nodes = res.info.nodeManager.nodes
                 if (nodes){
                     this.dataService.setNodes(Object.values(nodes))
                 }
-
-
             } catch(err){
-
                 console.log('err', err);
             }
 

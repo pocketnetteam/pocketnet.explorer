@@ -13,7 +13,7 @@
         </div>
 
         <div class="row address_balance_row">
-            {{address.unspent/100000000 | round:3 | poc:0:3}}
+            {{address.unspent/100000000 | round:3 | pkoin:0:3}}
         </div>
     </div>
 
@@ -27,15 +27,15 @@
                 <table class="table table-sm" style="table-layout: fixed">
                     <tr>
                         <td>Total Received</td>
-                        <td class="text-right text-muted">{{(address.spent + address.unspent)/100000000 | poc}}</td>
+                        <td class="text-right text-muted">{{(address.spent + address.unspent)/100000000 | pkoin}}</td>
                     </tr>
                     <tr>
                         <td>Total Sent</td>
-                        <td class="text-right text-muted">{{address.spent/100000000 | poc}}</td>
+                        <td class="text-right text-muted">{{address.spent/100000000 | pkoin}}</td>
                     </tr>
                     <tr>
                         <td>Final Balance</td>
-                        <td class="text-right text-muted">{{address.unspent/100000000 | poc}}</td>
+                        <td class="text-right text-muted">{{address.unspent/100000000 | pkoin}}</td>
                     </tr>
                     <tr>
                         <td>No. Transactions</td>
@@ -46,6 +46,6 @@
         </div>
     </div>
 
-    <app-tx-list class="row rowBlock" *ngIf="address" [in_txids]="address.txids"></app-tx-list>
+    <app-tx-list class="row rowBlock" *ngIf="address" [in_addressHash]="addresshash"></app-tx-list>
     
 </div>

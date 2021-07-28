@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-
 import { Transaction } from 'src/app/types/Transaction';
-
+import { Globals } from 'src/app/globals';
 
 @Component({
     selector: 'app-tx-list',
@@ -12,35 +11,77 @@ import { Transaction } from 'src/app/types/Transaction';
 })
 export class TxListComponent implements OnInit {
     loading = false;
-    txids: string[] = [];
+    completed = false;
+    addressHash: string = '';
+    blockHash: string = '';
     txs: Transaction[] = [];
-    start: number = 0;
-    pagesize: number = 10;
+    pageInit: number = 0;
+    pageStart: number = 0;
+    pageSize: number = 10;
 
     @Input()
-    set in_txids(p_txids: string[]) {
-        this.txids = p_txids;
+    set in_addressHash(addresshash: string) {
+        this.addressHash = addresshash;
         this.loadMore();
     }
 
-    constructor(private dataService: DataService) { }
+    @Input()
+    set in_blockHash(blockhash: string) {
+        this.blockHash = blockhash;
+        this.loadMore();
+    }
+
+    constructor(private dataService: DataService,
+        private global: Globals
+    ) {
+        this.pageInit = global.blockchainInfo.lastblock.height;
+    }
 
     ngOnInit() {
 
     }
 
-    loadMore() {
-        if (this.loading) return;
-        if (this.txs.length >= this.txids.length) return;
+    get Global() : Globals {
+        return this.global;
+    }
 
-        this.start = this.txs.length;
-        let _end = this.start + this.pagesize;
-        if (_end > this.txids.length) _end = this.txids.length;
-        let _txids = this.txids.slice(this.start, _end);
+    loadMore() {
+        if (this.addressHash != '')
+            this.loadMoreAddress();
+
+        if (this.blockHash != '')
+            this.loadMoreBlock();
+    }
+
+    loadMoreAddress() {
+        if (this.loading) return;
+        if (this.completed) return;
 
         this.loading = true;
-        this.dataService.getTransactions(_txids).subscribe(data => {
-            let _txs: Transaction[] = data['data']
+        this.dataService.getAddressTransactions(this.addressHash, this.pageInit, this.txs.length + 1, this.pageSize, data => {
+            if (data.length <= 0) {
+                this.completed = true;
+                return;
+            }
+
+            let _txs: Transaction[] = data
+            this.txs.push.apply(this.txs, _txs);
+            this.loading = false;
+        });
+    }
+
+    loadMoreBlock() {
+        if (this.loading) return;
+        if (this.completed) return;
+
+        this.loading = true;
+        this.dataService.getBlockTransactions(this.blockHash, this.txs.length + 1, this.pageSize, data => {
+            if (data.length <= 0) {
+                this.completed = true;
+                return;
+            }
+
+            let _txs: Transaction[] = data
             this.txs.push.apply(this.txs, _txs);
             this.loading = false;
         });

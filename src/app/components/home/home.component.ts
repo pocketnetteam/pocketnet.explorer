@@ -35,9 +35,9 @@ export class HomeComponent implements OnInit {
 
     updateLastBlocks(last: number = -1) {
         this.loading = true;
-        this.dataService.getLastBlocks(10, last, true).subscribe(data => {
+        this.dataService.getLastBlocks(10, last, true, data => {
             this.loading = false;
-            this.blocks = data['data'].map(block => ({...block, types: block.types || {}}));
+            this.blocks = data.map(block => ({...block, types: block.types || {}}));
         });
     }
 

@@ -3,15 +3,6 @@ class ScriptSig {
     public hex: string;
 }
 
-export class Vin {
-    public txid: string;
-    public vout: number;
-    public address: string;
-    public value: number;
-    public scriptSig: ScriptSig;
-    public sequence: number;
-}
-
 class ScriptPubKey {
     public asm: string;
     public hex: string;
@@ -20,30 +11,27 @@ class ScriptPubKey {
     public addresses: string[];
 }
 
+export class Vin {
+    public txid: string;
+    public vout: number;
+    public address: string;
+    public value: number;
+}
+
 export class Vout {
     public value: number;
     public n: number;
-    public scriptPubKey: ScriptPubKey;
+    public address: string;
 }
 
 export class Transaction {
+    public rowNumber: number;
+    public type: number;
     public txid: string;
-    public hash: string;
-    public version: number;
     public nTime: number;
-    public fee: number;
-    public amount: number;
-    public size: number;
-    public vsize: number;
-    public weight: number;
-    public locktime: string;
-    public coinbase: boolean;
-    public coinstake: boolean;
+    public height: number;
     public vin: Vin[];
     public vout: Vout[];
-    public hex: string;
-    public blockhash: string;
-    public height: number;
 }
 
 /*

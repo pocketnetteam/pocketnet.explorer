@@ -19,8 +19,10 @@ import { TxComponent } from './components/tx/tx.component';
 import { AddressComponent } from './components/address/address.component';
 import { VoutComponent } from './components/tx/vout/vout.component';
 import { VinComponent } from './components/tx/vin/vin.component';
-import { PocPipe } from './pipes/poc.pipe';
-import { PocTypePipe } from './pipes/poc_type.pipe';
+import { PKoinPipe } from './pipes/pkoin.pipe';
+import { TxTypePipe } from './pipes/txtype.pipe';
+import { TxFeePipe } from './pipes/txfee.pipe';
+import { TxAmountPipe } from './pipes/txamount.pipe';
 import { BlockListComponent } from './components/block-list/block-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { Globals } from 'src/app/globals';
@@ -59,8 +61,10 @@ import { ToastrModule } from 'ngx-toastr';
         AddressesComponent,
         VoutComponent,
         VinComponent,
-        PocPipe,
-        PocTypePipe,
+        PKoinPipe,
+        TxTypePipe,
+        TxFeePipe,
+        TxAmountPipe,
         BlockListComponent,
         FooterComponent,
         TimeAgoPipe,

@@ -41,8 +41,8 @@ export class AppComponent implements OnInit {
     }
 
     updatePeersInfo() {
-        this.dataService.getPeerInfo().subscribe(data => {
-            let peers = data['data'];
+        this.dataService.getPeerInfo(data => {
+            let peers = data;
             this.global.peersinfo = [];
             console.log('this.gloabl', this.global.peersinfo)
             peers.forEach(peer => {
@@ -56,8 +56,8 @@ export class AppComponent implements OnInit {
 
 
     updateBlockchainInfo() {
-        this.dataService.getBlockchainInfo().subscribe(data => {
-            this.global.blockchainInfo = data['data']
+        this.dataService.getBlockchainInfo(data => {
+            this.global.blockchainInfo = data
             localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
         });
     }
