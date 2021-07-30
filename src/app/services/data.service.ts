@@ -32,7 +32,7 @@ export class DataService {
 
     public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = '192.168.0.33:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private node = 'localhost:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
 
     public nodes: any[] = []
 
