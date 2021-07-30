@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { DataService } from 'src/app/services/data.service';
+import { Globals } from 'src/app/globals';
+import { stringify } from 'querystring';
 
 Highcharts.setOptions({
 });
@@ -15,10 +17,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     canvas: any;
     ctx: any;
     statisticData: any;
-    statPeriod: any = 3;
+    statPeriod: any = 2;
     show: boolean = true;
 
-    constructor(private dataService: DataService) { }
+    constructor(private dataService: DataService,
+        private global: Globals) { }
+
+    get Global() : Globals {
+        return this.global;
+    }
 
     ngOnInit() {
     }
@@ -32,41 +39,16 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     loadData() {
-        let round: Number = 3600;
+        let endTime = this.Global.blockchainInfo.lastblock.time;
 
-        let startTime: Date = new Date();
-        startTime.setHours(0, 0, 0, 0);
-
-        let endTime: Date = new Date();
-        endTime.setHours(0, 0, 0, 0);
-
-        if (this.statPeriod == 1) {
-            endTime.setHours((new Date()).getHours(), 0, 0, 0);
-            startTime.setHours((new Date()).getHours() - 1, 0, 0, 0);
-            startTime.setDate(startTime.getDate() - 1);
-            round = 3600;
-        }
-
-        if (this.statPeriod == 2) {
-            endTime.setDate((new Date()).getDate());
-            startTime.setDate(startTime.getDate() - 7);
-            round = 24 * 3600;
-        }
-
-        if ([3,4,5].indexOf(this.statPeriod) >= 0) {
-            endTime.setHours(0, 0, 0, 0);
-            startTime.setMonth(startTime.getMonth() - (this.statPeriod - 2));
-            round = 24 * 3600;
-        }
-
-        console.log('startTime', startTime);
-        console.log('endTime', endTime);
-
-        // let beg_time: Number = Math.floor(+cur_date / 1000);
-        this.dataService.getStatistic(Math.floor(+endTime / 1000), Math.floor(+startTime / 1000), round, data => {
+        this.dataService.getStatistic(endTime, this.statPeriod, data => {
             this.statisticData = data;
-            this.fillChartUsers(this.statisticData);
-            this.fillChartEvents(this.statisticData);
+            this.fillChartUsers(this.statisticData.users);
+            this.fillChartEvents(this.statisticData.txs);
+
+            setTimeout(() => {
+                this.loadData();
+            }, this.global.updateInterval);
         });
     }
 
@@ -75,7 +57,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             return '%b %e, %Y %H:00';
 
         if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y';        
+            return '%b %e, %Y';
     }
 
     formatLabel() {
@@ -95,16 +77,16 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         let self = this;
 
         for (let x in data) {
-            let _x = data[x];
-            let utcDate = new Date(+x * 1000);
-            utcDate.setHours(utcDate.getHours() + 1);
-            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
-            categories.push(utcDate);
+            if (Object.keys(data)[Object.keys(data).length - 1] == x)
+                break;
 
-            for (let y in _x) {
+            categories.push(x);
+
+            for (let y in data[x]) {
                 if (!(y in _datasets)) {
                     let _caption = y;
-                    if (_caption != 'UsersAcc') continue;
+
+                    // TODO (brangr): implement caption by type
 
                     _datasets[y] = {
                         name: _caption,
@@ -112,7 +94,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     };
                 }
 
-                _datasets[y].data.push(_x[y]);
+                _datasets[y].data.push(data[x][y]);
             }
         }
 
@@ -137,7 +119,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 type: 'datetime',
                 labels: {
-                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
+                    formatter: function () { return String(this.value); },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -155,7 +137,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
+                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ points[0].key }</b></span><br/>` : ``;
                     let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
@@ -172,7 +154,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     }
                 },
                 series: {
-                    connectNulls: true
+                    connectNulls: true,
+                    animation: false
                 }
             },
             series: datasets,
@@ -208,13 +191,14 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         let self = this;
 
         for (let x in data) {
-            let _x = data[x];
-            let utcDate = new Date(+x * 1000);
-            utcDate.setHours(utcDate.getHours() + 1);
-            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
-            categories.push(utcDate);
+            if (Object.keys(data)[Object.keys(data).length - 1] == x)
+                break;
 
-            for (let y in _x) {
+            categories.push(x);
+
+            for (let y in data[x]) {
+                if (y == '3') continue;
+
                 if (!(y in _datasets)) {
                     let _caption = y;
                     if (_caption == 'UsersAcc') continue;
@@ -230,7 +214,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     };
                 }
 
-                _datasets[y].data.push(_x[y]);
+                _datasets[y].data.push(data[x][y]);
             }
         }
 
@@ -255,7 +239,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 type: 'datetime',
                 labels: {
-                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
+                    formatter: function () { return String(this.value); },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -273,7 +257,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
+                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ points[0].key }</b></span><br/>` : ``;
                     let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
@@ -290,7 +274,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     }
                 },
                 series: {
-                    connectNulls: true
+                    connectNulls: true,
+                    animation: false
                 }
             },
             series: datasets,

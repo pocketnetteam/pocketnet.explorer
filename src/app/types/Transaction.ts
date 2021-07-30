@@ -34,6 +34,39 @@ export class Transaction {
     public vout: Vout[];
 }
 
+export const enum Types {
+    NotSupported = 0,
+
+    Money = 1,
+    Coinbase = 2,
+    Coinstake = 3,
+
+    AccountUser = 100,
+    AccountVideoServer = 101,
+    AccountMessageServer = 102,
+
+    Post = 200,
+    Video = 201,
+    Translate = 202,
+    ServerPing = 203,
+
+    Comment = 204,
+    CommentEdit = 205,
+    CommentDelete = 206,
+
+    Score = 300,
+    ScoreComment = 301,
+
+    Subscribe = 302,
+    SubscribePrivate = 303,
+    Unsubscribe = 304,
+
+    Blocking = 305,
+    Unblocking = 306,
+
+    Complain = 307,
+}
+
 /*
 
 {

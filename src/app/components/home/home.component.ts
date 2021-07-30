@@ -14,19 +14,14 @@ export class HomeComponent implements OnInit {
     freeze = false;
     updater: any;
 
-    private updateInterval = 60 * 1000;
-
     constructor(private dataService: DataService, private global: Globals) { }
 
     ngOnInit() {
         this.updateLastBlocks();
-        this.start_update();
     }
 
     start_update() {
-        this.updater = setInterval(() => {
-            this.updateLastBlocks();
-        }, this.updateInterval);
+        this.updateLastBlocks();
     }
 
     stop_update() {
@@ -37,7 +32,11 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         this.dataService.getLastBlocks(10, last, true, data => {
             this.loading = false;
-            this.blocks = data.map(block => ({...block, types: block.types || {}}));
+            this.blocks = data;
+
+            this.updater = setTimeout(() => {
+                this.updateLastBlocks();
+            }, this.global.updateInterval);
         });
     }
 
@@ -49,8 +48,8 @@ export class HomeComponent implements OnInit {
             last = Math.max.apply(Math, this.blocks.map(function(b) { return b.height; })) + diff;
 
             
-            if (last >= (this.global.blockchainInfo ? this.global.blockchainInfo.blocks : 0)) {
-                last = this.global.blockchainInfo.blocks;
+            if (last >= (this.global.blockchainInfo ? this.global.blockchainInfo.lastblock.height : 0)) {
+                last = this.global.blockchainInfo.lastblock.height;
                 this.start_update();
             }
 
@@ -61,6 +60,10 @@ export class HomeComponent implements OnInit {
             this.start_update();
         }
 
-        this.updateLastBlocks(last);
+        this.loading = true;
+        this.dataService.getLastBlocks(10, last, true, data => {
+            this.loading = false;
+            this.blocks = data;
+        });
     }
 }

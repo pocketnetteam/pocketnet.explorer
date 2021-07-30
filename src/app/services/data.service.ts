@@ -153,11 +153,11 @@ export class DataService {
         );
     }
 
-    getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24, success: Function = () => {}, failed: Function = () => {}) {
+    getStatistic(end_time: Number = 0, depth: Number = 1, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
             this.http.post(this.apiUrlRoot, {
                 method: 'getstatistic',
-                params: [end_time, start_time, round] 
+                params: [end_time, depth] 
             }),
             success, failed
         );

@@ -58,22 +58,21 @@
                             {{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                         <td class="text-right">{{ bc.ntx }}</td>
                             
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.users}">
-                            {{ bc.types.users || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.posts}">
-                            {{ bc.types.posts || '-' }}</td>
-                        <td class="text-right poc_type"
-                            [ngClass]="{'empty': (!bc.types.scores && !bc.types.commentScores)}">
-                            {{ (bc.types.scores||0) + (bc.types.commentScores||0) || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.subscribes}">
-                            {{ bc.types.subscribes || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.comments}">
-                            {{ bc.types.comments || '-' }}
+                        <td class="text-right poc_type" [ngClass]="{'empty': !(bc | AccountsCnt)}">
+                            {{ (bc | AccountsCnt) || '-' }}</td>
+                        <td class="text-right poc_type" [ngClass]="{'empty': !(bc | ContentsCnt)}">
+                            {{ (bc | ContentsCnt) || '-' }}</td>
+                        <td class="text-right poc_type" [ngClass]="{'empty': !(bc | ScoresCnt)}">
+                            {{ (bc | ScoresCnt) || '-' }}</td>
+                        <td class="text-right poc_type" [ngClass]="{'empty': !(bc | SubscribesCnt)}">
+                            {{ (bc | SubscribesCnt) || '-' }}</td>
+                        <td class="text-right poc_type" [ngClass]="{'empty': !(bc | CommentsCnt)}">
+                            {{ (bc | CommentsCnt) || '-' }}
                         </td>
 
                         <!-- <td class="text-right">{{ bc.size | number }}</td> -->
                         <td class="text-right poc_type">
-                            {{ bc.ntx-(bc.types.users||0)-(bc.types.posts||0)-(bc.types.scores||0)-(bc.types.subscribes||0)-(bc.types.comments||0)-(bc.types.commentScores||0) }}
+                            {{ bc.ntx - (bc | AccountsCnt) - (bc | ContentsCnt) - (bc | ScoresCnt) - (bc | SubscribesCnt) - (bc | CommentsCnt) }}
                         </td>
                     </tr>
                 </tbody>

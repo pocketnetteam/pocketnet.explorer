@@ -19,6 +19,13 @@ import { TxComponent } from './components/tx/tx.component';
 import { AddressComponent } from './components/address/address.component';
 import { VoutComponent } from './components/tx/vout/vout.component';
 import { VinComponent } from './components/tx/vin/vin.component';
+
+import { AccountsCntPipe } from './pipes/blockTxCount/accounts.pipe';
+import { ScoresCntPipe } from './pipes/blockTxCount/scores.pipe';
+import { ContentsCntPipe } from './pipes/blockTxCount/contents.pipe';
+import { CommentsCntPipe } from './pipes/blockTxCount/comments.pipe';
+import { SubscribesCntPipe } from './pipes/blockTxCount/subscribes.pipe';
+
 import { PKoinPipe } from './pipes/pkoin.pipe';
 import { TxTypePipe } from './pipes/txType.pipe';
 import { TxFeePipe } from './pipes/txFee.pipe';
@@ -61,6 +68,11 @@ import { ToastrModule } from 'ngx-toastr';
         AddressesComponent,
         VoutComponent,
         VinComponent,
+        AccountsCntPipe,
+        ContentsCntPipe,
+        CommentsCntPipe,
+        ScoresCntPipe,
+        SubscribesCntPipe,
         PKoinPipe,
         TxTypePipe,
         TxFeePipe,

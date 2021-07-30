@@ -9,7 +9,6 @@ import { Globals } from 'src/app/globals';
 })
 export class AppComponent implements OnInit {
     title = 'Pocketcoin (PKOIN) Explorer';
-    updateBCInfo = 60000;
 
     constructor(private dataService: DataService, private global: Globals) {
 
@@ -32,9 +31,9 @@ export class AppComponent implements OnInit {
             }
         }
 
-        setInterval(() => {
-            this.updateBlockchainInfo();
-        }, this.updateBCInfo);
+        // setInterval(() => {
+        //     this.updateBlockchainInfo();
+        // }, this.updateBCInfo);
 
         this.updateBlockchainInfo();
         this.updatePeersInfo();
@@ -59,6 +58,10 @@ export class AppComponent implements OnInit {
         this.dataService.getBlockchainInfo(data => {
             this.global.blockchainInfo = data
             localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
+
+            setTimeout(() => {
+                this.updateBlockchainInfo();
+            }, this.global.updateInterval);
         });
     }
 
