@@ -30,13 +30,14 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = window.location.host;
+    public currentLocation: any = '192.168.0.15:37171' || window.location.host;
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = '192.168.0.15:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private defaultNode = localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private node =  this.useProxy ? this.defaultNode : this.currentLocation;
 
     public nodes: any[] = []
 
