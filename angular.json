@@ -74,7 +74,7 @@
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "blockexplorer:build:production"
+                            "browserTarget": "blockexplorer:build:production",
                         }
                     }
                 },

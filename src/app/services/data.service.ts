@@ -30,16 +30,34 @@ export class DataService {
         }
     ];
 
-    public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+    public currentLocation: any = {
+        host: window.location.hostname,
+        port: window.location.port,
+        wss: '',
+        key: window.location.host
+    }
+
+    public useProxy: string | null = localStorage.getItem('explorerUseProxy')
+
+    public currentProxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+
+    public proxy = this.useProxy ? this.currentProxy : this.currentLocation 
+
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node = '192.168.0.15:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
 
     public nodes: any[] = []
 
+
     constructor(private http: HttpClient, private hex: HexService) { }
+
 
     get selectedNode(){
         return this.node
+    }
+
+    get selectedCurrentProxy(){
+        return 'https://' + this.currentProxy.host + ':' + this.currentProxy.port 
     }
     
     get selectedProxy(){
@@ -52,6 +70,25 @@ export class DataService {
 
     get apiUrlRoot() {
         return `http://${this.node}/public/`;
+    }
+    
+    changeUseProxy(){
+
+        if (this.useProxy){
+
+            localStorage.removeItem('explorerUseProxy');
+
+        } else {
+
+            localStorage.setItem('explorerUseProxy', 'true');
+        }
+
+        location.reload();
+    }
+
+    checkProxy(url: string){
+
+        return this.http.get(url + '/ping');
     }
 
     _execute(request: Observable<Object>, success: Function = () => {}, failed: Function = () => {}) {
@@ -214,4 +251,6 @@ export class DataService {
         localStorage.setItem('explorerNode', this.node);
         location.reload()
     }
+
+
 }
