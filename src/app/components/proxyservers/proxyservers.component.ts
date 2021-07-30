@@ -20,6 +20,7 @@ export class ProxyserversComponent implements OnInit {
     txtSuccessSelect: string = 'Add proxy';
     txtSuccessAdd: string = 'Add';
     txtSuccessSave: string = 'Save';
+    useproxy: null | string = localStorage.getItem('')
 
     displayModalSelect: boolean = false;
 
@@ -36,6 +37,11 @@ export class ProxyserversComponent implements OnInit {
         wss: '8099'
     }
 
+    get useProxy(){
+
+        return this.dataService.useProxy;
+    }
+
     get defaultProxies(){
         return this.dataService.defaultProxies
     }
@@ -49,9 +55,9 @@ export class ProxyserversComponent implements OnInit {
         return this.dataService.proxy;
     }
 
-    get selectedProxy(): string {
+    get selectedCurrentProxy(): string {
 
-        return this.dataService.selectedProxy;
+        return this.dataService.selectedCurrentProxy;
     }
 
 
@@ -67,6 +73,11 @@ export class ProxyserversComponent implements OnInit {
 
     }
 
+    changeUseProxy(){
+
+        this.dataService.changeUseProxy();
+
+    }    
     showError(err) {
         this.toastr.error(err);
     }

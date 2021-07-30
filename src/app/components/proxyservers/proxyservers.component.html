@@ -12,6 +12,15 @@
 
     <!-- List header -->
     <div class="row">
+        <div class="primary-checkbox">
+            <input
+                [checked]="useProxy"
+                type="checkbox" 
+                id="primary" 
+                (click)="changeUseProxy()"
+            />
+            <label for="primary"></label>
+          </div>
         <div class="column label">
             Use proxy: 
         </div>
@@ -19,7 +28,7 @@
             class="column value"
             (click)="openModalSelect('selectedUse')"
         >
-            {{selectedProxy}}
+            {{selectedCurrentProxy}}
         </div>
     </div>
     <app-modal
