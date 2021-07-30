@@ -60,9 +60,9 @@ export class ProxyserversComponent implements OnInit {
         return this.dataService.proxy;
     }
 
-    get selectedCurrentProxy(): string {
+    get selectedProxy(): string {
 
-        return this.dataService.selectedCurrentProxy;
+        return this.dataService.selectedProxy;
     }
 
 

@@ -30,18 +30,10 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = {
-        host: window.location.hostname,
-        port: window.location.port,
-        wss: '',
-        key: window.location.host
-    }
-
+    public currentLocation: any = window.location.host;
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
-    public currentProxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
-
-    public proxy = this.useProxy ? this.currentProxy : this.currentLocation 
+    public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private node = '192.168.0.15:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
@@ -54,10 +46,6 @@ export class DataService {
 
     get selectedNode(){
         return this.node
-    }
-
-    get selectedCurrentProxy(){
-        return 'https://' + this.currentProxy.host + ':' + this.currentProxy.port 
     }
     
     get selectedProxy(){
