@@ -71,7 +71,7 @@ export class DataService {
     get apiUrlRoot() {
         return `http://${this.node}/public/`;
     }
-    
+
     changeUseProxy(){
 
         if (this.useProxy){
@@ -84,11 +84,6 @@ export class DataService {
         }
 
         location.reload();
-    }
-
-    checkProxy(url: string){
-
-        return this.http.get(url + '/ping');
     }
 
     _execute(request: Observable<Object>, success: Function = () => {}, failed: Function = () => {}) {
