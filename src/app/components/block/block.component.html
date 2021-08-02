@@ -22,7 +22,7 @@
             </div>
 
             <div class="row d-none d-md-flex">
-                <div class="col-6">
+                <div class="col-4">
                     <table class="table table-sm" style="table-layout: fixed">
                         <tr>
                             <td>Transactions</td>
@@ -36,14 +36,6 @@
                             <td>Time</td>
                             <td class="text-right text-muted">{{block.time * 1000 | date:'MM/dd/yyyy HH:mm:ss'}}</td>
                         </tr>
-                        <tr>
-                            <td>Merkle Root</td>
-                            <td class="text-right text-muted">
-                                <div class="ellipsis">
-                                    <span>{{block.merkleroot}}</span>
-                                </div>
-                            </td>
-                        </tr>
                         <tr *ngIf="block.previousblockhash">
                             <td>Previous Block</td>
                             <td class="text-right"><a href="block/{{block.previousblockhash}}">{{block.height-1}}</a>
@@ -51,7 +43,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <table class="table table-sm" style="table-layout: fixed">
                         <tr>
                             <td>Difficulty</td>
@@ -62,12 +54,12 @@
                             <td class="text-right text-muted">{{block.bits}}</td>
                         </tr>
                         <tr>
-                            <td>Size (bytes)</td>
-                            <td class="text-right text-muted">{{ block.size | number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Version</td>
-                            <td class="text-right text-muted">{{block.version}}</td>
+                            <td>Merkle Root</td>
+                            <td class="text-right text-muted">
+                                <div class="ellipsis">
+                                    <span>{{block.merkleroot}}</span>
+                                </div>
+                            </td>
                         </tr>
                         <tr *ngIf="block.nextblockhash">
                             <td>Next block</td>
@@ -107,14 +99,6 @@
                         <tr>
                             <td>Bits</td>
                             <td class="text-right text-muted">{{block.bits}}</td>
-                        </tr>
-                        <tr>
-                            <td>Size (bytes)</td>
-                            <td class="text-right text-muted">{{ block.size | number }}</td>
-                        </tr>
-                        <tr>
-                            <td>Version</td>
-                            <td class="text-right text-muted">{{block.version}}</td>
                         </tr>
 
                         <tr *ngIf="block.previousblockhash">

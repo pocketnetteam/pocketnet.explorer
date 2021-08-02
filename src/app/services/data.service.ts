@@ -30,7 +30,7 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = window.location.host || '192.168.0.15:37171';
+    public currentLocation: any = '192.168.0.33:37171'; //window.location.host || 
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
@@ -101,11 +101,11 @@ export class DataService {
         return this.http.get(this.explorerUrl + 'topaddresses/30.json');
     }
 
-    getBlock(hash: string, verbose: boolean=true, success: Function = () => {}, failed: Function = () => {}) {
+    getCompactBlock(hash: string, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
             this.http.post(this.apiUrlRoot, {
-                method: 'getblock',
-                params: [ hash, (verbose ? 1 : 0) ]
+                method: 'getcompactblock',
+                params: [ hash ]
             }),
             success, failed
         );        
@@ -140,6 +140,17 @@ export class DataService {
             this.http.post(this.apiUrlRoot, {
                 method: 'getblocktransactions',
                 params: [ block, pageStart, pageSize ]
+            }),
+            success, failed
+        );
+    }
+
+    getTransactions(hashes: string[], success: Function = () => {}, failed: Function = () => {})
+    {
+        this._execute(
+            this.http.post(this.apiUrlRoot, {
+                method: 'gettransactions',
+                params: [ hashes ]
             }),
             success, failed
         );

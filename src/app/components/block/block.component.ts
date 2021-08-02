@@ -19,7 +19,7 @@ export class BlockComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataService.getBlock(this.blockhash, true, data => {
+        this.dataService.getCompactBlock(this.blockhash, data => {
             this.block = data
         });
     }

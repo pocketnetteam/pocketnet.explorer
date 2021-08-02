@@ -23,8 +23,8 @@
             <div class="row">
                 <table class="table table-sm">
                     <tr>
-                        <td>Size</td>
-                        <td class="text-right text-muted">{{tx.size}}</td>
+                        <td>Type</td>
+                        <td class="text-right text-muted">{{tx | txType}}</td>
                     </tr>
                     <tr>
                         <td>Time</td>
@@ -32,7 +32,7 @@
                     </tr>
                     <tr>
                         <td>Block</td>
-                        <td class="text-right text-muted"><a href="block/{{tx.blockhash}}">{{tx.blockhash}}</a></td>
+                        <td class="text-right text-muted"><a href="block/{{tx.blockHash}}">{{tx.blockHash}}</a></td>
                     </tr>
                 </table>
                 

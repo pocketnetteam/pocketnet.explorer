@@ -30,6 +30,7 @@ export class Transaction {
     public txid: string;
     public nTime: number;
     public height: number;
+    public blockHash: string;
     public vin: Vin[];
     public vout: Vout[];
 }
