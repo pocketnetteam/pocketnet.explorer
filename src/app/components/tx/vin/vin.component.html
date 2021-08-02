@@ -1,8 +1,14 @@
 <div class="row">
-    <div class="w-100 mx-2 p-2 bg-white border rounded">
+
+    <div class="w-100 mx-2 px-2 border-top border-left border-right rounded-top vinHead">
+        <a href="transaction/{{vin.txid}}">{{vin.txid}}</a>
+    </div>
+    
+    <div class="w-100 mx-2 p-2 bg-white border rounded-bottom">
         <span class="float-left"><a href="address/{{vin.address}}">{{vin.address}}</a></span>
         <span class="float-right">{{vin.value/100000000 | pkoin}}</span>
     </div>
+
 </div>
 <div class="row" *ngIf="extend">
 

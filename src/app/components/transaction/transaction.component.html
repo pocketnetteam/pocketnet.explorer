@@ -40,6 +40,7 @@
         </div>
     </div>
 
-    <app-tx-list class="row rowBlock" *ngIf="tx"></app-tx-list>
+    <!-- <app-tx-list class="row rowBlock" *ngIf="tx"></app-tx-list> -->
+    <app-tx class="row" [tx]="tx"></app-tx>
     
 </div>
