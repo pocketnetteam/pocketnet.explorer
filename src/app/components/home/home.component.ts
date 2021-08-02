@@ -16,6 +16,10 @@ export class HomeComponent implements OnInit {
 
     constructor(private dataService: DataService, private global: Globals) { }
 
+    get useProxy(){
+        return this.dataService.useProxy;
+    }
+
     ngOnInit() {
         this.updateLastBlocks();
     }

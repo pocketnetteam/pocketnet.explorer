@@ -30,13 +30,20 @@ export class DataService {
         }
     ];
 
-    public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+    public currentLocation: any = '192.168.0.15:37171' || window.location.host;
+    public useProxy: string | null = localStorage.getItem('explorerUseProxy')
+
+    public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node = 'localhost:37171'; //localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private defaultNode = localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private node =  this.useProxy ? this.defaultNode : this.currentLocation;
 
     public nodes: any[] = []
 
+
     constructor(private http: HttpClient, private hex: HexService) { }
+
 
     get selectedNode(){
         return this.node
@@ -52,6 +59,20 @@ export class DataService {
 
     get apiUrlRoot() {
         return `http://${this.node}/public/`;
+    }
+
+    changeUseProxy(){
+
+        if (this.useProxy){
+
+            localStorage.removeItem('explorerUseProxy');
+
+        } else {
+
+            localStorage.setItem('explorerUseProxy', 'true');
+        }
+
+        location.reload();
     }
 
     _execute(request: Observable<Object>, success: Function = () => {}, failed: Function = () => {}) {
@@ -214,4 +235,6 @@ export class DataService {
         localStorage.setItem('explorerNode', this.node);
         location.reload()
     }
+
+
 }

@@ -15,6 +15,15 @@
     <!-- List header -->
     <div [hidden]="!show">
         <div class="row">
+            <div class="primary-checkbox">
+                <input
+                    [checked]="useProxy"
+                    type="checkbox" 
+                    id="primary" 
+                    (click)="changeUseProxy()"
+                />
+                <label for="primary"></label>
+            </div>
             <div class="column label">
                 Use proxy:
             </div>
