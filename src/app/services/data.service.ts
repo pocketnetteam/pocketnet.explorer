@@ -30,7 +30,7 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = '192.168.0.15:37171' || window.location.host;
+    public currentLocation: any = window.location.host || '192.168.0.15:37171';
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
