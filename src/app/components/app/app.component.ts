@@ -31,10 +31,6 @@ export class AppComponent implements OnInit {
             }
         }
 
-        // setInterval(() => {
-        //     this.updateBlockchainInfo();
-        // }, this.updateBCInfo);
-
         this.updateBlockchainInfo();
         this.updatePeersInfo();
     }
@@ -55,14 +51,21 @@ export class AppComponent implements OnInit {
 
 
     updateBlockchainInfo() {
-        this.dataService.getBlockchainInfo(data => {
-            this.global.blockchainInfo = data
-            localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
+        this.dataService.getBlockchainInfo(
+            data => {
+                this.global.blockchainInfo = data
+                localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
 
-            setTimeout(() => {
-                this.updateBlockchainInfo();
-            }, this.global.updateInterval);
-        });
+                setTimeout(() => {
+                    this.updateBlockchainInfo();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.updateBlockchainInfo();
+                }, this.global.updateInterval);
+            }
+        );
     }
 
     @HostListener('window:scroll', ['$event']) onScrollEvent($event) {

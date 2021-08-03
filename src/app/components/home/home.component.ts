@@ -34,14 +34,21 @@ export class HomeComponent implements OnInit {
 
     updateLastBlocks(last: number = -1) {
         this.loading = true;
-        this.dataService.getLastBlocks(10, last, true, data => {
-            this.loading = false;
-            this.blocks = data;
+        this.dataService.getLastBlocks(10, last, true,
+            data => {
+                this.loading = false;
+                this.blocks = data;
 
-            this.updater = setTimeout(() => {
-                this.updateLastBlocks();
-            }, this.global.updateInterval);
-        });
+                this.updater = setTimeout(() => {
+                    this.updateLastBlocks();
+                }, this.global.updateInterval);
+            },
+            err => {
+                this.updater = setTimeout(() => {
+                    this.updateLastBlocks();
+                }, this.global.updateInterval);
+            }
+        );
     }
 
     MoveBlocks(diff: number = 0) {

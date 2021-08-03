@@ -43,15 +43,22 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     loadData() {
         let endTime = this.Global.blockchainInfo.lastblock.time;
 
-        this.dataService.getStatistic(endTime, this.statPeriod, data => {
-            this.statisticData = data;
-            this.fillChartUsers(this.statisticData.users);
-            this.fillChartEvents(this.statisticData.txs);
+        this.dataService.getStatistic(endTime, this.statPeriod,
+            data => {
+                this.statisticData = data;
+                this.fillChartUsers(this.statisticData.users);
+                this.fillChartEvents(this.statisticData.txs);
 
-            setTimeout(() => {
-                this.loadData();
-            }, this.global.updateInterval);
-        });
+                setTimeout(() => {
+                    this.loadData();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.loadData();
+                }, this.global.updateInterval);
+            }
+        );
     }
 
     formatTooltip(value: string) {
