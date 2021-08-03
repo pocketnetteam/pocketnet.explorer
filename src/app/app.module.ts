@@ -101,6 +101,6 @@ import { ToastrModule } from 'ngx-toastr';
         ToastrModule.forRoot()
     ],
     bootstrap: [AppComponent],
-    providers: [Globals]
+    providers: [Globals, TxTypePipe]
 })
 export class AppModule { }

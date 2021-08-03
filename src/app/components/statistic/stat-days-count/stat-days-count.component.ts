@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { DataService } from 'src/app/services/data.service';
+import { TxTypePipe } from 'src/app/pipes/txType.pipe';
 import { Globals } from 'src/app/globals';
 import { stringify } from 'querystring';
 
@@ -21,7 +22,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     show: boolean = true;
 
     constructor(private dataService: DataService,
-        private global: Globals) { }
+        private global: Globals,
+        private txTypePipe: TxTypePipe) { }
 
     get Global() : Globals {
         return this.global;
@@ -52,23 +54,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         });
     }
 
-    formatTooltip() {
-        if ([1].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y %H:00';
+    formatTooltip(value: string) {
+        if (this.statPeriod == 1)
+            return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)} ${value.substr(8, 2)}:00`;
+        
+        if (this.statPeriod == 2)
+            return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)}`;
 
-        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y';
-    }
-
-    formatLabel() {
-        if ([1].indexOf(this.statPeriod) >= 0)
-            return '%H:00';
-
-        if ([2].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y';
-
-        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
-            return '%b %e';
+        if (this.statPeriod == 3)
+            return `${value.substr(4, 2)}/${value.substr(0, 4)}`;
     }
 
     fillChartUsers(data) {
@@ -84,12 +78,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
             for (let y in data[x]) {
                 if (!(y in _datasets)) {
-                    let _caption = y;
-
-                    // TODO (brangr): implement caption by type
-
                     _datasets[y] = {
-                        name: _caption,
+                        name: this.txTypePipe.transformType(y),
                         data: []
                     };
                 }
@@ -176,15 +166,6 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private legendIndexes = {
-        'Users': 1,
-        'Subscribes': 2,
-        'Posts': 3,
-        'Ratings': 4,
-        'Comments': 5,
-        'CommentRatings': 6
-    }
-
     fillChartEvents(data) {
         let _datasets = {};
         let categories = [];
@@ -200,17 +181,10 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 if (y == '3') continue;
 
                 if (!(y in _datasets)) {
-                    let _caption = y;
-                    if (_caption == 'UsersAcc') continue;
-                    if (_caption == 'Users') _caption = 'New users';
-                    if (_caption == 'Subscribes') _caption = 'Follows';
-                    if (_caption == 'CommentRatings') _caption = 'Comments Ratings';
-                    if (_caption == 'Ratings') _caption = 'Posts Ratings';
-
                     _datasets[y] = {
-                        name: _caption,
+                        name: this.txTypePipe.transformType(y),
                         data: [],
-                        legendIndex: this.legendIndexes[y]
+                        legendIndex: y
                     };
                 }
 
@@ -237,9 +211,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             xAxis: {
                 categories: categories,
-                type: 'datetime',
                 labels: {
-                    formatter: function () { return String(this.value); },
+                    formatter: function () { return self.formatTooltip(String(this.value)); },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -257,7 +230,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ points[0].key }</b></span><br/>` : ``;
+                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ self.formatTooltip(points[0].key+'') }</b></span><br/>` : ``;
                     let index;
 
                     for (index = 0; index < pointsLength; index += 1) {

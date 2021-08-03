@@ -47,4 +47,12 @@ export class TxTypePipe implements PipeTransform {
         }
     }
 
+    transformType(txType: string, args?: any): string {
+        if (this.types.hasOwnProperty(+txType)) {
+            return this.types[+txType];
+        } else {
+            return '';
+        }
+    }
+
 }
