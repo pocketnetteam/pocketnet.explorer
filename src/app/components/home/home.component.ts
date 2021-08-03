@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit {
         if (diff != 0) {
             last = Math.max.apply(Math, this.blocks.map(function(b) { return b.height; })) + diff;
 
-            
             if (last >= (this.global.blockchainInfo ? this.global.blockchainInfo.lastblock.height : 0)) {
                 last = this.global.blockchainInfo.lastblock.height;
                 this.start_update();
