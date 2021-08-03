@@ -30,7 +30,7 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = window.location.host == 'localhost:4200' ? 'localhost:37171' : window.location.host;
+    public currentLocation: any = window.location.host == 'localhost:4200' ? '192.168.0.33:37171' : window.location.host;
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
@@ -103,7 +103,7 @@ export class DataService {
 
     getCompactBlock(hash: string, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getcompactblock', {
                 method: 'getcompactblock',
                 params: [ hash ]
             }),
@@ -113,7 +113,7 @@ export class DataService {
 
     getAddressInfo(hash: string, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getaddressspent', {
                 method: 'getaddressspent',
                 params: [ hash ]
             }),
@@ -126,7 +126,7 @@ export class DataService {
         success: Function = () => {}, failed: Function = () => {})
     {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getaddresstransactions', {
                 method: 'getaddresstransactions',
                 params: [ address, pageinit, pageStart, pageSize ]
             }),
@@ -137,7 +137,7 @@ export class DataService {
     getBlockTransactions(block: string, pageStart: number, pageSize: number, success: Function = () => {}, failed: Function = () => {})
     {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getblocktransactions', {
                 method: 'getblocktransactions',
                 params: [ block, pageStart, pageSize ]
             }),
@@ -148,7 +148,7 @@ export class DataService {
     getTransactions(hashes: string[], success: Function = () => {}, failed: Function = () => {})
     {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'gettransactions', {
                 method: 'gettransactions',
                 params: [ hashes ]
             }),
@@ -158,7 +158,7 @@ export class DataService {
 
     getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getlastblocks', {
                 method: 'getlastblocks',
                 params: [ count, last_height, verbose ]
             }),
@@ -168,7 +168,7 @@ export class DataService {
 
     checkStringType(value: string, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'searchbyhash', {
                 method: 'searchbyhash',
                 params: [ value ]
             }),
@@ -178,7 +178,7 @@ export class DataService {
 
     getBlockchainInfo(success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getnodeinfo', {
                 method: 'getnodeinfo',
                 params: [] 
             }), success, failed
@@ -187,7 +187,7 @@ export class DataService {
 
     getStatistic(end_time: Number = 0, depth: Number = 1, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getstatistic', {
                 method: 'getstatistic',
                 params: [end_time, depth] 
             }),
@@ -197,7 +197,7 @@ export class DataService {
 
     getPeerInfo(success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot, {
+            this.http.post(this.apiUrlRoot + 'getpeerinfo', {
                 method: 'getpeerinfo',
                 params: []
             }),

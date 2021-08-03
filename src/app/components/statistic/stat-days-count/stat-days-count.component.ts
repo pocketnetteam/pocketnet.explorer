@@ -25,7 +25,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         private global: Globals,
         private txTypePipe: TxTypePipe) { }
 
-    get Global() : Globals {
+    get Global(): Globals {
         return this.global;
     }
 
@@ -35,7 +35,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.loadData();
     }
-    
+
     toggleShow() {
         this.show = !this.show;
     }
@@ -64,7 +64,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     formatTooltip(value: string) {
         if (this.statPeriod == 1)
             return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)} ${value.substr(8, 2)}:00`;
-        
+
         if (this.statPeriod == 2)
             return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)}`;
 
@@ -134,11 +134,11 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ points[0].key }</b></span><br/>` : ``;
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px">${self.formatTooltip(points[0].key + '')}</span></b><br/>` : ``;
                     let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 13px">${points[index].y}</span></b><br/>`;
                     }
 
                     return tooltipMarkup;
@@ -177,6 +177,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         let _datasets = {};
         let categories = [];
         let self = this;
+        let yAxisCounter = {};
 
         for (let x in data) {
             if (Object.keys(data)[Object.keys(data).length - 1] == x)
@@ -187,11 +188,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             for (let y in data[x]) {
                 if (y == '3') continue;
 
+                if (!(y in yAxisCounter))
+                    yAxisCounter[y] = Object.keys(yAxisCounter).length;
+
                 if (!(y in _datasets)) {
                     _datasets[y] = {
                         name: this.txTypePipe.transformType(y),
                         data: [],
-                        legendIndex: y
+                        legendIndex: y,
+                        yAxis: yAxisCounter[y]
                     };
                 }
 
@@ -199,9 +204,17 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             }
         }
 
+        let yAxis = [];
         let datasets = [];
         for (let d in _datasets) {
             datasets.push(_datasets[d]);
+            yAxis.push({
+                title: {
+                    text: d
+                },
+                visible: false,
+                opposite: true
+            });
         }
 
         Highcharts.chart('stat_days_count_canvas', {
@@ -211,11 +224,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             chart: {
                 type: 'spline'
             },
-            yAxis: {
-                title: {
-                    text: ''
-                }
-            },
+            yAxis: yAxis,
             xAxis: {
                 categories: categories,
                 labels: {
@@ -235,13 +244,17 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 shared: true,
                 //crosshairs: true,
                 formatter: function () {
+                    // let tooltipMarkup = `<b><span style="font-size: 13px;">${self.formatTooltip(this.key + '')}</span></b><br/>`;
+                    // tooltipMarkup += `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b><span style="font-size: 12px;">${this.y}</span></b><br/>`;
+                    // return tooltipMarkup;
+
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ self.formatTooltip(points[0].key+'') }</b></span><br/>` : ``;
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${self.formatTooltip(points[0].key + '')}</span></b><br/>` : ``;
                     let index;
 
                     for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
                     }
 
                     return tooltipMarkup;
