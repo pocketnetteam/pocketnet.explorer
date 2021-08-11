@@ -25,6 +25,13 @@ export class DataService {
             wss: '8099',
             key: '1.pocketnet.app:8899:8099',
             default: true
+        }, 
+        {
+            host: 'test.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: 'test.pocketnet.app:8899:8099',
+            default: true
         }
     ];
 

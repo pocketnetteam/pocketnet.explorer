@@ -197,9 +197,10 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         'Users': 1,
         'Subscribes': 2,
         'Posts': 3,
-        'Ratings': 4,
-        'Comments': 5,
-        'CommentRatings': 6
+        'Videos': 4,
+        'Ratings': 5,
+        'Comments': 6,
+        'CommentRatings': 7
     }
 
     fillChartEvents(data) {
