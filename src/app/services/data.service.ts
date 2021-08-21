@@ -37,7 +37,7 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = window.location.host == 'localhost:4200' ? '192.168.0.33:37171' : window.location.host;
+    public currentLocation: any = window.location.host.split(":")[0] + ":38081";
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]

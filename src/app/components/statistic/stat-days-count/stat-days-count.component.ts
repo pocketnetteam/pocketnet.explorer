@@ -105,7 +105,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 text: ''
             },
             chart: {
-                type: 'spline'
+                type: 'area'
             },
             yAxis: {
                 title: {
