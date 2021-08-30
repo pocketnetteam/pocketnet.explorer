@@ -43,7 +43,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private defaultNode = localStorage.getItem("explorerNode");
     private node =  this.useProxy ? this.defaultNode : this.currentLocation;
 
     public nodes: any[] = []
@@ -65,7 +65,7 @@ export class DataService {
     }
 
     get apiUrlRoot() {
-        return `http://${this.node}/public/`;
+        return `https://${this.node}/public/`;
     }
 
     changeUseProxy(){
