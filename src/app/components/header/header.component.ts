@@ -30,6 +30,10 @@ export class HeaderComponent implements OnInit {
         return this.dataService.selectedNode;
     }
 
+    get chain(){
+
+        return this.global.chain === 'test' ? 'testnet' : '';
+    }
     ngOnInit() {
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;

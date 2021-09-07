@@ -57,7 +57,9 @@ export class AppComponent implements OnInit {
 
     updateBlockchainInfo() {
         this.dataService.getBlockchainInfo().subscribe(data => {
-            this.global.blockchainInfo = data['data']
+            const nodeinfo = data['data'];
+            this.global.blockchainInfo = nodeinfo;
+            this.global.chain = nodeinfo.chain;
             localStorage.setItem('blockchainInfo', JSON.stringify(this.global.blockchainInfo));
         });
     }

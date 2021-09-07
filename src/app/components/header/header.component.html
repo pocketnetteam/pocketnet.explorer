@@ -2,7 +2,7 @@
     <div class="container px-0">
         <div class="col-auto">
             <div class="row">
-                <div class="col-auto pl-0">
+                <div class="col-auto pl-0 logo">
                     <a class="navbar-brand" href="#">
                         <div class="logo-wrapper">
                             <img src="assets/logo.svg" width="30" height="30" class="d-inline-block align-top mr-1" alt="">
@@ -12,6 +12,13 @@
                             <div class="block-small">Pocketcoin is a network token of Pocketnet</div>
                         </div>
                     </a>
+                </div>
+                <div 
+                    *ngIf="chain"
+                    class="col-auto status rounded text-right network"
+                >
+                        <i class="fas fa-network-wired"></i>
+                        <span>{{chain}}</span>
                 </div>
                 <div class="col-auto node">
                     <a href="#nodeListSection">
