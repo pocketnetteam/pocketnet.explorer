@@ -83,10 +83,49 @@ tbody{
 
                 &.using{
                     color: @color-good;
+
+                    .fa-lock{
+                        display: none;
+                    }
+
+                    &:hover{
+
+                        .fa-lock{
+                            display: inline-block;
+                        }
+    
+                        .fa-check-circle{
+                            display: none;
+                        }
+
+                    }
+                }
+
+                &.fixed{
+                    color: @color-good;
+
+                    .fa-unlock{
+                        display: none;
+                    }
+
+                    &:hover{
+
+                        .fa-lock{
+                            display: none;
+
+                        }
+    
+                        .fa-unlock{
+                            display: inline-block;
+
+                        }
+
+                    }
                 }
         
                 &:hover{
                     color: @color-text-second;
+
                 }
                 
             }

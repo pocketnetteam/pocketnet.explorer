@@ -41,6 +41,7 @@ export class DataService {
 
     public defaultNode = "65.21.57.14:38081";
     public nodes: any[] = []
+    public fixed: boolean = Boolean(localStorage.getItem('nodeFixed'))
 
     constructor(private http: HttpClient, private hex: HexService) { }
 
@@ -54,6 +55,15 @@ export class DataService {
 
     get proxyUrl(){
         return this.selectedProxy + '/rpc';
+    }
+
+    fix(boo: boolean){
+        if (boo){
+            localStorage.setItem('nodeFixed', 'true');
+        } else {
+            localStorage.removeItem('nodeFixed');
+        }
+        this.fixed = boo;
     }
 
     checkProxy(url?: string){

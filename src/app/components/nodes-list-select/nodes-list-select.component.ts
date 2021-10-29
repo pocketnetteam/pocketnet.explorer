@@ -20,6 +20,11 @@ export class NodesListSelectComponent implements OnInit {
         return this.global;
     }
 
+    get fixed(){
+
+        return this.dataService.fixed;
+    }
+
     get selectedNode(){
         return this.dataService.selectedNode;
     }
@@ -27,6 +32,11 @@ export class NodesListSelectComponent implements OnInit {
     get nodes(){
         return this.dataService.nodes;
 
+    }
+
+    fix(boo: boolean){
+
+        this.dataService.fix(boo);
     }
 
     toggleShow(){
@@ -54,7 +64,9 @@ export class NodesListSelectComponent implements OnInit {
                     this.dataService.setNodes(Object.values(nodes))
                 }
 
-                if (!this.selectedNode){
+                console.log('nodes!!!',nodes,  nodes[this.selectedNode])
+
+                if (!this.selectedNode || !nodes[this.selectedNode]){
 
                     this.dataService.checkProxy().subscribe((resP: any) => {
 
