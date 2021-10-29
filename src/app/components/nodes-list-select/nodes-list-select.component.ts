@@ -39,6 +39,7 @@ export class NodesListSelectComponent implements OnInit {
 
      selectNode(addr){
         this.dataService.selectNode(addr);
+        location.reload();
     }
     
 
@@ -52,6 +53,32 @@ export class NodesListSelectComponent implements OnInit {
                 if (nodes){
                     this.dataService.setNodes(Object.values(nodes))
                 }
+
+                if (!this.selectedNode){
+
+                    this.dataService.checkProxy().subscribe((resP: any) => {
+
+                        let node = resP && resP.data && resP.data.node;
+    
+                        if (!node && nodes){
+    
+                            const keys = Object.keys(nodes); 
+    
+                            if (keys.length && keys.indexOf(this.dataService.defaultNode) === -1){
+                                node = keys[0];
+                            } else {
+                                node = this.dataService.defaultNode;
+                            }
+    
+                        } 
+    
+                        this.selectNode(node);
+
+    
+                    })
+                }
+
+
 
 
             } catch(err){

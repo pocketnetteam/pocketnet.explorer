@@ -37,8 +37,9 @@ export class DataService {
 
     public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node =  localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    private node =  localStorage.getItem("explorerNode");
 
+    public defaultNode = "65.21.57.14:38081";
     public nodes: any[] = []
 
     constructor(private http: HttpClient, private hex: HexService) { }
@@ -55,7 +56,11 @@ export class DataService {
         return this.selectedProxy + '/rpc';
     }
 
-    checkProxy(url: string){
+    checkProxy(url?: string){
+
+        if (!url){
+            url = this.selectedProxy;
+        }
 
         return this.http.get(url + '/ping');
     }
@@ -162,29 +167,43 @@ export class DataService {
     async selectProxy(proxy){
 
         this.proxy = proxy;
-        this.getNodes().subscribe((res: any) => {
+        this.getNodes().subscribe((resN: any) => {
+
+            const nodes = resN.data.info.nodeManager.nodes;
 
             try {
+
+                this.checkProxy().subscribe((resP: any) => {
+
+                    let node = resP && resP.data && resP.data.node;
+
+                    if (!node && nodes){
+
+                        const keys = Object.keys(nodes); 
+
+                        if (keys.length && keys.indexOf(this.node) === -1){
+                            node = keys[0];
+
+                        }
+
+                    } 
+
+                    this.selectNode(node);
+
+                    localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
+                    location.reload()
+            
+
+                })
                 
-                const nodes = res.data.info.nodeManager.nodes
 
-                if (nodes){
-                    console.log('nodes', nodes)
-                    const keys = Object.keys(nodes); 
-
-                    if (keys.length && keys.indexOf(this.node) === -1){
-                        this.selectNode(keys[0]);
-                    }
-                }
 
             }  catch (err){
 
                 console.log('err', err);
             }
 
-            localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
-            location.reload()
-    
+
 
         })
 
@@ -194,6 +213,5 @@ export class DataService {
 
         this.node = node;
         localStorage.setItem('explorerNode', this.node);
-        location.reload()
     }
 }
