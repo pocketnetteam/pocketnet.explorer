@@ -37,8 +37,12 @@
             </app-loader>
             <tbody>
                 <tr *ngFor="let node of nodes; trackBy: trackByFn" [class]="!node.statistic.percent ? 'cantuse' : ''">
-                    <td (click)="selectNode(node.node.key)">
-                        <div *ngIf="selectedNode !== node.node.key" class="use">
+                    <td>
+                        <div 
+                            *ngIf="selectedNode !== node.node.key" 
+                            class="use"
+                            (click)="selectNode(node.node.key)"
+                        >
                             <i class="far fa-circle"></i>
                         </div>
                         <div 

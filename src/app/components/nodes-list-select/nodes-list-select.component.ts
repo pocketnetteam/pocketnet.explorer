@@ -34,6 +34,7 @@ export class NodesListSelectComponent implements OnInit {
 
     }
 
+
     fix(boo: boolean){
 
         this.dataService.fix(boo);
@@ -48,6 +49,7 @@ export class NodesListSelectComponent implements OnInit {
      }
 
      selectNode(addr){
+        this.fix(false);
         this.dataService.selectNode(addr);
         location.reload();
     }
@@ -64,9 +66,11 @@ export class NodesListSelectComponent implements OnInit {
                     this.dataService.setNodes(Object.values(nodes))
                 }
 
-                console.log('nodes!!!',nodes,  nodes[this.selectedNode])
+                const node: any = this.selectedNode && nodes[this.selectedNode];
 
-                if (!this.selectedNode || !nodes[this.selectedNode]){
+                const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
+
+                if (!this.fixed && !availableNode){
 
                     this.dataService.checkProxy().subscribe((resP: any) => {
 
