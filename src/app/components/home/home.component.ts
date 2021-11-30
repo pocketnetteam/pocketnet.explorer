@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     updateLastBlocks(autoUpdate: boolean = true, last: number = -1) {
         clearInterval(this.updater);
         this.loading = true;
-        this.dataService.getLastBlocks(10, last, true,
+        this.dataService.getLastBlocks(20, last, true,
             data => {
                 this.loading = false;
                 data.sort((a,b) => (a.height > b.height) ? -1 : ((b.height > a.height) ? 1 : 0))
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
                 this.start_update();
                 return;
             } else {
-                if (last - 10 < 0) last = 9;
+                if (last - 20 < 0) last = 19;
                 this.updateLastBlocks(false, last);
             }
         } else {

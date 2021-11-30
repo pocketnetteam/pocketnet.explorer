@@ -12,9 +12,9 @@
             {{addresshash}}
         </div>
 
-        <div class="row address_balance_row">
+        <!-- <div class="row address_balance_row">
             {{address.unspent/100000000 | round:3 | pkoin:0:3}}
-        </div>
+        </div> -->
     </div>
 
     <!-- Summary -->
@@ -25,21 +25,21 @@
             </div>
             <div class="row">
                 <table class="table table-sm" style="table-layout: fixed">
-                    <tr>
+                    <!-- <tr>
                         <td>Total Received</td>
                         <td class="text-right text-muted">{{(address.spent + address.unspent)/100000000 | pkoin}}</td>
                     </tr>
                     <tr>
                         <td>Total Sent</td>
                         <td class="text-right text-muted">{{address.spent/100000000 | pkoin}}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>Final Balance</td>
-                        <td class="text-right text-muted">{{address.unspent/100000000 | pkoin}}</td>
+                        <td class="text-right text-muted">{{address.balance | pkoin}}</td>
                     </tr>
                     <tr>
-                        <td>No. Transactions</td>
-                        <td class="text-right text-muted">{{address.txids.length}}</td>
+                        <td>Recent changes (Height)</td>
+                        <td class="text-right text-muted">{{address.lastChange}}</td>
                     </tr>
                 </table>
             </div>

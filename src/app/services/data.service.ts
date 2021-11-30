@@ -37,7 +37,7 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = 'localhost:38081'; // window.location.host.split(":")[0] + ":38081";
+    public currentLocation: any = '127.0.0.1:38081'; // window.location.host.split(":")[0] + ":38081";
     public useProxy: string | null = localStorage.getItem('explorerUseProxy')
 
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
@@ -65,7 +65,7 @@ export class DataService {
     }
 
     get apiUrlRoot() {
-        return `https://${this.node}/public/`;
+        return `http://${this.node}/public/`;
     }
 
     changeUseProxy(){
@@ -120,8 +120,8 @@ export class DataService {
 
     getAddressInfo(hash: string, success: Function = () => {}, failed: Function = () => {}) {
         this._execute(
-            this.http.post(this.apiUrlRoot + 'getaddressspent', {
-                method: 'getaddressspent',
+            this.http.post(this.apiUrlRoot + 'getaddressinfo', {
+                method: 'getaddressinfo',
                 params: [ hash ]
             }),
             success, failed
