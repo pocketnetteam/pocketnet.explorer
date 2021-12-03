@@ -50,9 +50,9 @@ export class NodesListSelectComponent implements OnInit {
 
                 const nodes = {};
                 
-                for (var n in res.data.info.nodeManager.nodes)
+                for (var n in res.info.nodeManager.nodes)
                 {
-                    let node = res.data.info.nodeManager.nodes[n];
+                    let node = res.info.nodeManager.nodes[n];
                     if (node.node.version && node.node.version.startsWith("0.20"))
                         if (node.status.difference > -10)
                             nodes[node.node.key] = node;

@@ -37,14 +37,11 @@ export class DataService {
         }
     ];
 
-    public currentLocation: any = '127.0.0.1:38081'; // window.location.host.split(":")[0] + ":38081";
-    public useProxy: string | null = localStorage.getItem('explorerUseProxy')
-
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
     private defaultNode = localStorage.getItem("explorerNode");
-    private node =  this.useProxy ? this.defaultNode : this.currentLocation;
+    private node =  this.defaultNode;
 
     public nodes: any[] = []
 
@@ -60,44 +57,31 @@ export class DataService {
         return 'https://' + this.proxy.host + ':' + this.proxy.port
     }
 
-    get proxyUrl(){
-        return this.selectedProxy + '/rpc';
+    get proxyUrl() {
+        return this.selectedProxy + '/rpc/';
     }
 
-    get apiUrlRoot() {
-        return `http://${this.node}/public/`;
+    _executeGET(method: string, success: Function = () => {}, failed: Function = () => {}) {
+        this.http.get(this.selectedProxy + method)
+            .subscribe(answer => {
+                if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
+                    failed(answer);
+
+                success(answer["data"]);
+            });
     }
 
-    changeUseProxy(){
+    _executePOST(method: string, prms: Object, success: Function = () => {}, failed: Function = () => {})
+    {
+        prms['options'] = { node: this.node };
 
-        if (this.useProxy){
-
-            localStorage.removeItem('explorerUseProxy');
-
-        } else {
-
-            localStorage.setItem('explorerUseProxy', 'true');
-        }
-
-        location.reload();
-    }
-
-    _execute(request: Observable<Object>, success: Function = () => {}, failed: Function = () => {}) {
-        request.subscribe(answer => {
-            if (answer["error"] || !answer["result"])
-                failed(answer);
-
-            success(answer["result"]);
-        });
-    }
-
-    _executeProxy(request: Observable<Object>, success: Function = () => {}, failed: Function = () => {}) {
-        request.subscribe(answer => {
-            if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
-                failed(answer);
-
-            success(answer["data"]);
-        });
+        this.http.post(this.proxyUrl + method, prms)
+            .subscribe(answer => {
+                if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
+                    failed(answer);
+    
+                success(answer["data"]);
+            });
     }
 
     checkProxy(url: string, success: Function = () => {}, failed: Function = () => {}){
@@ -109,21 +93,23 @@ export class DataService {
     }
 
     getCompactBlock(hash: string, success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getcompactblock', {
+        this._executePOST(
+            'getcompactblock',
+            {
                 method: 'getcompactblock',
-                params: [ hash ]
-            }),
+                parameters: [ hash ]
+            },
             success, failed
         );        
     }
 
     getAddressInfo(hash: string, success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getaddressinfo', {
+        this._executePOST(
+            'getaddressinfo',
+            {
                 method: 'getaddressinfo',
-                params: [ hash ]
-            }),
+                parameters: [ hash ]
+            },
             success, failed
         );
     }
@@ -132,89 +118,98 @@ export class DataService {
         pageStart: number, pageSize: number,
         success: Function = () => {}, failed: Function = () => {})
     {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getaddresstransactions', {
+        this._executePOST(
+            'getaddresstransactions',
+            {
                 method: 'getaddresstransactions',
-                params: [ address, pageinit, pageStart, pageSize ]
-            }),
+                parameters: [ address, pageinit, pageStart, pageSize ]
+            },
             success, failed
         );
     }
 
     getBlockTransactions(block: string, pageStart: number, pageSize: number, success: Function = () => {}, failed: Function = () => {})
     {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getblocktransactions', {
+        this._executePOST(
+            'getblocktransactions',
+            {
                 method: 'getblocktransactions',
-                params: [ block, pageStart, pageSize ]
-            }),
+                parameters: [ block, pageStart, pageSize ]
+            },
             success, failed
         );
     }
 
     getTransactions(hashes: string[], success: Function = () => {}, failed: Function = () => {})
     {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'gettransactions', {
+        this._executePOST(
+            'gettransactions',
+            {
                 method: 'gettransactions',
-                params: [ hashes ]
-            }),
+                parameters: [ hashes ]
+            },
             success, failed
         );
     }
 
     getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false, success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getlastblocks', {
+        this._executePOST(
+            'getlastblocks',
+            {
                 method: 'getlastblocks',
-                params: [ count, last_height, verbose ]
-            }),
+                parameters: [ count, last_height, verbose ]
+            },
             success, failed
         );
     }
 
     checkStringType(value: string, success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'searchbyhash', {
+        this._executePOST(
+            'searchbyhash',
+            {
                 method: 'searchbyhash',
-                params: [ value ]
-            }),
+                parameters: [ value ]
+            },
             success, failed
         );
     }
 
     getBlockchainInfo(success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getnodeinfo', {
+        this._executePOST(
+            'getnodeinfo',
+            {
                 method: 'getnodeinfo',
-                params: [] 
-            }), success, failed
+                parameters: [] 
+            },
+            success, failed
         );
     }
 
     getStatistic(end_time: Number = 0, depth: Number = 1, success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getstatistic', {
+        this._executePOST(
+            'getstatistic',
+            {
                 method: 'getstatistic',
-                params: [end_time, depth] 
-            }),
+                parameters: [end_time, depth] 
+            },
             success, failed
         );
     }
 
     getPeerInfo(success: Function = () => {}, failed: Function = () => {}) {
-        this._execute(
-            this.http.post(this.apiUrlRoot + 'getpeerinfo', {
+        this._executePOST(
+            'getpeerinfo',
+            {
                 method: 'getpeerinfo',
-                params: []
-            }),
+                parameters: []
+            },
             success, failed
         );
     }
 
     getNodes(success: Function = () => {}, failed: Function = () => {}) {
-        this._executeProxy(
-            this.http.get(this.selectedProxy + '/info'),
+        this._executeGET(
+            '/info',
             success, failed
         );
     }
