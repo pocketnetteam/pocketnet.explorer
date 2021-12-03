@@ -45,10 +45,56 @@ export class NodesListSelectComponent implements OnInit {
     ngOnInit(){
         this.dataService.getNodes((res: any) => {
             try {
-                const nodes = res.info.nodeManager.nodes
+
+                // debugger;
+
+                const nodes = {};
+                
+                for (var n in res.data.info.nodeManager.nodes)
+                {
+                    let node = res.data.info.nodeManager.nodes[n];
+                    if (node.node.version && node.node.version.startsWith("0.20"))
+                        if (node.status.difference > -10)
+                            nodes[node.node.key] = node;
+                }
+
                 if (nodes){
                     this.dataService.setNodes(Object.values(nodes))
                 }
+
+                // debugger;
+
+                let node = this.selectedNode && nodes[this.selectedNode];
+                if (!node)
+                    node = nodes[0]
+
+                // const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
+
+                // if (!this.fixed && !availableNode){
+
+                //     this.dataService.checkProxy().subscribe((resP: any) => {
+
+                //         let node = resP && resP.data && resP.data.node;
+    
+                //         if (!node && nodes){
+    
+                //             const keys = Object.keys(nodes); 
+    
+                //             if (keys.length && keys.indexOf(this.dataService.defaultNode) === -1){
+                //                 node = keys[0];
+                //             } else {
+                //                 node = this.dataService.defaultNode;
+                //             }
+    
+                //         } 
+    
+                //         this.selectNode(node);
+                //     })
+                // }
+
+
+
+
             } catch(err){
                 console.log('err', err);
             }
