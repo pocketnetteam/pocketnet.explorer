@@ -14,18 +14,46 @@ const proxy = localStorage.getItem('explorerProxy');
 export class DataService {
 
     public defaultProxies: Proxy[] = [
+        // {
+        //     host: 'pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: 'pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '1.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '1.pocketnet.app:8899:8099',
+        //     default: false
+        // },
+        // {
+        //     host: '2.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '2.pocketnet.app:8899:8099',
+        //     default: false
+        // }, 
+        // {
+        //     host: '3.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '3.pocketnet.app:8899:8099',
+        //     default: false
+        // }, 
         {
-            host: 'pocketnet.app', 
+            host: '4.pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: 'pocketnet.app:8899:8099',
-            default: true
-        },
+            key: '4.pocketnet.app:8899:8099',
+            default: false
+        }, 
         {
-            host: '1.pocketnet.app', 
+            host: '5.pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: '1.pocketnet.app:8899:8099',
+            key: '5.pocketnet.app:8899:8099',
             default: false
         }, 
         {
@@ -40,7 +68,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = localStorage.getItem("explorerNode");
+    private defaultNode = '65.21.56.203:38081'; //localStorage.getItem("explorerNode");
     private node =  this.defaultNode;
 
     public nodes: any[] = []
@@ -92,12 +120,12 @@ export class DataService {
         return this.http.get(this.explorerUrl + 'topaddresses/30.json');
     }
 
-    getCompactBlock(hash: string, success: Function = () => {}, failed: Function = () => {}) {
+    getCompactBlock(hash: string = '', number: number = -1, success: Function = () => {}, failed: Function = () => {}) {
         this._executePOST(
             'getcompactblock',
             {
                 method: 'getcompactblock',
-                parameters: [ hash ]
+                parameters: [ hash, number ]
             },
             success, failed
         );        

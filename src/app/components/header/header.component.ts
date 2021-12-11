@@ -43,14 +43,27 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    searchEnter(value: string) {
-        if (value.length == 34 || value.length == 64) {
+    isNumber(value: string | number): boolean
+    {
+        return ((value != null) &&
+            (value !== '') &&
+            !isNaN(Number(value.toString())));
+    }
+
+    searchEnter(value: any) {
+        if (value.length == 34 || value.length == 64)
+        {
             // Address
             this.dataService.checkStringType(value, data => {
                 if (data && data && data['type'] != 'notfound') {
                     this.router.navigate([`${data['type']}`, value])
                 }
             });
+        }
+
+        if (this.isNumber(value))
+        {
+            this.router.navigate(['block', value])
         }
 
         this.searchValue = '';

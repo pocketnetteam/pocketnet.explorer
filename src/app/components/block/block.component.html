@@ -36,9 +36,9 @@
                             <td>Time</td>
                             <td class="text-right text-muted">{{block.time * 1000 | date:'MM/dd/yyyy HH:mm:ss'}}</td>
                         </tr>
-                        <tr *ngIf="block.previousblockhash">
+                        <tr *ngIf="block.prevhash">
                             <td>Previous Block</td>
-                            <td class="text-right"><a href="block/{{block.previousblockhash}}">{{block.height-1}}</a>
+                            <td class="text-right"><a href="block/{{block.prevhash}}">{{block.height-1}}</a>
                             </td>
                         </tr>
                     </table>
@@ -61,9 +61,9 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr *ngIf="block.nextblockhash">
+                        <tr *ngIf="block.nexthash">
                             <td>Next block</td>
-                            <td class="text-right"><a href="block/{{block.nextblockhash}}">{{block.height+1}}</a></td>
+                            <td class="text-right"><a href="block/{{block.nexthash}}">{{block.height+1}}</a></td>
                         </tr>
                     </table>
                 </div>

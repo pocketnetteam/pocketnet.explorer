@@ -17,7 +17,7 @@ export class ProxyserversComponent implements OnInit {
         private dataService: DataService
     ) {}
 
-    show: boolean = false;
+    show: boolean = true;
     txtSuccessSelect: string = 'Add proxy';
     txtSuccessAdd: string = 'Add';
     txtSuccessSave: string = 'Save';

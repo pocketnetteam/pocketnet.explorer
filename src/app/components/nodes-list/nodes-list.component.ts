@@ -12,7 +12,7 @@ export class NodesListComponent implements OnInit {
         private global: Globals
     ) { }
 
-    show: boolean = false;
+    show: boolean = true;
 
     get Global() : Globals {
         return this.global;

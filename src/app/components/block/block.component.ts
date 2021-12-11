@@ -12,14 +12,26 @@ import { Block } from '../../types/Block';
 })
 export class BlockComponent implements OnInit {
     blockhash: string;
+    blocknumber: number;
     block: Block;
 
-    constructor(private dataService: DataService, private activateRoute: ActivatedRoute) {
+    isNumber(value: string | number): boolean
+    {
+        return ((value != null) &&
+            (value !== '') &&
+            !isNaN(Number(value.toString())));
+    }
+
+    constructor(private dataService: DataService, private activateRoute: ActivatedRoute)
+    {
         this.blockhash = activateRoute.snapshot.params['hash'];
     }
 
     ngOnInit() {
-        this.dataService.getCompactBlock(this.blockhash, data => {
+        var hash = !this.isNumber(this.blockhash) ? this.blockhash : '';
+        var number = this.isNumber(this.blockhash) ? Number(this.blockhash)  : -1;
+        
+        this.dataService.getCompactBlock(hash, number, data => {
             this.block = data
         });
     }
