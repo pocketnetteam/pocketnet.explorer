@@ -14,34 +14,34 @@ const proxy = localStorage.getItem('explorerProxy');
 export class DataService {
 
     public defaultProxies: Proxy[] = [
-        // {
-        //     host: 'pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: 'pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '1.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '1.pocketnet.app:8899:8099',
-        //     default: false
-        // },
-        // {
-        //     host: '2.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '2.pocketnet.app:8899:8099',
-        //     default: false
-        // }, 
-        // {
-        //     host: '3.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '3.pocketnet.app:8899:8099',
-        //     default: false
-        // }, 
+        {
+            host: 'pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: 'pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '1.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '1.pocketnet.app:8899:8099',
+            default: false
+        },
+        {
+            host: '2.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '2.pocketnet.app:8899:8099',
+            default: false
+        }, 
+        {
+            host: '3.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '3.pocketnet.app:8899:8099',
+            default: false
+        }, 
         {
             host: '4.pocketnet.app', 
             port: '8899',
@@ -68,7 +68,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = '65.21.56.203:38081'; //localStorage.getItem("explorerNode");
+    private defaultNode = '135.181.196.243:38081'; //localStorage.getItem("explorerNode");
     private node =  this.defaultNode;
 
     public nodes: any[] = []

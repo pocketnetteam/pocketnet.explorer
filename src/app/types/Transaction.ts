@@ -4,10 +4,6 @@ class ScriptSig {
 }
 
 class ScriptPubKey {
-    public asm: string;
-    public hex: string;
-    public reqSigs: number;
-    public type: string;
     public addresses: string[];
 }
 
@@ -21,7 +17,7 @@ export class Vin {
 export class Vout {
     public value: number;
     public n: number;
-    public address: string;
+    public scriptPubKey: ScriptPubKey;
 }
 
 export class Transaction {
