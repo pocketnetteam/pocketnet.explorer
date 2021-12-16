@@ -16,6 +16,7 @@ export class TxTypePipe implements PipeTransform {
         100: 'Account (User)',
         101: 'Account (Video Server)',
         102: 'Account (Message Server)',
+        103: 'Account Settings',
 
         200: 'Post',
         201: 'Video',

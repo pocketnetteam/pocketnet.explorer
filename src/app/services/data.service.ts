@@ -34,28 +34,14 @@ export class DataService {
             wss: '8099',
             key: '2.pocketnet.app:8899:8099',
             default: false
-        }, 
+        },
         {
             host: '3.pocketnet.app', 
             port: '8899',
             wss: '8099',
             key: '3.pocketnet.app:8899:8099',
             default: false
-        }, 
-        {
-            host: '4.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '4.pocketnet.app:8899:8099',
-            default: false
-        }, 
-        {
-            host: '5.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '5.pocketnet.app:8899:8099',
-            default: false
-        }, 
+        },
         {
             host: 'test.pocketnet.app', 
             port: '8899',
@@ -68,7 +54,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = '135.181.196.243:38081'; //localStorage.getItem("explorerNode");
+    private defaultNode = localStorage.getItem("explorerNode"); // '135.181.196.243:38081'; //
     private node =  this.defaultNode;
 
     public nodes: any[] = []
@@ -213,12 +199,27 @@ export class DataService {
         );
     }
 
-    getStatistic(end_time: Number = 0, depth: Number = 1, success: Function = () => {}, failed: Function = () => {}) {
+    getStatistic(type: Number, success: Function = () => {}, failed: Function = () => {}) {
+        let method = 'getstatisticbyhours';
+        if (type == 2)
+            method = 'getstatisticbydays';
+
         this._executePOST(
-            'getstatistic',
+            method,
             {
-                method: 'getstatistic',
-                parameters: [end_time, depth] 
+                method: method,
+                parameters: [] 
+            },
+            success, failed
+        );
+    }
+
+    getStatisticContent(success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getstatisticcontent',
+            {
+                method: 'getstatisticcontent',
+                parameters: [] 
             },
             success, failed
         );

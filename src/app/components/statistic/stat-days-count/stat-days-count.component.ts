@@ -1,5 +1,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+
 import * as Highcharts from 'highcharts';
+import Streamgraph from 'highcharts/modules/streamgraph';
+Streamgraph(Highcharts);
+
+// import theme from 'highcharts/themes/grid-light';
+// theme(Highcharts);
+
 import { DataService } from 'src/app/services/data.service';
 import { TxTypePipe } from 'src/app/pipes/txType.pipe';
 import { Globals } from 'src/app/globals';
@@ -17,7 +24,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
     canvas: any;
     ctx: any;
-    statisticData: any;
+    statTransactions: any;
+    statContent: any;
     statPeriod: any = 2;
     show: boolean = true;
 
@@ -41,13 +49,10 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     loadData() {
-        let endTime = this.Global.blockchainInfo.lastblock.time;
-
-        this.dataService.getStatistic(endTime, this.statPeriod,
+        this.dataService.getStatistic(this.statPeriod,
             data => {
-                this.statisticData = data;
-                this.fillChartUsers(this.statisticData.users);
-                this.fillChartEvents(this.statisticData.txs);
+                this.statTransactions = data;
+                this.fillChartTransactions();
 
                 setTimeout(() => {
                     this.loadData();
@@ -59,40 +64,40 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 }, this.global.updateInterval);
             }
         );
+
+        // this.dataService.getStatisticContent(
+        //     data => {
+        //         this.statContent = data;
+        //         this.fillChartContent();
+
+        //         setTimeout(() => {
+        //             this.loadData();
+        //         }, this.global.updateInterval);
+        //     },
+        //     err => {
+        //         setTimeout(() => {
+        //             this.loadData();
+        //         }, this.global.updateInterval);
+        //     }
+        // );
     }
 
-    formatTooltip(value: string) {
-        if (this.statPeriod == 1)
-            return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)} ${value.substr(8, 2)}:00`;
-
-        if (this.statPeriod == 2)
-            return `${value.substr(6, 2)}/${value.substr(4, 2)}/${value.substr(0, 4)}`;
-
-        if (this.statPeriod == 3)
-            return `${value.substr(4, 2)}/${value.substr(0, 4)}`;
-    }
-
-    fillChartUsers(data) {
+    fillChartContent() {
         let _datasets = {};
         let categories = [];
         let self = this;
 
-        for (let x in data) {
-            if (Object.keys(data)[Object.keys(data).length - 1] == x)
-                break;
+        for (let x in this.statContent)
+        {
+            let category = this.txTypePipe.transformType(x);
+            categories.push(category);
 
-            categories.push(x);
-
-            for (let y in data[x]) {
-                if (!(y in _datasets)) {
-                    _datasets[y] = {
-                        name: this.txTypePipe.transformType(y),
-                        data: []
-                    };
-                }
-
-                _datasets[y].data.push(data[x][y]);
-            }
+            _datasets[category] = {
+                name: category,
+                data: [
+                    this.statContent[x]
+                ]
+            };
         }
 
         let datasets = [];
@@ -100,21 +105,20 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             datasets.push(_datasets[d]);
         }
 
-        Highcharts.chart('stat_days_users_canvas', {
+        Highcharts.chart('stat_days_content_canvas', {
             title: {
-                text: ''
+                text: 'Контент за все время'
             },
             chart: {
-                type: 'area'
+                type: 'column'
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'Count'
                 }
             },
             xAxis: {
                 categories: categories,
-                type: 'datetime',
                 labels: {
                     formatter: function () { return String(this.value); },
                     style: {
@@ -129,19 +133,9 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 verticalAlign: 'bottom'
             },
             tooltip: {
-                shared: true,
-                //crosshairs: true,
+                shared: false,
                 formatter: function () {
-                    let points = this.points;
-                    let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px">${self.formatTooltip(points[0].key + '')}</span></b><br/>` : ``;
-                    let index;
-
-                    for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 13px">${points[index].y}</span></b><br/>`;
-                    }
-
-                    return tooltipMarkup;
+                    return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b><span style="font-size: 13px">${this.y}</span></b><br/>`;
                 }
             },
             plotOptions: {
@@ -155,38 +149,25 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     animation: false
                 }
             },
-            series: datasets,
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
+            series: datasets
         });
     }
 
-    fillChartEvents(data) {
+    fillChartTransactions() {
         let _datasets = {};
         let categories = [];
         let self = this;
         let yAxisCounter = {};
 
-        for (let x in data) {
-            if (Object.keys(data)[Object.keys(data).length - 1] == x)
-                break;
+        for (let x in this.statTransactions)
+        {
+            let category = this.txTypePipe.transformType(x);
 
-            categories.push(x);
+            categories.push(category);
 
-            for (let y in data[x]) {
-                if (y == '3') continue;
+            for (let y in this.statTransactions[x])
+            {
+                if (y == "205") continue;
 
                 if (!(y in yAxisCounter))
                     yAxisCounter[y] = Object.keys(yAxisCounter).length;
@@ -194,13 +175,11 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 if (!(y in _datasets)) {
                     _datasets[y] = {
                         name: this.txTypePipe.transformType(y),
-                        data: [],
-                        legendIndex: y,
-                        yAxis: yAxisCounter[y]
+                        data: []
                     };
                 }
 
-                _datasets[y].data.push(data[x][y]);
+                _datasets[y].data.push(this.statTransactions[x][y]);
             }
         }
 
@@ -218,21 +197,25 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         }
 
         Highcharts.chart('stat_days_count_canvas', {
-            title: {
-                text: ''
-            },
             chart: {
                 type: 'spline'
             },
+            title: {
+                text: ''
+            },
             yAxis: yAxis,
             xAxis: {
+                type: 'category',
                 categories: categories,
-                labels: {
-                    formatter: function () { return self.formatTooltip(String(this.value)); },
-                    style: {
-                        fontSize: '0.6rem'
-                    }
-                },
+                crosshair: true,
+                tickmarkPlacement: 'on',
+                // labels: {
+                //     formatter: function () { return String(this.value); },
+                //     style: {
+                //         fontSize: '0.6rem'
+                //     }
+                // },
+                visible: false,
             },
             legend: {
                 enabled: true,
@@ -242,25 +225,28 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 shared: true,
-                //crosshairs: true,
-                formatter: function () {
-                    // let tooltipMarkup = `<b><span style="font-size: 13px;">${self.formatTooltip(this.key + '')}</span></b><br/>`;
-                    // tooltipMarkup += `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b><span style="font-size: 12px;">${this.y}</span></b><br/>`;
-                    // return tooltipMarkup;
+                // formatter: function () {
+                //     let points = this.points;
+                //     let pointsLength = points.length;
+                //     let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${points[0].key}</span></b><br/>` : ``;
+                //     let index;
 
-                    let points = this.points;
-                    let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${self.formatTooltip(points[0].key + '')}</span></b><br/>` : ``;
-                    let index;
+                //     for (index = 0; index < pointsLength; index += 1) {
+                //         tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
+                //     }
 
-                    for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
-                    }
-
-                    return tooltipMarkup;
-                }
+                //     return tooltipMarkup;
+                // }
             },
             plotOptions: {
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 0,
+                    marker: {
+                        enabled: false
+                    }
+                },
                 spline: {
                     marker: {
                         enabled: false
