@@ -280,10 +280,8 @@ export class DataService {
     }
 
     selectNode(node){
-
         this.node = node;
         localStorage.setItem('explorerNode', this.node);
-        location.reload()
     }
 
 
