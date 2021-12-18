@@ -20,6 +20,10 @@ export class NodesListSelectComponent implements OnInit {
         return this.global;
     }
 
+    get fixed(){
+        return this.dataService.fixed;
+    }
+
     get selectedNode(){
         return this.dataService.selectedNode;
     }
@@ -38,7 +42,9 @@ export class NodesListSelectComponent implements OnInit {
      }
 
      selectNode(addr){
+        this.dataService.fix(false);
         this.dataService.selectNode(addr);
+        location.reload();
     }
     
 
@@ -68,32 +74,32 @@ export class NodesListSelectComponent implements OnInit {
                 if (!node && Object.keys(nodes).length > 0)
                 {
                     node = nodes[Object.keys(nodes)[0]]
-                    //this.fix(false);
+                    this.dataService.fix(false);
                     this.dataService.selectNode(node.node.key);
                 }
 
-                //const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
-                // if (!this.fixed && !availableNode){
+                const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
+                if (!this.fixed && !availableNode){
 
-                //     this.dataService.checkProxy().subscribe((resP: any) => {
+                    this.dataService.checkProxy().subscribe((resP: any) => {
 
-                //         let node = resP && resP.data && resP.data.node;
+                        let node = resP && resP.data && resP.data.node;
     
-                //         if (!node && nodes){
+                        if (!node && nodes){
     
-                //             const keys = Object.keys(nodes); 
+                            const keys = Object.keys(nodes); 
     
-                //             if (keys.length && keys.indexOf(this.dataService.defaultNode) === -1){
-                //                 node = keys[0];
-                //             } else {
-                //                 node = this.dataService.defaultNode;
-                //             }
+                            if (keys.length && keys.indexOf(this.dataService.defaultNode) === -1){
+                                node = keys[0];
+                            } else {
+                                node = this.dataService.defaultNode;
+                            }
     
-                //         } 
+                        } 
     
-                //         this.selectNode(node);
-                //     })
-                // }
+                        this.selectNode(node);
+                    })
+                }
 
 
 

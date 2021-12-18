@@ -54,10 +54,11 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = ''; // = localStorage.getItem("explorerNode"); // '135.181.196.243:38081'; //
-    private node =  this.defaultNode;
+    public defaultNode = "65.21.57.14:38081";
+    private node =  localStorage.getItem("explorerNode");
 
     public nodes: any[] = []
+    public fixed: boolean = Boolean(localStorage.getItem('nodeFixed'))
 
 
     constructor(private http: HttpClient, private hex: HexService) { }
@@ -73,6 +74,15 @@ export class DataService {
 
     get proxyUrl() {
         return this.selectedProxy + '/rpc/';
+    }
+
+    fix(boo: boolean){
+        if (boo){
+            localStorage.setItem('nodeFixed', 'true');
+        } else {
+            localStorage.removeItem('nodeFixed');
+        }
+        this.fixed = boo;
     }
 
     _executeGET(method: string, success: Function = () => {}, failed: Function = () => {}) {
@@ -98,7 +108,9 @@ export class DataService {
             });
     }
 
-    checkProxy(url: string, success: Function = () => {}, failed: Function = () => {}){
+    checkProxy(url?: string){
+        if (!url)
+            url = this.selectedProxy;
         return this.http.get(url + '/ping');
     }
 
