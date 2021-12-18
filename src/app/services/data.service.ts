@@ -54,7 +54,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private defaultNode = localStorage.getItem("explorerNode"); // '135.181.196.243:38081'; //
+    private defaultNode = ''; // = localStorage.getItem("explorerNode"); // '135.181.196.243:38081'; //
     private node =  this.defaultNode;
 
     public nodes: any[] = []
@@ -237,6 +237,7 @@ export class DataService {
     }
 
     getNodes(success: Function = () => {}, failed: Function = () => {}) {
+        debugger
         this._executeGET(
             '/info',
             success, failed
@@ -252,7 +253,14 @@ export class DataService {
         this.proxy = proxy;
         this.getNodes((res: any) => {
             try {
-                const nodes = res.info.nodeManager.nodes
+                const nodes = {};
+                for (var n in res.info.nodeManager.nodes)
+                {
+                    let node = res.info.nodeManager.nodes[n];
+                    if (node.node.version && !node.node.version.startsWith("0.20.16"))
+                        if (node.status.difference > -10)
+                            nodes[node.node.key] = node;
+                }
 
                 if (nodes){
                     console.log('nodes', nodes)
