@@ -237,7 +237,7 @@ export class DataService {
     }
 
     getNodes(success: Function = () => {}, failed: Function = () => {}) {
-        debugger
+        
         this._executeGET(
             '/info',
             success, failed

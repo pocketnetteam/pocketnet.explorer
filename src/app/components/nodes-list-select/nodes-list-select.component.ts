@@ -65,11 +65,14 @@ export class NodesListSelectComponent implements OnInit {
                 // debugger;
 
                 let node = this.selectedNode && nodes[this.selectedNode];
-                if (!node)
-                    node = nodes[0]
+                if (!node && Object.keys(nodes).length > 0)
+                {
+                    node = nodes[Object.keys(nodes)[0]]
+                    //this.fix(false);
+                    this.dataService.selectNode(node.node.key);
+                }
 
-                // const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
-
+                //const availableNode = node && node.node && node.statistic && node.statistic.percent && !node.statistic.difference;
                 // if (!this.fixed && !availableNode){
 
                 //     this.dataService.checkProxy().subscribe((resP: any) => {
