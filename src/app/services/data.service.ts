@@ -269,7 +269,7 @@ export class DataService {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && !node.node.version.startsWith("0.20.16"))
+                    if (node.node.version && !node.node.version.startsWith("0.20"))
                         if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
