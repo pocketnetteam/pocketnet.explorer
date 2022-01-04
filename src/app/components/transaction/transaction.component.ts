@@ -11,6 +11,7 @@ import { Transaction } from 'src/app/types/Transaction';
 export class TransactionComponent implements OnInit {
     txhash: string;
     tx: Transaction;
+    notFound: Boolean = false;
 
     constructor(private dataService: DataService, private activateRoute: ActivatedRoute) {
         this.txhash = activateRoute.snapshot.params['hash'];
@@ -18,7 +19,12 @@ export class TransactionComponent implements OnInit {
 
     ngOnInit() {
         this.dataService.getTransactions([this.txhash], data => {
-            this.tx = data[0];
+            if (data.length <= 0)
+                this.notFound = true;
+            else {
+                this.tx = data[0];
+                this.notFound = false;
+            }
         });
     }
 

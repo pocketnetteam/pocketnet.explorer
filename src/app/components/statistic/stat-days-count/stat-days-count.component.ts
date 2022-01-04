@@ -159,15 +159,16 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         let self = this;
         let yAxisCounter = {};
 
+        let maxKey = Math.max.apply(null, Object.keys(this.statTransactions));
+
         for (let x in this.statTransactions)
         {
-            let category = this.txTypePipe.transformType(x);
-
-            categories.push(category);
+            categories.push(x);
 
             for (let y in this.statTransactions[x])
             {
                 if (y == "205") continue;
+                if (y == "303") continue;
 
                 if (!(y in yAxisCounter))
                     yAxisCounter[y] = Object.keys(yAxisCounter).length;
@@ -179,7 +180,14 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     };
                 }
 
-                _datasets[y].data.push(this.statTransactions[x][y]);
+                let count = Number(this.statTransactions[x][y]);
+                if (y == "302")
+                    count += Number(this.statTransactions[x]["303"]);
+
+                _datasets[y].data.push({
+                    x: Number(x),
+                    y: count
+                });
             }
         }
 
@@ -209,13 +217,18 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 crosshair: true,
                 tickmarkPlacement: 'on',
-                // labels: {
-                //     formatter: function () { return String(this.value); },
-                //     style: {
-                //         fontSize: '0.6rem'
-                //     }
-                // },
-                visible: false,
+                labels: {
+                    formatter: function () {
+                        if (maxKey - Number(this.value) <= 0)
+                            return 'Now';
+
+                        return `${maxKey - Number(this.value)} day(s) ago`;
+                    },
+                    style: {
+                        fontSize: '0.6rem'
+                    }
+                },
+                visible: true,
             },
             legend: {
                 enabled: true,
@@ -225,18 +238,22 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 shared: true,
-                // formatter: function () {
-                //     let points = this.points;
-                //     let pointsLength = points.length;
-                //     let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${points[0].key}</span></b><br/>` : ``;
-                //     let index;
+                formatter: function () {
+                    let points = this.points;
+                    let pointsLength = points.length;
 
-                //     for (index = 0; index < pointsLength; index += 1) {
-                //         tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
-                //     }
+                    let day = 'Now';
+                    if (maxKey - Number(points[0].key) > 0)
+                        day = `${maxKey - Number(points[0].key)} day(s) ago`;
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${day}</span></b><br/>` : ``;
+                    let index;
 
-                //     return tooltipMarkup;
-                // }
+                    for (index = 0; index < pointsLength; index += 1) {
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
+                    }
+
+                    return tooltipMarkup;
+                }
             },
             plotOptions: {
                 area: {

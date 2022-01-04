@@ -1,4 +1,12 @@
-<app-loader *ngIf="!tx"></app-loader>
+<app-loader *ngIf="!tx && !notFound"></app-loader>
+
+<div class="col" *ngIf="!tx && notFound">
+    <div class="rowBlock">
+        <div class="row">
+            Transaction not found. Try refreshing the page in a couple of minutes
+        </div>
+    </div>
+</div>
 
 <div class="col" *ngIf="tx">
 

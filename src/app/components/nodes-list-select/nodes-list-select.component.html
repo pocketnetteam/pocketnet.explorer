@@ -45,7 +45,7 @@
                             <i class="fa fa-check-circle"></i>
                         </div>
                     </td>
-                    <td><span>{{ node.node.name }}</span></td>
+                    <td><span>{{ node.node.name }} ({{ node.node.version }})</span></td>
                     <td class="td-address"><span>{{ node.node.key + '/' + node.node.ws }}</span></td>
                     <td class="td-percent">
                         <span *ngIf="node.statistic.percent">

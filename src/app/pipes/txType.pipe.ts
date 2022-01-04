@@ -9,7 +9,7 @@ export class TxTypePipe implements PipeTransform {
     private types: { [hex: number]: string } = {
         0: 'Not Supported',
 
-        1: 'Money',
+        1: 'PKOIN',
         2: 'Coinbase',
         3: 'Coinstake',
 

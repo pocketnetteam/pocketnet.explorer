@@ -100,12 +100,17 @@ export class DataService {
         prms['options'] = { node: this.node };
 
         this.http.post(this.proxyUrl + method, prms)
-            .subscribe(answer => {
-                if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
-                    failed(answer);
-    
-                success(answer["data"]);
-            });
+            .subscribe(
+                answer => {
+                    if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
+                        failed(answer);
+        
+                    success(answer["data"]);
+                },
+                error => {
+                    failed(error);
+                }
+            );
     }
 
     checkProxy(url?: string){

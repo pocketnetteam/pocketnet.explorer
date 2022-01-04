@@ -1,4 +1,12 @@
-<app-loader *ngIf="!block"></app-loader>
+<app-loader *ngIf="!block && !notFound"></app-loader>
+
+<div class="col" *ngIf="!block && notFound">
+    <div class="rowBlock">
+        <div class="row">
+            Block not found. Try refreshing the page in a couple of minutes
+        </div>
+    </div>
+</div>
 
 <div class="col" *ngIf="block">
 
