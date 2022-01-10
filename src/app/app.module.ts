@@ -54,6 +54,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
+import { DatePipe } from '@angular/common'
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -101,6 +103,6 @@ import { ToastrModule } from 'ngx-toastr';
         ToastrModule.forRoot()
     ],
     bootstrap: [AppComponent],
-    providers: [Globals, TxTypePipe]
+    providers: [Globals, TxTypePipe, DatePipe]
 })
 export class AppModule { }

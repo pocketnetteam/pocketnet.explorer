@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { DatePipe } from '@angular/common'
 
 import * as Highcharts from 'highcharts';
 import Streamgraph from 'highcharts/modules/streamgraph';
@@ -29,9 +30,11 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     statPeriod: any = 2;
     show: boolean = true;
 
-    constructor(private dataService: DataService,
+    constructor(
+        private dataService: DataService,
         private global: Globals,
-        private txTypePipe: TxTypePipe) { }
+        private txTypePipe: TxTypePipe,
+        public datepipe: DatePipe) { }
 
     get Global(): Globals {
         return this.global;
@@ -80,6 +83,22 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         //         }, this.global.updateInterval);
         //     }
         // );
+    }
+
+    dateFormatter(maxKey: any, point: any) {
+        let pointDate = new Date();
+        
+        if (this.statPeriod == 2) {
+            pointDate.setDate(pointDate.getDate() - (maxKey - point));
+            return `${this.datepipe.transform(pointDate, 'MM/dd/yyyy')}`;
+        }
+
+        if (this.statPeriod == 1) {
+            pointDate.setHours(pointDate.getHours() - (maxKey - point));
+            return `${this.datepipe.transform(pointDate, 'HH:mm')}`;
+        }
+
+        return '¯\_(ツ)_/¯';
     }
 
     fillChartContent() {
@@ -218,11 +237,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 crosshair: true,
                 tickmarkPlacement: 'on',
                 labels: {
-                    formatter: function () {
-                        if (maxKey - Number(this.value) <= 0)
-                            return 'Now';
-
-                        return `${maxKey - Number(this.value)} day(s) ago`;
+                    formatter: function() {
+                        return self.dateFormatter(maxKey, Number(this.value));
                     },
                     style: {
                         fontSize: '0.6rem'
@@ -242,12 +258,10 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                     let points = this.points;
                     let pointsLength = points.length;
 
-                    let day = 'Now';
-                    if (maxKey - Number(points[0].key) > 0)
-                        day = `${maxKey - Number(points[0].key)} day(s) ago`;
+                    let day = self.dateFormatter(maxKey, Number(points[0].key));
                     let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${day}</span></b><br/>` : ``;
-                    let index;
 
+                    let index;
                     for (index = 0; index < pointsLength; index += 1) {
                         tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
                     }
