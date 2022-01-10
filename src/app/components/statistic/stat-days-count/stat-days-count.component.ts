@@ -267,6 +267,24 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 spline: {
                     marker: {
                         enabled: false
+                    },
+                    events: {
+                        legendItemClick: function(event) {
+                            let current = this;
+                            let s = this.chart.series.filter(s => { return s == current; });
+                            if (s && s[0].visible) {
+                                this.chart.series.forEach(s => {
+                                    if (s != current)
+                                        s.setVisible(!s.visible);
+                                });
+                            } else {
+                                this.chart.series.forEach(s => {
+                                    s.setVisible(s == current);
+                                });
+                            }
+
+                            return false;
+                        }
                     }
                 },
                 series: {
