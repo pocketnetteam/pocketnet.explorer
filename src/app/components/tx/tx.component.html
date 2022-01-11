@@ -26,7 +26,7 @@
             <div class="border-top ml-n2 mr-1 txvalues txvalues-info" *ngIf="(tx | txType) != ''">{{tx | txType}}</div>
             <div class="border-top mr-1 txvalues txvalues-info" *ngIf="tx.type > 3">Fee: {{tx | txFee | pkoin}}</div>
             <div class="border-top ml-1 mr-n2 float-right txvalues txvalues-amount">{{ tx | txAmount | pkoin }}</div>
-            <div *ngIf="Global.blockchainInfo" class="border-top float-right txvalues txvalues-conf">{{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0)- tx.height }} Confirmations</div>
+            <div *ngIf="Global.blockchainInfo" class="border-top float-right txvalues txvalues-conf">{{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0) - (tx.height ? tx.height : 0) }} Confirmations</div>
         </div>
     </div>
 </div>
