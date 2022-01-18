@@ -27,12 +27,12 @@ export class TxTypePipe implements PipeTransform {
         205: 'Comment (Edit)',
         206: 'Comment (Delete)',
 
-        300: 'Score',
-        301: 'Score (Comment)',
+        300: 'Rating',
+        301: 'Rating (Comment)',
 
-        302: 'Subscribe',
-        303: 'Subscribe (Private)',
-        304: 'Unsubscribe',
+        302: 'Follow',
+        303: 'Follow (Private)',
+        304: 'Unfollow',
 
         305: 'Blocking',
         306: 'Unblocking',
