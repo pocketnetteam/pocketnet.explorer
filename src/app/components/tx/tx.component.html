@@ -1,4 +1,4 @@
-<div class="col rounded bg-light py-2 mb-3 border">
+<div class="col rounded bg-light pt-2 pb-1 mb-3 border">
     <div class="row">
         <div class="col-lg-auto col-md-8 col-sm-7 border-bottom pb-2 ">
             <div class="ellipsis">
@@ -12,21 +12,22 @@
         </div>
     </div>
 
-    <div class="row my-2">
+    <div class="row my-2" *ngIf="extend">
         <div class="col">
             <app-vin class="mb-1" *ngFor="let vin of tx.vin" [vin]="vin"></app-vin>
         </div>
         <div class="col">
-            <app-vout class="" *ngFor="let vout of tx.vout" [vout]="vout"></app-vout>
+            <app-vout class="" *ngFor="let vout of filterOuts()" [vout]="vout"></app-vout>
         </div>
     </div>
 
     <div class="row">
         <div class="col pt-2">
-            <div class="border-top ml-n2 mr-1 txvalues txvalues-info" *ngIf="(tx | txType) != ''">{{tx | txType}}</div>
-            <div class="border-top mr-1 txvalues txvalues-info" *ngIf="tx.type > 3">Fee: {{tx | txFee | pkoin}}</div>
-            <div class="border-top ml-1 mr-n2 float-right txvalues txvalues-amount">{{ tx | txAmount | pkoin }}</div>
-            <div *ngIf="Global.blockchainInfo" class="border-top float-right txvalues txvalues-conf">{{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0) - (tx.height ? tx.height : 0) }} Confirmations</div>
+            <div *ngIf="Global.blockchainInfo" class="mr-4 txvalues txvalues-type text-left">{{tx | txType}}</div>
+            <div class="mr-5 txvalues txvalues-info text-left" *ngIf="(tx | txType) != ''">Confirmations: {{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0) - (tx.height ? tx.height : 0) }}</div>
+            <div class="mr-4 txvalues txvalues-info text-left" *ngIf="tx.type > 3 || tx.type == 1">Fee: {{tx | txFee | pkoin}}</div>
+
+            <div class="float-right txvalues txvalues-amount text-right">{{ tx | txAmount | pkoin }}</div>
         </div>
     </div>
 </div>

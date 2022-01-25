@@ -17,7 +17,7 @@ export class TxFeePipe implements PipeTransform {
             fee -= o.value;
         });
         
-        return fee/100000000;
+        return fee;
     }
 
 }

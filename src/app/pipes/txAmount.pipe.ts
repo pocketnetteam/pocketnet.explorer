@@ -13,7 +13,7 @@ export class TxAmountPipe implements PipeTransform {
             amount += o.value;
         });
         
-        return amount/100000000;
+        return amount;
     }
 
 }

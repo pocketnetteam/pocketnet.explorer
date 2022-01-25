@@ -20,12 +20,16 @@ export class TxTypePipe implements PipeTransform {
 
         200: 'Post',
         201: 'Video',
-        202: 'Translate',
-        203: 'Server Ping',
+        202: 'Article',
+        // 203: 'Server Ping',
 
         204: 'Comment',
         205: 'Comment (Edit)',
         206: 'Comment (Delete)',
+
+        207: 'Delete Content',
+
+        208: 'Boost Content',
 
         300: 'Rating',
         301: 'Rating (Comment)',

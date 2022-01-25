@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="w-100 mx-2 mb-1 p-2 bg-white border rounded">
+    <div class="w-100 mx-2 mb-1 px-2 pt-1 border rounded voutBox" [ngClass]="{spent: vout.spent}">
         <span class="float-left" *ngIf="vout.scriptPubKey.addresses">
             <a href="address/{{vout.scriptPubKey.addresses[0]}}">{{vout.scriptPubKey.addresses[0]}}</a>
         </span>

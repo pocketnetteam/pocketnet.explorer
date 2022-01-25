@@ -14,12 +14,15 @@ export class TxComponent implements OnInit {
     constructor(private global: Globals) { }
 
     get Global() : Globals { 
-
         return this.global; 
     }
 
     ngOnInit() {
         
+    }
+
+    filterOuts() {
+        return this.tx.vout.filter(out => out.value > 0);
     }
 
 }

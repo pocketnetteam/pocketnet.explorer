@@ -23,6 +23,8 @@ import { VinComponent } from './components/tx/vin/vin.component';
 import { AccountsCntPipe } from './pipes/blockTxCount/accounts.pipe';
 import { ScoresCntPipe } from './pipes/blockTxCount/scores.pipe';
 import { ContentsCntPipe } from './pipes/blockTxCount/contents.pipe';
+import { ArticleCntPipe } from './pipes/blockTxCount/articles.pipe';
+import { BoostCntPipe } from './pipes/blockTxCount/boosts.pipe';
 import { CommentsCntPipe } from './pipes/blockTxCount/comments.pipe';
 import { SubscribesCntPipe } from './pipes/blockTxCount/subscribes.pipe';
 
@@ -72,6 +74,8 @@ import { DatePipe } from '@angular/common'
         VinComponent,
         AccountsCntPipe,
         ContentsCntPipe,
+        ArticleCntPipe,
+        BoostCntPipe,
         CommentsCntPipe,
         ScoresCntPipe,
         SubscribesCntPipe,

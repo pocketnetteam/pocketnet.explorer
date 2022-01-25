@@ -3,12 +3,12 @@ import { BlockCompact } from 'src/app/types/Block';
 import { Types } from 'src/app/types/Transaction';
 
 @Pipe({
-    name: 'ContentsCnt'
+    name: 'ArticleCnt'
 })
-export class ContentsCntPipe implements PipeTransform {
+export class ArticleCntPipe implements PipeTransform {
 
     transform(block: BlockCompact, args?: any): number {
-        return (block.types[Types.Post]||0 + block.types[Types.Video]||0) || 0;
+        return (block.types[Types.Article]||0) || 0;
     }
 
 }

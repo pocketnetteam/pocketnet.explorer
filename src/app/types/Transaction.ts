@@ -18,6 +18,7 @@ export class Vout {
     public value: number;
     public n: number;
     public scriptPubKey: ScriptPubKey;
+    public spent: number;
 }
 
 export class Transaction {
@@ -44,12 +45,16 @@ export const enum Types {
 
     Post = 200,
     Video = 201,
-    Translate = 202,
-    ServerPing = 203,
+    Article = 202,
+    // ServerPing = 203,
 
     Comment = 204,
     CommentEdit = 205,
     CommentDelete = 206,
+
+    ContentDelete = 207,
+    
+    BoostContent = 208,
 
     Score = 300,
     ScoreComment = 301,
