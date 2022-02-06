@@ -29,6 +29,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     statContent: any;
     statPeriod: any = 2;
     show: boolean = true;
+    loading: boolean = false;
 
     constructor(
         private dataService: DataService,
@@ -52,30 +53,32 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     loadData() {
+        if (this.loading) return;
+
+        this.loading = true;
+
         this.dataService.getStatistic(this.statPeriod,
             data => {
                 this.statTransactions = data;
                 this.fillChartTransactions();
 
-                setTimeout(() => {
-                    this.loadData();
-                }, this.global.updateInterval);
-            },
-            err => {
-                setTimeout(() => {
-                    this.loadData();
-                }, this.global.updateInterval);
-            }
-        );
-
-        this.dataService.getStatisticContent(this.statPeriod,
-            data => {
-                this.statContent = data;
-                this.fillChartContent();
-
-                setTimeout(() => {
-                    this.loadData();
-                }, this.global.updateInterval);
+                this.dataService.getStatisticContent(this.statPeriod,
+                    data => {
+                        this.loading = false;
+                        
+                        this.statContent = data;
+                        this.fillChartUsers();
+        
+                        setTimeout(() => {
+                            this.loadData();
+                        }, this.global.updateInterval);
+                    },
+                    err => {
+                        setTimeout(() => {
+                            this.loadData();
+                        }, this.global.updateInterval);
+                    }
+                );
             },
             err => {
                 setTimeout(() => {
@@ -168,6 +171,102 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 }
             },
             series: datasets
+        });
+    }
+
+    fillChartUsers() {
+        let data = [];
+        let datasets = [];
+        let categories = [];
+        let self = this;
+
+        let maxKey = Math.max.apply(null, Object.keys(this.statContent));
+
+        for (let x in this.statContent) {
+            categories.push(x);
+
+            let y = this.statContent[x];
+            data.push(y);
+        }
+
+        datasets.push({
+            name: 'Accounts',
+            data: data
+        });
+
+        Highcharts.chart('stat_days_content_canvas', {
+            title: {
+                text: ''
+            },
+            chart: {
+                type: 'spline'
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            xAxis: {
+                categories: categories,
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        return self.dateFormatter(maxKey, Number(this.value));
+                    },
+                    style: {
+                        fontSize: '0.6rem'
+                    }
+                },
+            },
+            legend: {
+                enabled: true,
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+            },
+            tooltip: {
+                shared: true,
+                //crosshairs: true,
+                formatter: function () {
+                    let points = this.points;
+                    let pointsLength = points.length;
+
+                    let day = self.dateFormatter(maxKey, Number(points[0].key));
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${day}</span></b><br/>` : ``;
+
+                    let index;
+                    for (index = 0; index < pointsLength; index += 1) {
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
+                    }
+
+                    return tooltipMarkup;
+                }
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: false
+                    }
+                },
+                series: {
+                    connectNulls: true
+                }
+            },
+            series: datasets,
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
         });
     }
 
