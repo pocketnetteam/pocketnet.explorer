@@ -68,21 +68,21 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             }
         );
 
-        // this.dataService.getStatisticContent(
-        //     data => {
-        //         this.statContent = data;
-        //         this.fillChartContent();
+        this.dataService.getStatisticContent(this.statPeriod,
+            data => {
+                this.statContent = data;
+                this.fillChartContent();
 
-        //         setTimeout(() => {
-        //             this.loadData();
-        //         }, this.global.updateInterval);
-        //     },
-        //     err => {
-        //         setTimeout(() => {
-        //             this.loadData();
-        //         }, this.global.updateInterval);
-        //     }
-        // );
+                setTimeout(() => {
+                    this.loadData();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.loadData();
+                }, this.global.updateInterval);
+            }
+        );
     }
 
     dateFormatter(maxKey: any, point: any) {
@@ -108,11 +108,10 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
         for (let x in this.statContent)
         {
-            let category = this.txTypePipe.transformType(x);
-            categories.push(category);
+            categories.push(x);
 
-            _datasets[category] = {
-                name: category,
+            _datasets[x] = {
+                name: x,
                 data: [
                     this.statContent[x]
                 ]
@@ -126,7 +125,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
         Highcharts.chart('stat_days_content_canvas', {
             title: {
-                text: 'Контент за все время'
+                text: ''
             },
             chart: {
                 type: 'column'

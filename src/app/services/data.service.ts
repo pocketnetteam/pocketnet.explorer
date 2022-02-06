@@ -231,11 +231,15 @@ export class DataService {
         );
     }
 
-    getStatisticContent(success: Function = () => {}, failed: Function = () => {}) {
+    getStatisticContent(type: Number, success: Function = () => {}, failed: Function = () => {}) {
+        let method = 'getstatisticcontentbyhours';
+        if (type == 2)
+            method = 'getstatisticcontentbydays';
+
         this._executePOST(
-            'getstatisticcontent',
+            method,
             {
-                method: 'getstatisticcontent',
+                method: method,
                 parameters: [] 
             },
             success, failed
@@ -274,7 +278,7 @@ export class DataService {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && !node.node.version.startsWith("0.20"))
+                    if (node.node.version && !node.node.version.startsWith("0.20.18"))
                         if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
