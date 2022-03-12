@@ -24,9 +24,11 @@ import { AccountsCntPipe } from './pipes/blockTxCount/accounts.pipe';
 import { ScoresCntPipe } from './pipes/blockTxCount/scores.pipe';
 import { ContentsCntPipe } from './pipes/blockTxCount/contents.pipe';
 import { ArticleCntPipe } from './pipes/blockTxCount/articles.pipe';
+import { VideosCntPipe } from './pipes/blockTxCount/videos.pipe';
 import { BoostCntPipe } from './pipes/blockTxCount/boosts.pipe';
 import { CommentsCntPipe } from './pipes/blockTxCount/comments.pipe';
 import { SubscribesCntPipe } from './pipes/blockTxCount/subscribes.pipe';
+import { PkoinsCntPipe } from './pipes/blockTxCount/pkoins.pipe';
 
 import { PKoinPipe } from './pipes/pkoin.pipe';
 import { TxTypePipe } from './pipes/txType.pipe';
@@ -75,10 +77,12 @@ import { DatePipe } from '@angular/common'
         AccountsCntPipe,
         ContentsCntPipe,
         ArticleCntPipe,
+        VideosCntPipe,
         BoostCntPipe,
         CommentsCntPipe,
         ScoresCntPipe,
         SubscribesCntPipe,
+        PkoinsCntPipe,
         PKoinPipe,
         TxTypePipe,
         TxFeePipe,

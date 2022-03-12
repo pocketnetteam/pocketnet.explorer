@@ -3,12 +3,12 @@ import { BlockCompact } from 'src/app/types/Block';
 import { Types } from 'src/app/types/Transaction';
 
 @Pipe({
-    name: 'AccountsCnt'
+    name: 'VideosCnt'
 })
-export class AccountsCntPipe implements PipeTransform {
+export class VideosCntPipe implements PipeTransform {
 
     transform(block: BlockCompact, args?: any): number {
-        return ((block.types[Types.AccountUser]||0) + (block.types[Types.AccountVideoServer]||0) + (block.types[Types.AccountMessageServer]||0)) || 0;
+        return (block.types[Types.Video]||0) || 0;
     }
 
 }

@@ -8,7 +8,7 @@ import { Types } from 'src/app/types/Transaction';
 export class ScoresCntPipe implements PipeTransform {
 
     transform(block: BlockCompact, args?: any): number {
-        return (block.types[Types.Score]||0 + block.types[Types.ScoreComment]||0) || 0;
+        return ((block.types[Types.Score]||0) + (block.types[Types.ScoreComment]||0)) || 0;
     }
 
 }

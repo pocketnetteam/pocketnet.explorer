@@ -66,19 +66,19 @@ export class TxListComponent implements OnInit {
         }
 
         let _txs: Transaction[] = data;
-        _txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 1 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
+        _txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 0 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
         this.txs.push.apply(this.txs, _txs);
         this.loading = false;
     }
 
     loadMoreAddress() {
-        this.dataService.getAddressTransactions(this.addressHash, this.pageInit, this.txs.length + 1, this.pageSize, data => {
+        this.dataService.getAddressTransactions(this.addressHash, this.pageInit, this.txs.length, this.pageSize, data => {
             this.fillTransactions(data);
         });
     }
 
     loadMoreBlock() {
-        this.dataService.getBlockTransactions(this.blockHash, this.txs.length + 1, this.pageSize, data => {
+        this.dataService.getBlockTransactions(this.blockHash, this.txs.length, this.pageSize, data => {
             this.fillTransactions(data);
         });
     }
