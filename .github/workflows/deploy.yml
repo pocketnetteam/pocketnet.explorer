@@ -39,7 +39,7 @@ jobs:
         with:
           name: explorer.tgz
       - name: Unpack artifact
-        run: tar xzf explorer.tgz -C /data/expl/
+        run: tar xzf explorer.tgz -C /data/expl/ --no-same-owner
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
