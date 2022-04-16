@@ -66,8 +66,8 @@ export class TxListComponent implements OnInit {
         }
 
         let _txs: Transaction[] = data;
-        _txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 0 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
-        this.txs.push.apply(this.txs, _txs);
+        this.txs.push(..._txs);
+        this.txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 0 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
         this.loading = false;
     }
 
