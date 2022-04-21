@@ -46,7 +46,6 @@ export const enum Types {
     Post = 200,
     Video = 201,
     Article = 202,
-    // ServerPing = 203,
 
     Comment = 204,
     CommentEdit = 205,
@@ -67,6 +66,11 @@ export const enum Types {
     Unblocking = 306,
 
     Complain = 307,
+
+    ModerationRequest = 400,
+    ModerationRegister = 401,
+    ModerationFlag = 410,
+    ModerationVote = 420,
 }
 
 /*

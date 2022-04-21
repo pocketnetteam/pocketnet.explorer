@@ -41,7 +41,12 @@ export class TxTypePipe implements PipeTransform {
         305: 'Blocking',
         306: 'Unblocking',
 
-        307: 'Complain'
+        307: 'Complain',
+
+        400: 'Moderation Request',
+        401: 'Moderation Register',
+        410: 'Moderation Flag',
+        420: 'Moderation Vote',
     }
 
     transform(tx: Transaction, args?: any): string {

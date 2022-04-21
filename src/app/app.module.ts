@@ -29,6 +29,7 @@ import { BoostCntPipe } from './pipes/blockTxCount/boosts.pipe';
 import { CommentsCntPipe } from './pipes/blockTxCount/comments.pipe';
 import { SubscribesCntPipe } from './pipes/blockTxCount/subscribes.pipe';
 import { PkoinsCntPipe } from './pipes/blockTxCount/pkoins.pipe';
+import { FlagsCntPipe } from './pipes/blockTxCount/moderation/flags.pipe';
 
 import { PKoinPipe } from './pipes/pkoin.pipe';
 import { TxTypePipe } from './pipes/txType.pipe';
@@ -83,6 +84,7 @@ import { DatePipe } from '@angular/common'
         ScoresCntPipe,
         SubscribesCntPipe,
         PkoinsCntPipe,
+        FlagsCntPipe,
         PKoinPipe,
         TxTypePipe,
         TxFeePipe,
