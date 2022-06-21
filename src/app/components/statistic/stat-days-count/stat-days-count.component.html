@@ -15,7 +15,7 @@
     <div [hidden]="!show">
         <div class="row">
             <ng-select class="w-100" [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod"
-                (ngModelChange)="loadData()">
+                (ngModelChange)="ngAfterViewInit()">
                 <ng-option [value]="1">Show statistics for last Day</ng-option>
                 <ng-option [value]="2">Show statistics for last Month</ng-option>
             </ng-select>
