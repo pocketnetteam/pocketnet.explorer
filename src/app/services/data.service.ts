@@ -15,47 +15,54 @@ export class DataService {
 
     public defaultProxies: Proxy[] = [
         {
-            host: '1.pocketnet.app', 
+            host: 'pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: '1.pocketnet.app:8899:8099',
+            key: 'pocketnet.app:8899:8099',
             default: true
         },
-        {
-            host: '2.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '2.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '3.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '3.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '4.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '4.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '5.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '5.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '6.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '6.pocketnet.app:8899:8099',
-            default: true
-        },
+        // {
+        //     host: '1.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '1.pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '2.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '2.pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '3.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '3.pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '4.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '4.pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '5.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '5.pocketnet.app:8899:8099',
+        //     default: true
+        // },
+        // {
+        //     host: '6.pocketnet.app', 
+        //     port: '8899',
+        //     wss: '8099',
+        //     key: '6.pocketnet.app:8899:8099',
+        //     default: true
+        // },
         {
             host: 'test.pocketnet.app', 
             port: '8899',
@@ -143,6 +150,17 @@ export class DataService {
             {
                 method: 'getcompactblock',
                 parameters: [ hash, number ]
+            },
+            success, failed
+        );        
+    }
+
+    getCoinInfo(success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getcoininfo',
+            {
+                method: 'getcoininfo',
+                parameters: []
             },
             success, failed
         );        

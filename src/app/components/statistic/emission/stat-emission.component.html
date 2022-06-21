@@ -1,0 +1,26 @@
+<div class="col">
+
+    <div class="row">
+        <div class="section-top pointer" (click)="toggleShow()">
+            <span class="title">
+                Emission
+            </span>
+            <span class="icon">
+                <i [class]="show ? 'fas fa-angle-down opened' : 'fas fa-angle-down closed'"> </i>
+            </span>
+        </div>
+    </div>
+
+    <div [hidden]="!show && coinInfo.emissionPercent">
+        
+        <div class="row mb-1">
+            The emission at the height of {{coinInfo.height | number:'':'en-us'}} is {{coinInfo.emission | pkoin:0:0}}
+        </div>
+        <div class="row">
+            <div class="bar back">
+                <div class="bar front" [ngStyle]="{'width': coinInfo.emissionPercent + '%'}"></div>
+            </div>
+        </div>        
+    </div>
+
+</div>

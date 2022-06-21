@@ -41,6 +41,7 @@ import { Globals } from 'src/app/globals';
 
 import { HighchartsChartModule } from 'highcharts-angular';
 import { StatDaysCountComponent } from './components/statistic/stat-days-count/stat-days-count.component';
+import { StatEmissionComponent } from './components/statistic/emission/stat-emission.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RoundPipe } from './pipes/round.pipe';
@@ -93,6 +94,7 @@ import { DatePipe } from '@angular/common'
         FooterComponent,
         TimeAgoPipe,
         StatDaysCountComponent,
+        StatEmissionComponent,
         RoundPipe,
         RplPipe,
         NodesListComponent,

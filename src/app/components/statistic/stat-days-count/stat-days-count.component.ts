@@ -29,7 +29,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     statContent: any;
     statPeriod: any = 2;
     show: boolean = true;
-    loading: boolean = false;
+    loadingUsers: boolean = false;
+    loadingTransactions: boolean = false;
 
     constructor(
         private dataService: DataService,
@@ -45,48 +46,61 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.loadData();
+        this.loadDataUsers();
+        this.loadDataTransactions();
     }
 
     toggleShow() {
         this.show = !this.show;
     }
 
-    loadData() {
-        if (this.loading) return;
+    loadDataUsers() {
+        if (this.loadingUsers) return;
+        this.loadingUsers = true;
 
-        this.loading = true;
-
-        this.dataService.getStatistic(this.statPeriod,
+        this.dataService.getStatisticContent(this.statPeriod,
             data => {
-                this.statTransactions = data;
-                this.fillChartTransactions();
+                this.loadingUsers = false;
+                
+                this.statContent = data;
+                this.fillChartUsers();
 
-                this.dataService.getStatisticContent(this.statPeriod,
-                    data => {
-                        this.loading = false;
-                        
-                        this.statContent = data;
-                        this.fillChartUsers();
-        
-                        setTimeout(() => {
-                            this.loadData();
-                        }, this.global.updateInterval);
-                    },
-                    err => {
-                        setTimeout(() => {
-                            this.loadData();
-                        }, this.global.updateInterval);
-                    }
-                );
+                setTimeout(() => {
+                    this.loadDataUsers();
+                }, this.global.updateInterval);
             },
             err => {
                 setTimeout(() => {
-                    this.loadData();
+                    this.loadDataUsers();
                 }, this.global.updateInterval);
             }
         );
     }
+
+    loadDataTransactions() {
+        if (this.loadingTransactions) return;
+
+        this.loadingTransactions = true;
+
+        this.dataService.getStatistic(this.statPeriod,
+            data => {
+                this.loadingTransactions = false;
+
+                this.statTransactions = data;
+                this.fillChartTransactions();
+        
+                setTimeout(() => {
+                    this.loadDataTransactions();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.loadDataTransactions();
+                }, this.global.updateInterval);
+            }
+        );
+    }
+
 
     dateFormatter(maxKey: any, point: any) {
         let pointDate = new Date();
@@ -308,17 +322,26 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             }
         }
 
-        let yAxis = [];
+        let yAxis = [
+            {
+                title: {
+                    text: ''
+                },
+                visible: true,
+                opposite: true
+            },
+            {
+                title: {
+                    text: ''
+                },
+                visible: true,
+                opposite: false
+            }
+        ];
         let datasets = [];
         for (let d in _datasets) {
+            _datasets[d].yAxis = d == "300" ? 0 : 1;
             datasets.push(_datasets[d]);
-            yAxis.push({
-                title: {
-                    text: d
-                },
-                visible: false,
-                opposite: true
-            });
         }
 
         Highcharts.chart('stat_days_count_canvas', {

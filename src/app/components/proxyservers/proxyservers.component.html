@@ -63,6 +63,7 @@
             </div>
         </div>
     </app-modal>
+    
     <app-modal *ngIf="displayModalAdd" (closeModal)="closeModalAdd()" (successModal)="addProxyItem()"
         [txtSuccess]="newProxy.key ? txtSuccessSave : txtSuccessAdd">
         <div class="add-proxy-content">
