@@ -13,8 +13,9 @@
 
     <div [hidden]="!show && coinInfo.emissionPercent">
         
-        <div class="row mb-1">
-            The emission at the height of {{coinInfo.height | number:'':'en-us'}} is {{coinInfo.emission | pkoin:0:0}}
+        <div class="row mb-1 barTitle">
+            <div class="curValue">The emission at the height of {{coinInfo.height | number:'':'en-us'}} is {{coinInfo.emission | pkoin:0:0}}</div>
+            <div class="endValue">{{ 24000000 | pkoin:0:0 }}</div>
         </div>
         <div class="row">
             <div class="bar back">
