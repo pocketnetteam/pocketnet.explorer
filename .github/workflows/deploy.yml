@@ -57,6 +57,6 @@ jobs:
       - name: Unpack artifact
         run: |
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
-          tar xzf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner
+          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner --recursive-unlink
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/blockexplorer/*
-          tar xzf explorer.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner
+          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner --recursive-unlink
