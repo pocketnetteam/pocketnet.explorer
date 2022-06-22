@@ -56,7 +56,7 @@ jobs:
           name: explorer.tgz
       - name: Unpack artifact
         run: |
-          rm -Recurse -Force C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
+          rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
           tar xzf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner
-          rm -Recurse -Force C:/inetpub/wwwroot/blockexplorer/*
+          rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/blockexplorer/*
           tar xzf explorer.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner
