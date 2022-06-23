@@ -14,8 +14,16 @@
     <div [hidden]="!show && coinInfo.emissionPercent">
         
         <div class="row mb-1 barTitle">
-            <div class="curValue">The emission at the height of {{coinInfo.height | number:'':'en-us'}} is {{coinInfo.emission | pkoin:0:0}}</div>
-            <div class="endValue">{{ 24000000 | pkoin:0:0 }}</div>
+            <div class="curValue">
+                The emission at the height of
+                <div class="em emHeight">{{ coinInfo.height | number:'':'en-us' }}</div>
+                is
+                <div class="em emCurrent">{{ coinInfo.emission | pkoin:0:0 }}</div>
+                (<div class="em emCurrentPercent">{{ coinInfo.emissionPercent | round:1 }}%</div> of Total)</div>
+            <div class="endValue">
+                <div class="em emTotalValue">{{ 24375000 | pkoin:0:0 }}</div>
+                Total Ever Issued
+            </div>
         </div>
         <div class="row">
             <div class="bar back">
