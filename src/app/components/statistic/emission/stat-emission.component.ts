@@ -14,9 +14,9 @@ import { stringify } from 'querystring';
 export class StatEmissionComponent implements OnInit, AfterViewInit {
 
     coinInfo: any = {
-        emission: 12129115,
-        height: 1750823,
-        emissionPercent: 34
+        emission: 0,
+        height: 0,
+        emissionPercent: 0
     };
     show: boolean = true;
     loading: boolean = false;
@@ -60,9 +60,9 @@ export class StatEmissionComponent implements OnInit, AfterViewInit {
             },
             err => {
                 this.coinInfo = {
-                    emission: 12129115,
-                    height: 1750823,
-                    emissionPercent: 12129115 / 240000
+                    emission: 0,
+                    height: 0,
+                    emissionPercent: 0
                 };
                 this.fillChartCoin();
 
