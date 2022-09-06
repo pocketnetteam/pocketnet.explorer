@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
 import { DataService } from 'src/app/services/data.service';
+import * as semver from 'semver';
 
 @Component({
     selector: 'app-nodes-list2',
@@ -59,8 +60,8 @@ export class NodesListSelectComponent implements OnInit {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && node.node.version.startsWith("0.20"))
-                        //if (node.status.difference > -10)
+                    if (node.node.version && semver.gte(node.node.version, '0.20.25'))
+                        if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
 

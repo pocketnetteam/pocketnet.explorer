@@ -6,6 +6,8 @@ import { Proxy } from '../types/Proxy';
 import { toUnicode } from 'punycode';
 import { Observable } from 'rxjs';
 
+import * as semver from 'semver';
+
 const proxy = localStorage.getItem('explorerProxy');
 
 @Injectable({
@@ -15,54 +17,47 @@ export class DataService {
 
     public defaultProxies: Proxy[] = [
         {
-            host: 'pocketnet.app', 
+            host: '1.pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: 'pocketnet.app:8899:8099',
+            key: '1.pocketnet.app:8899:8099',
             default: true
         },
-        // {
-        //     host: '1.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '1.pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '2.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '2.pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '3.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '3.pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '4.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '4.pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '5.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '5.pocketnet.app:8899:8099',
-        //     default: true
-        // },
-        // {
-        //     host: '6.pocketnet.app', 
-        //     port: '8899',
-        //     wss: '8099',
-        //     key: '6.pocketnet.app:8899:8099',
-        //     default: true
-        // },
+        {
+            host: '2.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '2.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '3.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '3.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '4.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '4.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '5.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '5.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '6.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '6.pocketnet.app:8899:8099',
+            default: true
+        },
         {
             host: 'test.pocketnet.app', 
             port: '8899',
@@ -310,13 +305,12 @@ export class DataService {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && !node.node.version.startsWith("0.20"))
-                        //if (node.status.difference > -10)
+                    if (node.node.version && semver.gte(node.node.version, '0.20.25'))
+                        if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
 
                 if (nodes){
-                    console.log('nodes', nodes)
                     const keys = Object.keys(nodes); 
 
                     if (keys.length && keys.indexOf(this.node) === -1){
