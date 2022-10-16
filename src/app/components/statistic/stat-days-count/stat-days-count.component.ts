@@ -27,7 +27,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     ctx: any;
     statTransactions: any;
     statContent: any;
-    statPeriod: any = 2;
+    statPeriod: any = 30;
     show: boolean = true;
     loadingUsers: boolean = false;
     loadingTransactions: boolean = false;
@@ -105,7 +105,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     dateFormatter(maxKey: any, point: any) {
         let pointDate = new Date();
         
-        if (this.statPeriod == 2) {
+        if (this.statPeriod > 1) {
             pointDate.setDate(pointDate.getDate() - (maxKey - point));
             return `${this.datepipe.transform(pointDate, 'MM/dd/yyyy')}`;
         }

@@ -17,7 +17,11 @@
             <ng-select class="w-100" [searchable]="false" [clearable]="false" [(ngModel)]="statPeriod"
                 (ngModelChange)="ngAfterViewInit()">
                 <ng-option [value]="1">Show statistics for last Day</ng-option>
-                <ng-option [value]="2">Show statistics for last Month</ng-option>
+                <ng-option [value]="7">Show statistics for last Week</ng-option>
+                <ng-option [value]="30">Show statistics for last 1 Month</ng-option>
+                <ng-option [value]="90">Show statistics for last 3 Month</ng-option>
+                <ng-option [value]="180">Show statistics for last 6 Month</ng-option>
+                <!-- <ng-option [value]="360">Show statistics for last 12 Month</ng-option> -->
             </ng-select>
         </div>
 

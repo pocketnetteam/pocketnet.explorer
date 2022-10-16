@@ -243,31 +243,43 @@ export class DataService {
         );
     }
 
-    getStatistic(type: Number, success: Function = () => {}, failed: Function = () => {}) {
-        let method = 'getstatisticbyhours';
-        if (type == 2)
-            method = 'getstatisticbydays';
+    getStatistic(type: number, success: Function = () => {}, failed: Function = () => {}) {
+        let depth = type;
+        let method = 'getstatisticbydays';
+        if (type == 1) {
+            depth = type * 24;
+            method = 'getstatisticbyhours';
+        }
 
         this._executePOST(
             method,
             {
                 method: method,
-                parameters: [] 
+                parameters: [
+                    9999999,
+                    depth
+                ] 
             },
             success, failed
         );
     }
 
-    getStatisticContent(type: Number, success: Function = () => {}, failed: Function = () => {}) {
-        let method = 'getstatisticcontentbyhours';
-        if (type == 2)
-            method = 'getstatisticcontentbydays';
+    getStatisticContent(type: number, success: Function = () => {}, failed: Function = () => {}) {
+        let depth = type;
+        let method = 'getstatisticcontentbydays';
+        if (type == 1) {
+            depth = type * 24;
+            method = 'getstatisticcontentbyhours';
+        }
 
         this._executePOST(
             method,
             {
                 method: method,
-                parameters: [] 
+                parameters: [
+                    9999999,
+                    depth
+                ] 
             },
             success, failed
         );
@@ -305,7 +317,7 @@ export class DataService {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && semver.gte(node.node.version, '0.20.25'))
+                    if (node.node.version && semver.gte(node.node.version, '0.20.27'))
                         if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
