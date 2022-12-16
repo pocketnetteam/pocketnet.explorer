@@ -1,11 +1,12 @@
 {
     "name": "blockexplorer",
-    "version": "0.0.1",
+    "version": "0.1.14",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
-        "build.prod": "ng build --prod",
+        "build.prod": "ng build --prod --deployUrl=\"/blockexplorer/\"",
+        "build.prod.node": "ng build --prod --deployUrl=\"/blockexplorer/\" --outputPath=\"./dist/blockexplorer\"",
         "ironbot": "ng build --outputPath I:\\www\\blockexplorer",
         "test": "ng test",
         "lint": "ng lint",
@@ -33,6 +34,7 @@
         "ngx-toastr": "10.1.0",
         "popper.js": "^1.15.0",
         "rxjs": "~6.5.2",
+        "semver": "^7.3.7",
         "time-ago-pipe": "^1.3.2",
         "tslib": "^1.10.0",
         "zone.js": "~0.9.1"

@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { HexService } from './hex.service'
 
 import { Proxy } from '../types/Proxy';
+import { toUnicode } from 'punycode';
+import { Observable } from 'rxjs';
+
+import * as semver from 'semver';
 
 const proxy = localStorage.getItem('explorerProxy');
 
@@ -13,17 +17,52 @@ export class DataService {
 
     public defaultProxies: Proxy[] = [
         {
-            host: 'pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: 'pocketnet.app:8899:8099',
-            default: true
-        }, 
-        {
             host: '1.pocketnet.app', 
             port: '8899',
             wss: '8099',
             key: '1.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '2.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '2.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '3.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '3.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '4.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '4.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '5.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '5.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '6.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '6.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: 'test.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: 'test.pocketnet.app:8899:8099',
             default: true
         }, 
         {
@@ -35,13 +74,18 @@ export class DataService {
         }
     ];
 
-    public proxy =  proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+    public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
+
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    private node =  localStorage.getItem("explorerNode" ) || "65.21.57.14:38081";
+    public defaultNode = "65.21.57.14:38081";
+    private node =  localStorage.getItem("explorerNode");
 
     public nodes: any[] = []
+    public fixed: boolean = Boolean(localStorage.getItem('nodeFixed'))
+
 
     constructor(private http: HttpClient, private hex: HexService) { }
+
 
     get selectedNode(){
         return this.node
@@ -51,149 +95,260 @@ export class DataService {
         return 'https://' + this.proxy.host + ':' + this.proxy.port
     }
 
-    get proxyUrl(){
-        return this.selectedProxy + '/rpc';
+    get proxyUrl() {
+        return this.selectedProxy + '/rpc/';
     }
 
-    checkProxy(url: string){
+    fix(boo: boolean){
+        if (boo){
+            localStorage.setItem('nodeFixed', 'true');
+        } else {
+            localStorage.removeItem('nodeFixed');
+        }
+        this.fixed = boo;
+    }
 
+    _executeGET(method: string, success: Function = () => {}, failed: Function = () => {}) {
+        this.http.get(this.selectedProxy + method)
+            .subscribe(answer => {
+                if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
+                    failed(answer);
+
+                success(answer["data"]);
+            });
+    }
+
+    _executePOST(method: string, prms: Object, success: Function = () => {}, failed: Function = () => {})
+    {
+        prms['options'] = { node: this.node };
+
+        this.http.post(this.proxyUrl + method, prms)
+            .subscribe(
+                answer => {
+                    if (!answer["result"] || answer["result"] != 'success' || !answer["data"])
+                        failed(answer);
+        
+                    success(answer["data"]);
+                },
+                error => {
+                    failed(error);
+                }
+            );
+    }
+
+    checkProxy(url?: string){
+        if (!url)
+            url = this.selectedProxy;
         return this.http.get(url + '/ping');
     }
 
-    getTopAddresses() {
-
+    getTopAddresses(success: Function = () => {}, failed: Function = () => {}) {
         return this.http.get(this.explorerUrl + 'topaddresses/30.json');
-
     }
 
-    getBlock(hash: string, verbose: boolean=true) {
-        return this.http.post(this.proxyUrl + '/getblock', {
-            method: 'getblock',
-            parameters: [ hash, (verbose ? 1 : 0) ],
-            options: {
-                node: this.node
-            }
-        });
+    getCompactBlock(hash: string = '', number: number = -1, success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getcompactblock',
+            {
+                method: 'getcompactblock',
+                parameters: [ hash, number ]
+            },
+            success, failed
+        );        
     }
 
-    getAddressInfo(hash: string) {
-        return this.http.post(this.proxyUrl + '/getaddressinfo', {
-            method: 'getaddressinfo',
-            parameters: [ hash ],
-            options: {
-                node: this.node
-            }
-        });
+    getCoinInfo(success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getcoininfo',
+            {
+                method: 'getcoininfo',
+                parameters: []
+            },
+            success, failed
+        );        
     }
 
-    getTransactions(tx: string[]) {
-        return this.http.post(this.proxyUrl + '/gettransactions', {
-            method: 'gettransactions',
-            parameters: [ tx ],
-            options: {
-                node: this.node
-            }
-        });
+    getAddressInfo(hash: string, success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getaddressinfo',
+            {
+                method: 'getaddressinfo',
+                parameters: [ hash ]
+            },
+            success, failed
+        );
     }
 
-    getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false) {
-        return this.http.post(this.proxyUrl + '/getlastblocks', {
-            method: 'getlastblocks',
-            parameters: [ count, last_height, verbose ],
-            options: {
-                node: this.node
-            }
-        });
+    getAddressTransactions(address: string, pageinit: number,
+        pageStart: number, pageSize: number,
+        success: Function = () => {}, failed: Function = () => {})
+    {
+        this._executePOST(
+            'getaddresstransactions',
+            {
+                method: 'getaddresstransactions',
+                parameters: [ address, pageinit, pageStart, pageSize ]
+            },
+            success, failed
+        );
     }
 
-    checkStringType(value: string) {
-        return this.http.post(this.proxyUrl + '/checkstringtype', {
-            method: 'checkstringtype',
-            parameters: [ value ],
-            options: {
-                node: this.node
-            }
-        });
+    getBlockTransactions(block: string, pageStart: number, pageSize: number, success: Function = () => {}, failed: Function = () => {})
+    {
+        this._executePOST(
+            'getblocktransactions',
+            {
+                method: 'getblocktransactions',
+                parameters: [ block, pageStart, pageSize ]
+            },
+            success, failed
+        );
     }
 
-    getBlockchainInfo() {
-        return this.http.post(this.proxyUrl + '/getnodeinfo', {
-            method: 'getnodeinfo',
-            parameters: [],
-            options: {
-                node: this.node
-            }
-            
-        });
+    getTransactions(hashes: string[], success: Function = () => {}, failed: Function = () => {})
+    {
+        this._executePOST(
+            'gettransactions',
+            {
+                method: 'gettransactions',
+                parameters: [ hashes ]
+            },
+            success, failed
+        );
     }
 
-    getStatistic(end_time: Number = 0, start_time: Number = 0, round: Number = 8600 * 24) {
-        return this.http.post(this.proxyUrl  + '/getstatistic', {
-                method: 'getstatistic',
-                parameters: [end_time, start_time, round],
-                options: {
-                    node: this.node    
-                }
-                
-        });
+    getLastBlocks(count: number, last_height: number = -1, verbose: boolean = false, success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getlastblocks',
+            {
+                method: 'getlastblocks',
+                parameters: [ count, last_height, verbose ]
+            },
+            success, failed
+        );
     }
 
-    getPeerInfo() {
-        return this.http.post(this.proxyUrl + '/getpeerinfo', {
+    checkStringType(value: string, success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'searchbyhash',
+            {
+                method: 'searchbyhash',
+                parameters: [ value ]
+            },
+            success, failed
+        );
+    }
+
+    getBlockchainInfo(success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getnodeinfo',
+            {
+                method: 'getnodeinfo',
+                parameters: [] 
+            },
+            success, failed
+        );
+    }
+
+    getStatistic(type: number, success: Function = () => {}, failed: Function = () => {}) {
+        let depth = type;
+        let method = 'getstatisticbydays';
+        if (type == 1) {
+            depth = type * 24;
+            method = 'getstatisticbyhours';
+        }
+
+        this._executePOST(
+            method,
+            {
+                method: method,
+                parameters: [
+                    9999999,
+                    depth
+                ] 
+            },
+            success, failed
+        );
+    }
+
+    getStatisticContent(type: number, success: Function = () => {}, failed: Function = () => {}) {
+        let depth = type;
+        let method = 'getstatisticcontentbydays';
+        if (type == 1) {
+            depth = type * 24;
+            method = 'getstatisticcontentbyhours';
+        }
+
+        this._executePOST(
+            method,
+            {
+                method: method,
+                parameters: [
+                    9999999,
+                    depth
+                ] 
+            },
+            success, failed
+        );
+    }
+
+    getPeerInfo(success: Function = () => {}, failed: Function = () => {}) {
+        this._executePOST(
+            'getpeerinfo',
+            {
                 method: 'getpeerinfo',
-                parameters: [],
-                options: {
-                    node: this.node
-                }
-                
-        });
+                parameters: []
+            },
+            success, failed
+        );
     }
 
-    getNodes() {
-        return this.http.get(this.selectedProxy + '/info')
+    getNodes(success: Function = () => {}, failed: Function = () => {}) {
+        
+        this._executeGET(
+            '/info',
+            success, failed
+        );
     }
 
     setNodes(nodes) {
-
         this.nodes = nodes;
     }
     
 
     async selectProxy(proxy){
-
         this.proxy = proxy;
-        this.getNodes().subscribe((res: any) => {
-
+        this.getNodes((res: any) => {
             try {
-                
-                const nodes = res.data.info.nodeManager.nodes
+                const nodes = {};
+                for (var n in res.info.nodeManager.nodes)
+                {
+                    let node = res.info.nodeManager.nodes[n];
+                    if (node.node.version && semver.gte(node.node.version, '0.20.27'))
+                        if (node.status.difference > -10)
+                            nodes[node.node.key] = node;
+                }
 
                 if (nodes){
-                    console.log('nodes', nodes)
                     const keys = Object.keys(nodes); 
 
                     if (keys.length && keys.indexOf(this.node) === -1){
                         this.selectNode(keys[0]);
                     }
                 }
-
             }  catch (err){
-
                 console.log('err', err);
             }
 
             localStorage.setItem('explorerProxy', JSON.stringify(this.proxy));
             location.reload()
-    
-
         })
-
     }
 
     selectNode(node){
-
         this.node = node;
         localStorage.setItem('explorerNode', this.node);
-        location.reload()
     }
+
+
 }

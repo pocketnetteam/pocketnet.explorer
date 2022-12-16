@@ -1,6 +1,17 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { DatePipe } from '@angular/common'
+
 import * as Highcharts from 'highcharts';
+import Streamgraph from 'highcharts/modules/streamgraph';
+Streamgraph(Highcharts);
+
+// import theme from 'highcharts/themes/grid-light';
+// theme(Highcharts);
+
 import { DataService } from 'src/app/services/data.service';
+import { TxTypePipe } from 'src/app/pipes/txType.pipe';
+import { Globals } from 'src/app/globals';
+import { stringify } from 'querystring';
 
 Highcharts.setOptions({
 });
@@ -14,106 +25,114 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
 
     canvas: any;
     ctx: any;
-    statisticData: any;
-    statPeriod: any = 3;
+    statTransactions: any;
+    statContent: any;
+    statPeriod: any = 30;
     show: boolean = true;
+    loadingUsers: boolean = false;
+    loadingTransactions: boolean = false;
 
-    constructor(private dataService: DataService) { }
+    constructor(
+        private dataService: DataService,
+        private global: Globals,
+        private txTypePipe: TxTypePipe,
+        public datepipe: DatePipe) { }
+
+    get Global(): Globals {
+        return this.global;
+    }
 
     ngOnInit() {
     }
 
     ngAfterViewInit() {
-        this.loadData();
+        this.loadDataUsers();
+        this.loadDataTransactions();
     }
-    
+
     toggleShow() {
         this.show = !this.show;
     }
 
-    loadData() {
-        let round: Number = 3600;
+    loadDataUsers() {
+        if (this.loadingUsers) return;
+        this.loadingUsers = true;
 
-        let startTime: Date = new Date();
-        startTime.setHours(0, 0, 0, 0);
+        this.dataService.getStatisticContent(this.statPeriod,
+            data => {
+                this.loadingUsers = false;
+                
+                this.statContent = data;
+                this.fillChartUsers();
 
-        let endTime: Date = new Date();
-        endTime.setHours(0, 0, 0, 0);
+                setTimeout(() => {
+                    this.loadDataUsers();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.loadDataUsers();
+                }, this.global.updateInterval);
+            }
+        );
+    }
+
+    loadDataTransactions() {
+        if (this.loadingTransactions) return;
+
+        this.loadingTransactions = true;
+
+        this.dataService.getStatistic(this.statPeriod,
+            data => {
+                this.loadingTransactions = false;
+
+                this.statTransactions = data;
+                this.fillChartTransactions();
+        
+                setTimeout(() => {
+                    this.loadDataTransactions();
+                }, this.global.updateInterval);
+            },
+            err => {
+                setTimeout(() => {
+                    this.loadDataTransactions();
+                }, this.global.updateInterval);
+            }
+        );
+    }
+
+
+    dateFormatter(maxKey: any, point: any) {
+        let pointDate = new Date();
+        
+        if (this.statPeriod > 1) {
+            pointDate.setDate(pointDate.getDate() - (maxKey - point));
+            return `${this.datepipe.transform(pointDate, 'MM/dd/yyyy')}`;
+        }
 
         if (this.statPeriod == 1) {
-            endTime.setHours((new Date()).getHours(), 0, 0, 0);
-            startTime.setHours((new Date()).getHours() - 1, 0, 0, 0);
-            startTime.setDate(startTime.getDate() - 1);
-            round = 3600;
+            pointDate.setHours(pointDate.getHours() - (maxKey - point));
+            return `${this.datepipe.transform(pointDate, 'HH:mm')}`;
         }
 
-        if (this.statPeriod == 2) {
-            endTime.setDate((new Date()).getDate());
-            startTime.setDate(startTime.getDate() - 7);
-            round = 24 * 3600;
-        }
-
-        if ([3,4,5].indexOf(this.statPeriod) >= 0) {
-            endTime.setHours(0, 0, 0, 0);
-            startTime.setMonth(startTime.getMonth() - (this.statPeriod - 2));
-            round = 24 * 3600;
-        }
-
-        console.log('startTime', startTime);
-        console.log('endTime', endTime);
-
-        // let beg_time: Number = Math.floor(+cur_date / 1000);
-        this.dataService.getStatistic(Math.floor(+endTime / 1000), Math.floor(+startTime / 1000), round).subscribe(data => {
-            this.statisticData = data['data'];
-            this.fillChartUsers(this.statisticData);
-            this.fillChartEvents(this.statisticData);
-        });
+        return '¯\_(ツ)_/¯';
     }
 
-    formatTooltip() {
-        if ([1].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y %H:00';
-
-        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y';        
-    }
-
-    formatLabel() {
-        if ([1].indexOf(this.statPeriod) >= 0)
-            return '%H:00';
-
-        if ([2].indexOf(this.statPeriod) >= 0)
-            return '%b %e, %Y';
-
-        if ([2,3,4,5].indexOf(this.statPeriod) >= 0)
-            return '%b %e';
-    }
-
-    fillChartUsers(data) {
+    fillChartContent() {
         let _datasets = {};
         let categories = [];
         let self = this;
 
-        for (let x in data) {
-            let _x = data[x];
-            let utcDate = new Date(+x * 1000);
-            utcDate.setHours(utcDate.getHours() + 1);
-            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
-            categories.push(utcDate);
+        for (let x in this.statContent)
+        {
+            categories.push(x);
 
-            for (let y in _x) {
-                if (!(y in _datasets)) {
-                    let _caption = y;
-                    if (_caption != 'UsersAcc') continue;
-
-                    _datasets[y] = {
-                        name: _caption,
-                        data: []
-                    };
-                }
-
-                _datasets[y].data.push(_x[y]);
-            }
+            _datasets[x] = {
+                name: x,
+                data: [
+                    this.statContent[x]
+                ]
+            };
         }
 
         let datasets = [];
@@ -121,7 +140,75 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             datasets.push(_datasets[d]);
         }
 
-        Highcharts.chart('stat_days_users_canvas', {
+        Highcharts.chart('stat_days_content_canvas', {
+            title: {
+                text: ''
+            },
+            chart: {
+                type: 'column'
+            },
+            yAxis: {
+                title: {
+                    text: 'Count'
+                }
+            },
+            xAxis: {
+                categories: categories,
+                labels: {
+                    formatter: function () { return String(this.value); },
+                    style: {
+                        fontSize: '0.6rem'
+                    }
+                },
+            },
+            legend: {
+                enabled: true,
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+            },
+            tooltip: {
+                shared: false,
+                formatter: function () {
+                    return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b><span style="font-size: 13px">${this.y}</span></b><br/>`;
+                }
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: false
+                    }
+                },
+                series: {
+                    connectNulls: true,
+                    animation: false
+                }
+            },
+            series: datasets
+        });
+    }
+
+    fillChartUsers() {
+        let data = [];
+        let datasets = [];
+        let categories = [];
+        let self = this;
+
+        let maxKey = Math.max.apply(null, Object.keys(this.statContent));
+
+        for (let x in this.statContent) {
+            categories.push(x);
+
+            let y = this.statContent[x];
+            data.push(y);
+        }
+
+        datasets.push({
+            name: 'Accounts',
+            data: data
+        });
+
+        Highcharts.chart('stat_days_content_canvas', {
             title: {
                 text: ''
             },
@@ -137,7 +224,9 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 categories: categories,
                 type: 'datetime',
                 labels: {
-                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
+                    formatter: function () {
+                        return self.dateFormatter(maxKey, Number(this.value));
+                    },
                     style: {
                         fontSize: '0.6rem'
                     }
@@ -155,11 +244,13 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
-                    let index;
 
+                    let day = self.dateFormatter(maxKey, Number(points[0].key));
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${day}</span></b><br/>` : ``;
+
+                    let index;
                     for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
                     }
 
                     return tooltipMarkup;
@@ -193,74 +284,88 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private legendIndexes = {
-        'Users': 1,
-        'Subscribes': 2,
-        'Posts': 3,
-        'Videos': 4,
-        'Ratings': 5,
-        'Comments': 6,
-        'CommentRatings': 7
-    }
-
-    fillChartEvents(data) {
+    fillChartTransactions() {
         let _datasets = {};
         let categories = [];
         let self = this;
+        let yAxisCounter = {};
 
-        for (let x in data) {
-            let _x = data[x];
-            let utcDate = new Date(+x * 1000);
-            utcDate.setHours(utcDate.getHours() + 1);
-            utcDate.setMinutes(utcDate.getMinutes() - utcDate.getTimezoneOffset());
-            categories.push(utcDate);
+        let maxKey = Math.max.apply(null, Object.keys(this.statTransactions));
 
-            for (let y in _x) {
+        for (let x in this.statTransactions)
+        {
+            categories.push(x);
+
+            for (let y in this.statTransactions[x])
+            {
+                if (y == "205") continue;
+                if (y == "303") continue;
+
+                if (!(y in yAxisCounter))
+                    yAxisCounter[y] = Object.keys(yAxisCounter).length;
+
                 if (!(y in _datasets)) {
-                    let _caption = y;
-                    if (_caption == 'UsersAcc') continue;
-                    if (_caption == 'Users') _caption = 'New users';
-                    if (_caption == 'Subscribes') _caption = 'Follows';
-                    if (_caption == 'CommentRatings') _caption = 'Comments Ratings';
-                    if (_caption == 'Ratings') _caption = 'Posts Ratings';
-
                     _datasets[y] = {
-                        name: _caption,
-                        data: [],
-                        legendIndex: this.legendIndexes[y]
+                        name: this.txTypePipe.transformType(y),
+                        data: []
                     };
                 }
 
-                _datasets[y].data.push(_x[y]);
+                let count = Number(this.statTransactions[x][y]);
+                if (y == "302")
+                    count += Number(this.statTransactions[x]["303"]);
+
+                _datasets[y].data.push({
+                    x: Number(x),
+                    y: count
+                });
             }
         }
 
+        let yAxis = [
+            {
+                title: {
+                    text: ''
+                },
+                visible: true,
+                opposite: true
+            },
+            {
+                title: {
+                    text: ''
+                },
+                visible: true,
+                opposite: false
+            }
+        ];
         let datasets = [];
         for (let d in _datasets) {
+            _datasets[d].yAxis = d == "300" ? 0 : 1;
             datasets.push(_datasets[d]);
         }
 
         Highcharts.chart('stat_days_count_canvas', {
-            title: {
-                text: ''
-            },
             chart: {
                 type: 'spline'
             },
-            yAxis: {
-                title: {
-                    text: ''
-                }
+            title: {
+                text: ''
             },
+            yAxis: yAxis,
             xAxis: {
+                type: 'category',
                 categories: categories,
-                type: 'datetime',
+                crosshair: true,
+                tickmarkPlacement: 'on',
                 labels: {
-                    formatter: function () { return Highcharts.dateFormat(self.formatLabel(), this.value); },
+                    formatter: function() {
+                        return self.dateFormatter(maxKey, Number(this.value));
+                    },
                     style: {
                         fontSize: '0.6rem'
                     }
                 },
+                visible: true,
             },
             legend: {
                 enabled: true,
@@ -270,28 +375,56 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
                 shared: true,
-                //crosshairs: true,
                 formatter: function () {
                     let points = this.points;
                     let pointsLength = points.length;
-                    let tooltipMarkup = pointsLength ? `<span style="font-size: 12px"><b>${ Highcharts.dateFormat(self.formatTooltip(), points[0].key) }</b></span><br/>` : ``;
-                    let index;
 
+                    let day = self.dateFormatter(maxKey, Number(points[0].key));
+                    let tooltipMarkup = pointsLength ? `<b><span style="font-size: 13px;">${day}</span></b><br/>` : ``;
+
+                    let index;
                     for (index = 0; index < pointsLength; index += 1) {
-                        tooltipMarkup += `<span style="color:${ points[index].color }">\u25CF</span> ${ points[index].series.name }: <b>${ points[index].y }</b><br/>`;
+                        tooltipMarkup += `<span style="color:${points[index].color}">\u25CF</span> ${points[index].series.name}: <b><span style="font-size: 12px;">${points[index].y}</span></b><br/>`;
                     }
 
                     return tooltipMarkup;
                 }
             },
             plotOptions: {
-                spline: {
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 0,
                     marker: {
                         enabled: false
                     }
                 },
+                spline: {
+                    marker: {
+                        enabled: false
+                    },
+                    events: {
+                        legendItemClick: function(event) {
+                            let current = this;
+                            let s = this.chart.series.filter(s => { return s == current; });
+                            if (s && s[0].visible) {
+                                this.chart.series.forEach(s => {
+                                    if (s != current)
+                                        s.setVisible(!s.visible);
+                                });
+                            } else {
+                                this.chart.series.forEach(s => {
+                                    s.setVisible(s == current);
+                                });
+                            }
+
+                            return false;
+                        }
+                    }
+                },
                 series: {
-                    connectNulls: true
+                    connectNulls: true,
+                    animation: false
                 }
             },
             series: datasets,

@@ -34,16 +34,19 @@
                         <th class="text-left d-none d-lg-table-cell" title="Block hash">Hash</th>
 
                         <th class="text-right" title="Age">Age</th>
-                        <th class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell" title="Time">Time</th>
-                        <th class="text-right" title="Transactions in block">TX</th>
+                        <!-- <th class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell" title="Time">Time</th> -->
+                        <th class="text-center" title="Transactions in block">TX</th>
 
-                        <th class="text-right" title="Users"><i class="fas fa-user-friends"></i></th>
-                        <th class="text-right" title="Posts"><i class="far fa-file-alt"></i></th>
-                        <th class="text-right" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
-                        <th class="text-right" title="Follows"><i class="far fa-address-book"></i></th>
-                        <th class="text-right" title="Comments"><i class="fas fa-comments"></i></th>
-                        <!-- <th class="text-right" title="Block size">Size</th> -->
-                        <th class="text-right" title="Coins"><i class="fas fa-coins"></i></th>
+                        <th class="text-center" title="Users"><i class="fas fa-user-friends"></i></th>
+                        <th class="text-center" title="Posts"><i class="far fa-file-alt"></i></th>
+                        <th class="text-center" title="Videos"><i class="fas fa-video"></i></th>
+                        <th class="text-center" title="Articles"><i class="fas fa-scroll"></i></th>
+                        <th class="text-center" title="Boosts"><i class="fas fa-bolt"></i></th>
+                        <th class="text-center" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
+                        <th class="text-center" title="Follows"><i class="far fa-address-book"></i></th>
+                        <th class="text-center" title="Comments"><i class="fas fa-comments"></i></th>
+                        <th class="text-center" title="Flags"><i class="fas fa-exclamation-circle"></i></th>
+                        <th class="text-center" title="Coins"><i class="fas fa-coins"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,27 +57,19 @@
                         </td>
 
                         <td class="text-right nowrap">{{ bc.time * 1000 | timeAgo | rpl:' ago':'' }}</td>
-                        <td class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell">
-                            {{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-                        <td class="text-right">{{ bc.ntx }}</td>
+                        <!-- <td class="text-center d-none d-md-table-cell d-lg-none d-xl-table-cell">{{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td> -->
+                        <td class="text-center">{{ bc.ntx }}</td>
                             
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.users}">
-                            {{ bc.types.users || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.posts}">
-                            {{ bc.types.posts || '-' }}</td>
-                        <td class="text-right poc_type"
-                            [ngClass]="{'empty': (!bc.types.scores && !bc.types.commentScores)}">
-                            {{ (bc.types.scores||0) + (bc.types.commentScores||0) || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.subscribes}">
-                            {{ bc.types.subscribes || '-' }}</td>
-                        <td class="text-right poc_type" [ngClass]="{'empty': !bc.types.comments}">
-                            {{ bc.types.comments || '-' }}
-                        </td>
-
-                        <!-- <td class="text-right">{{ bc.size | number }}</td> -->
-                        <td class="text-right poc_type">
-                            {{ bc.ntx-(bc.types.users||0)-(bc.types.posts||0)-(bc.types.scores||0)-(bc.types.subscribes||0)-(bc.types.comments||0)-(bc.types.commentScores||0) }}
-                        </td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | AccountsCnt)}">{{ (bc | AccountsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ContentsCnt)}">{{ (bc | ContentsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | VideosCnt)}">{{ (bc | VideosCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ArticleCnt)}">{{ (bc | ArticleCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | BoostCnt)}">{{ (bc | BoostCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ScoresCnt)}">{{ (bc | ScoresCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | SubscribesCnt)}">{{ (bc | SubscribesCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | CommentsCnt)}">{{ (bc | CommentsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | FlagsCnt)}">{{ (bc | FlagsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | PkoinsCnt)}">{{ (bc | PkoinsCnt) || '-' }}</td>
                     </tr>
                 </tbody>
             </table>

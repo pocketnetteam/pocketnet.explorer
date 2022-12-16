@@ -9,17 +9,20 @@ import { Globals } from 'src/app/globals';
 })
 export class TxComponent implements OnInit {
     @Input() tx: Transaction;
-    extend: boolean = false;
+    extend: boolean = true;
     
     constructor(private global: Globals) { }
 
     get Global() : Globals { 
-
         return this.global; 
     }
 
     ngOnInit() {
         
+    }
+
+    filterOuts() {
+        return this.tx.vout.filter(out => out.value > 0);
     }
 
 }

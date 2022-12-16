@@ -1,0 +1,62 @@
+name: Deploy Web
+
+on:
+  push:
+    tags: v*.*.*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Prepare
+        run: |
+          npm i
+          npm run build.prod
+        
+      - name: Prepare archive
+        run: tar czf /tmp/explorer.tgz -C ./dist/blockexplorer/ .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: explorer.tgz
+          path: /tmp/explorer.tgz
+
+  deploy_unix:
+    needs: build
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ expl.1, expl.2, expl.3 ]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: explorer.tgz
+      - name: Unpack artifact
+        run: tar xzf explorer.tgz -C /data/expl/ --no-same-owner
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash
+
+  deploy_win:
+    needs: build
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [ expl.bastyon.com ]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: explorer.tgz
+      - name: Unpack artifact
+        run: |
+          rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
+          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner --recursive-unlink
+          rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/blockexplorer/*
+          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner --recursive-unlink

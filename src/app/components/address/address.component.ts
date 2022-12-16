@@ -17,8 +17,8 @@ export class AddressComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataService.getAddressInfo(this.addresshash).subscribe(data => {
-            this.address = data['data'];
+        this.dataService.getAddressInfo(this.addresshash, data => {
+            this.address = data;
         });
     }
 

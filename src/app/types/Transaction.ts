@@ -3,47 +3,74 @@ class ScriptSig {
     public hex: string;
 }
 
+class ScriptPubKey {
+    public addresses: string[];
+}
+
 export class Vin {
     public txid: string;
     public vout: number;
     public address: string;
     public value: number;
-    public scriptSig: ScriptSig;
-    public sequence: number;
-}
-
-class ScriptPubKey {
-    public asm: string;
-    public hex: string;
-    public reqSigs: number;
-    public type: string;
-    public addresses: string[];
 }
 
 export class Vout {
     public value: number;
     public n: number;
     public scriptPubKey: ScriptPubKey;
+    public spent: number;
 }
 
 export class Transaction {
+    public rowNumber: number;
+    public type: number;
     public txid: string;
-    public hash: string;
-    public version: number;
     public nTime: number;
-    public fee: number;
-    public amount: number;
-    public size: number;
-    public vsize: number;
-    public weight: number;
-    public locktime: string;
-    public coinbase: boolean;
-    public coinstake: boolean;
+    public height: number;
+    public blockHash: string;
     public vin: Vin[];
     public vout: Vout[];
-    public hex: string;
-    public blockhash: string;
-    public height: number;
+}
+
+export const enum Types {
+    NotSupported = 0,
+
+    Money = 1,
+    Coinbase = 2,
+    Coinstake = 3,
+
+    AccountUser = 100,
+    AccountVideoServer = 101,
+    AccountMessageServer = 102,
+
+    Post = 200,
+    Video = 201,
+    Article = 202,
+
+    Comment = 204,
+    CommentEdit = 205,
+    CommentDelete = 206,
+
+    ContentDelete = 207,
+    
+    BoostContent = 208,
+
+    Score = 300,
+    ScoreComment = 301,
+
+    Subscribe = 302,
+    SubscribePrivate = 303,
+    Unsubscribe = 304,
+
+    Blocking = 305,
+    Unblocking = 306,
+
+    Complain = 307,
+
+    ModerationRequest = 400,
+    ModerationRegister = 401,
+    ModerationFlag = 410,
+    ModerationVote = 420,
 }
 
 /*

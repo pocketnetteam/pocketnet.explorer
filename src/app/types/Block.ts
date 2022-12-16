@@ -2,8 +2,8 @@ export class BlockCompact {
     public hash: string;
     public height: number;
     public time: number;
-    public size: number;
     public ntx: number;
+    public types: any[];
 }
 
 export class Block {

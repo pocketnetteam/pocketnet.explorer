@@ -1,4 +1,12 @@
-<app-loader *ngIf="!tx"></app-loader>
+<app-loader *ngIf="!tx && !notFound"></app-loader>
+
+<div class="col" *ngIf="!tx && notFound">
+    <div class="rowBlock">
+        <div class="row">
+            Transaction not found. Try refreshing the page in a couple of minutes
+        </div>
+    </div>
+</div>
 
 <div class="col" *ngIf="tx">
 
@@ -23,8 +31,8 @@
             <div class="row">
                 <table class="table table-sm">
                     <tr>
-                        <td>Size</td>
-                        <td class="text-right text-muted">{{tx.size}}</td>
+                        <td>Type</td>
+                        <td class="text-right text-muted">{{tx | txType}}</td>
                     </tr>
                     <tr>
                         <td>Time</td>
@@ -32,7 +40,7 @@
                     </tr>
                     <tr>
                         <td>Block</td>
-                        <td class="text-right text-muted"><a href="block/{{tx.blockhash}}">{{tx.blockhash}}</a></td>
+                        <td class="text-right text-muted"><a href="block/{{tx.blockHash}}">{{tx.blockHash}}</a></td>
                     </tr>
                 </table>
                 
@@ -40,6 +48,7 @@
         </div>
     </div>
 
-    <app-tx-list class="row rowBlock" *ngIf="tx" [in_txids]="[tx.txid]"></app-tx-list>
+    <!-- <app-tx-list class="row rowBlock" *ngIf="tx"></app-tx-list> -->
+    <app-tx class="row" [tx]="tx"></app-tx>
     
 </div>

@@ -28,9 +28,9 @@ start() {
 }
 
 getBlockRecursive(blockid) {
-    data = rpc.getBlock(blockid);
+    data = rpc.getCompactBlock(blockid);
 
-    if ((blockid == GENESIS || exists(data.previousblockhash)) && !exists(blockid)) {
+    if ((blockid == GENESIS || exists(data.prevhash)) && !exists(blockid)) {
 
         if (exists(data.height)) // To be sure we delete old block version with same height
         {
@@ -38,9 +38,9 @@ getBlockRecursive(blockid) {
         }
 
         writeBlock(data);
-        if (data.nextblockhash != null) getBlockRecursive(data.nextblockhash); // Go up
+        if (data.nexthash != null) getBlockRecursive(data.nexthash); // Go up
     } else {
-        if (data.previousblockhash != null) getBlockRecursive(data.previousblockhash); // Go down
+        if (data.prevhash != null) getBlockRecursive(data.prevhash); // Go down
     }
 }
 
@@ -165,7 +165,7 @@ getLastBlocks() {
 
 }
 
-getBlock(blockid) {
+getCompactBlock(blockid) {
     data = redis.hget("blocks", blockid);
     // Send to client
 }
