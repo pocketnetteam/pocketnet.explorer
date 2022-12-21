@@ -63,7 +63,7 @@
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | AccountsCnt)}">{{ (bc | AccountsCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ContentsCnt)}">{{ (bc | ContentsCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | VideosCnt)}">{{ (bc | VideosCnt) || '-' }}</td>
-                        <td class="text-center poc_type" []="{'empty': !(bc | ArticleCnt)}">{{ (bc | ArticleCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ArticleCnt)}">{{ (bc | ArticleCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | BoostCnt)}">{{ (bc | BoostCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ScoresCnt)}">{{ (bc | ScoresCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | SubscribesCnt)}">{{ (bc | SubscribesCnt) || '-' }}</td>
