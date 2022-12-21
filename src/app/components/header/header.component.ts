@@ -3,6 +3,11 @@ import { DataService } from 'src/app/services/data.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Globals } from 'src/app/globals';
 
+import {ThemeConfig} from 'bootstrap-darkmode';
+
+const themeConfig = new ThemeConfig();
+// place customizations here
+
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -11,6 +16,7 @@ import { Globals } from 'src/app/globals';
 export class HeaderComponent implements OnInit {
     searchValue: string = '';
     search_full: boolean = false;
+    darktheme: boolean = false;
     
     constructor(
         private dataService: DataService,
@@ -30,6 +36,12 @@ export class HeaderComponent implements OnInit {
         return this.dataService.selectedNode;
     }
 
+    toggleTheme(){
+        this.darktheme = !this.darktheme;
+        themeConfig.setTheme(this.darktheme ? 'dark' : 'white');
+        localStorage.setItem('usertheme', this.darktheme ? 'black' : 'white');
+    }
+
     ngOnInit() {
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;
@@ -41,6 +53,12 @@ export class HeaderComponent implements OnInit {
                 window.scrollTo(0, 0);
             }
         });
+
+        const theme = localStorage.getItem('usertheme');
+
+        if (theme === 'black' || theme === 'gray'){
+            this.toggleTheme();
+        }
     }
 
     isNumber(value: string | number): boolean

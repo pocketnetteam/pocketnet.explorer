@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light fixed-top">
+<nav class="navbar navbar-light fixed-top bg-darkmode-dark">
     <div class="container px-0">
         <div class="col-auto">
             <div class="row">
@@ -7,11 +7,22 @@
                         <div class="logo-wrapper">
                             <img src="assets/logo.svg" width="30" height="30" class="d-inline-block align-top mr-1" alt="">
                         </div>
-                        <div class="text-wrapper">
+                        <div class="text-wrapper text-body">
                             <div class="d-inline-block">Pocketcoin (PKOIN) Explorer</div>
                             <div class="block-small">Pocketcoin is a network token of Pocketnet</div>
                         </div>
                     </a>
+                </div>
+                <div 
+                    (click)="toggleTheme()" 
+                    [class]="'theme-toggler ' + (darktheme ? 'on' : 'off')"
+
+                >
+                    <span class="label">
+                        dark mode: 
+                    </span>
+                    <i class="fa fa-toggle-on"></i>
+                    <i class="fa fa-toggle-off"></i>
                 </div>
                 <div class="col-auto node">
                     <a href="#nodeListSection">

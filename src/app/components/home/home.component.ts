@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.updateLastBlocks(true);
+
     }
 
     start_update() {

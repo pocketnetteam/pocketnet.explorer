@@ -60,7 +60,9 @@ import { ModalComponent } from './components/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+
+
 
 @NgModule({
     declarations: [

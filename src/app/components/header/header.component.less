@@ -23,6 +23,48 @@
         display: flex;
         align-items: center;
     }
+    
+    .theme-toggler{
+        display: flex;
+        align-items: center;
+        padding: 0;
+
+        .label{
+            color: #007bff;
+            font-size: .9em;
+            padding-right: .5em;
+        }
+
+        i{
+            cursor: pointer;
+        }
+
+        .fa-toggle-off{
+            display: none;
+            color: rgb(244, 26, 77);
+        }
+        .fa-toggle-on{
+            color: #068222;
+        }
+
+        &.on{
+            .fa-toggle-on{
+                display: inline-block;
+            }
+            .fa-toggle-off{
+                display: none;
+            }
+        }
+
+        &.off{
+            .fa-toggle-on{
+                display: none;
+            }
+            .fa-toggle-off{
+                display: inline-block;
+            }
+        }
+    }
 
     .status {
         line-height: 30px;
