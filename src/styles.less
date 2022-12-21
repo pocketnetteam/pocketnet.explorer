@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~bootstrap-darkmode/css/darktheme.css";
-
 * {
     font-size: 0.95rem;
     font-family: Roboto;
@@ -28,6 +26,26 @@ a {
     margin-bottom: 3rem;
 }
 
+body[data-theme="black"]{
+    color:rgb(190, 190, 190);
+    background: rgb(12, 12, 23);
+}
+
+body[data-theme="black"] .bg-darkmode-dark{
+    background: rgb(24, 36, 52)!important;
+}
+
+body[data-theme="black"] .text-body{
+    color: rgb(178, 171, 172)!important;
+}
+
+body[data-theme="black"] .btn{
+    color: #f8f9fa;  
+}
+
+body[data-theme="black"] .table{
+    color: rgb(178, 171, 172);  
+}
 
 .mono {
     font-family: 'Roboto Mono' !important;
@@ -76,4 +94,3 @@ a {
 }
 
 
-@import "~@ng-select/ng-select/themes/material.theme.css";

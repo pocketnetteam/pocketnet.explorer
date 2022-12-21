@@ -26,7 +26,6 @@
         "@ngtools/webpack": "^8.0.3",
         "@types/jquery": "^3.3.29",
         "bootstrap": "^4.3.1",
-        "bootstrap-darkmode": "^5.0.1",
         "core-js": "^3.1.4",
         "help": "^3.0.2",
         "highcharts": "^9.0.0",

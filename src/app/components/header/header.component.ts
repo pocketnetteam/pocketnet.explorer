@@ -3,9 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Globals } from 'src/app/globals';
 
-import {ThemeConfig} from 'bootstrap-darkmode';
 
-const themeConfig = new ThemeConfig();
 // place customizations here
 
 @Component({
@@ -38,7 +36,11 @@ export class HeaderComponent implements OnInit {
 
     toggleTheme(){
         this.darktheme = !this.darktheme;
-        themeConfig.setTheme(this.darktheme ? 'dark' : 'white');
+
+        const body = document.querySelector('body');
+        console.log('body', body)
+        body.setAttribute('theme', this.darktheme ? 'black' : 'white');
+        body.setAttribute('data-theme', this.darktheme ? 'black' : 'white');
         localStorage.setItem('usertheme', this.darktheme ? 'black' : 'white');
     }
 
