@@ -23,6 +23,36 @@
         display: flex;
         align-items: center;
     }
+    
+    .theme-toggler{
+        display: flex;
+        align-items: center;
+        padding: 0;
+
+        i {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 1.4em;
+        }
+
+        &.on{
+            .fa-toggle-on{
+                display: inline-block;
+            }
+            .fa-toggle-off{
+                display: none;
+            }
+        }
+
+        &.off{
+            .fa-toggle-on{
+                display: none;
+            }
+            .fa-toggle-off{
+                display: inline-block;
+            }
+        }
+    }
 
     .status {
         line-height: 30px;

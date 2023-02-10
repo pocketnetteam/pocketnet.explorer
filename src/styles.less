@@ -26,7 +26,6 @@ a {
     margin-bottom: 3rem;
 }
 
-
 .mono {
     font-family: 'Roboto Mono' !important;
 }
@@ -70,6 +69,114 @@ a {
         .opened{
             transform: rotate(180deg)
         }
+    }
+}
+
+.table td,
+.table th {
+    border-top: 1px solid #dee2e6;
+}
+
+.txHead,
+.txFoot {
+    background-color: #f0f2f5;
+}
+
+
+.highcharts-root{
+
+    .highcharts-minor-grid-line, .highcharts-grid-line, .highcharts-axis-line{
+        stroke: #f3f3f3!important
+    }
+}
+
+body[data-theme="black"] {
+
+    background: rgb(12, 12, 23);
+    
+
+    * {
+        color:#647082;
+    }
+
+    .highcharts-root{
+
+        .highcharts-minor-grid-line, .highcharts-grid-line, .highcharts-axis-line{
+            stroke: #212125!important
+        }
+    
+        .highcharts-legend-box {
+            fill: #212125!important;
+        }
+
+        .highcharts-legend-item{
+            text{
+                fill: #8b8ba0!important;
+            }
+        }
+
+    
+    }
+
+    
+
+
+    .bg-darkmode-dark{
+        background: rgb(24, 36, 52)!important;
+    }
+
+    .text-body{
+        color: rgb(178, 171, 172)!important;
+    }
+
+    .btn{
+        color: #f8f9fa;  
+    }
+
+    .bar.back {
+        background-color: #363637;
+    }
+
+    a,
+    a *,
+    .theme-toggler i  {
+        color: #316195 !important;  
+    }
+
+    .table {
+        &.table-borderless {
+            td,
+            th {
+                border: 0 !important;
+            }
+        }
+        td,
+        th {
+            border-top: 1px solid #141b22;
+        }
+    }
+
+    .txHead,
+    .txFoot {
+        background-color: #1b2a3c;
+    }
+
+    .form-control {
+        background-color: #182434;
+        border: 1px solid #33455e;
+    }
+
+    .bar.front {
+        background-color: #316195;
+    }
+
+    .poc_type.empty
+    {
+        color: #363c45;
+    }
+
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        background-color: #182434;
     }
 }
 

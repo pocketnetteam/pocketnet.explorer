@@ -1,20 +1,29 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common'
 
 import * as Highcharts from 'highcharts';
 import Streamgraph from 'highcharts/modules/streamgraph';
+import theme  from 'highcharts/themes/grid-light';
+import _ from 'lodash';
+
 Streamgraph(Highcharts);
 
-// import theme from 'highcharts/themes/grid-light';
-// theme(Highcharts);
+Highcharts.setOptions({
+
+});
+theme(Highcharts);     
+
+
+
+console.log('init');
 
 import { DataService } from 'src/app/services/data.service';
 import { TxTypePipe } from 'src/app/pipes/txType.pipe';
 import { Globals } from 'src/app/globals';
 import { stringify } from 'querystring';
 
-Highcharts.setOptions({
-});
+
+
 
 @Component({
     selector: 'app-stat-days-count',
@@ -31,18 +40,26 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     show: boolean = true;
     loadingUsers: boolean = false;
     loadingTransactions: boolean = false;
+    showChart: boolean = true;
 
     constructor(
         private dataService: DataService,
         private global: Globals,
         private txTypePipe: TxTypePipe,
-        public datepipe: DatePipe) { }
+        public datepipe: DatePipe) { 
+
+        }
 
     get Global(): Globals {
         return this.global;
     }
 
+
     ngOnInit() {
+
+
+
+        
     }
 
     ngAfterViewInit() {
@@ -119,6 +136,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
     }
 
     fillChartContent() {
+        
         let _datasets = {};
         let categories = [];
         let self = this;
@@ -140,12 +158,15 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             datasets.push(_datasets[d]);
         }
 
-        Highcharts.chart('stat_days_content_canvas', {
+        const id = 'stat_days_content_canvas';
+
+        Highcharts.chart(id, {
             title: {
                 text: ''
             },
             chart: {
-                type: 'column'
+                type: 'column',
+                
             },
             yAxis: {
                 title: {
@@ -186,6 +207,8 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             series: datasets
         });
+
+
     }
 
     fillChartUsers() {
@@ -443,6 +466,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 }]
             }
         });
+
     }
 
 }

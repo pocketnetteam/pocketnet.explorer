@@ -29,7 +29,7 @@
         <div class="table-responsive-sm w-100">
             <table class="table table-sm table-borderless" style="min-width: 350px;">
                 <thead class="">
-                    <tr>
+                    <tr class="">
                         <th class="text-left" title="Block height">Height</th>
                         <th class="text-left d-none d-lg-table-cell" title="Block hash">Hash</th>
 
@@ -79,19 +79,19 @@
     <!-- Blocks control -->
     <div 
         [hidden]="!show"
-        class="row last_blocks_control_back"
+        class="row last_blocks_control_back bg-darkmode-dark"
     >
         <div class="col px-0">
             <div class="float-left">
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(0)"
+                <button type="button" class="btn shadow-none bg-darkmode-dark" (click)="MoveBlocks(0)"
                     title="Forward at 100 blocks"><i class="fas fa-angle-double-up"></i></button>
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(10)"
+                <button type="button" class="btn shadow-none bg-darkmode-dark" (click)="MoveBlocks(10)"
                     title="Forward at 10 blocks"><i class="fas fa-angle-up"></i></button>
             </div>
         </div>
         <div class="col px-0">
             <div class="float-right">
-                <button type="button" class="btn btn-light shadow-none" (click)="MoveBlocks(-10)"
+                <button type="button" class="btn shadow-none bg-darkmode-dark" (click)="MoveBlocks(-10)"
                     title="Backward at 10 blocks"><i class="fas fa-angle-down"></i></button>
             </div>
         </div>

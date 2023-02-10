@@ -1,11 +1,11 @@
-<div class="col rounded bg-light pt-2 pb-1 mb-3 border">
-    <div class="row">
-        <div class="col-lg-auto col-md-8 col-sm-7 border-bottom pb-2 ">
+<div class="col rounded bg-light mb-3 bg-darkmode-dark">
+    <div class="row pt-2 txHead">
+        <div class="col-lg-auto col-md-8 col-sm-7 pb-2 ">
             <div class="ellipsis">
                 <a href="transaction/{{tx.txid}}">{{tx.txid}}</a>
             </div>
         </div>
-        <div class="col align-self-end text-right border-bottom pb-2 text-muted pointer" (click)="extend = !extend">
+        <div class="col align-self-end text-right pb-2 text-muted pointer" (click)="extend = !extend">
             {{tx.nTime * 1000 | date:'medium'}}
             <i *ngIf="!extend" class="fas fa-angle-down pl-2"></i>
             <i *ngIf="extend" class="fas fa-angle-up pl-2"></i>
@@ -21,8 +21,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col pt-2">
+    <div class="row pt-1 pb-1 txFoot">
+        <div class="col">
             <div *ngIf="Global.blockchainInfo" class="mr-4 txvalues txvalues-type text-left">{{tx | txType}}</div>
             <div class="mr-5 txvalues txvalues-info text-left" *ngIf="(tx | txType) != ''">Confirmations: {{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0) - (tx.height ? tx.height : 0) }}</div>
             <div class="mr-4 txvalues txvalues-info text-left" *ngIf="tx.type > 3 || tx.type == 1">Fee: {{tx | txFee | pkoin}}</div>
