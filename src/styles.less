@@ -83,13 +83,43 @@ a {
 }
 
 
+.highcharts-root{
+
+    .highcharts-minor-grid-line, .highcharts-grid-line, .highcharts-axis-line{
+        stroke: #f3f3f3!important
+    }
+}
+
 body[data-theme="black"] {
 
     background: rgb(12, 12, 23);
+    
 
     * {
         color:#647082;
     }
+
+    .highcharts-root{
+
+        .highcharts-minor-grid-line, .highcharts-grid-line, .highcharts-axis-line{
+            stroke: #212125!important
+        }
+    
+        .highcharts-legend-box {
+            fill: #212125!important;
+        }
+
+        .highcharts-legend-item{
+            text{
+                fill: #8b8ba0!important;
+            }
+        }
+
+    
+    }
+
+    
+
 
     .bg-darkmode-dark{
         background: rgb(24, 36, 52)!important;

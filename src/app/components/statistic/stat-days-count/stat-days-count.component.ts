@@ -11,7 +11,7 @@ Streamgraph(Highcharts);
 Highcharts.setOptions({
 
 });
-//theme(Highcharts);     
+theme(Highcharts);     
 
 
 
