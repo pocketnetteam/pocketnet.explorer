@@ -1,19 +1,18 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common'
 
-import * as High from 'highcharts';
+import * as Highcharts from 'highcharts';
 import Streamgraph from 'highcharts/modules/streamgraph';
 import theme  from 'highcharts/themes/grid-light';
 import _ from 'lodash';
 
-const Highcharts = _.cloneDeep(High);
-
 Streamgraph(Highcharts);
 
 Highcharts.setOptions({
-});            
 
-theme(Highcharts);
+});
+//theme(Highcharts);     
+
 
 
 console.log('init');
@@ -232,9 +231,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             data: data
         });
 
-        const id = 'stat_days_content_canvas';
-
-        Highcharts.chart(id, {
+        Highcharts.chart('stat_days_content_canvas', {
             title: {
                 text: ''
             },
@@ -370,9 +367,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             datasets.push(_datasets[d]);
         }
 
-        const id = 'stat_days_count_canvas';
-
-        Highcharts.chart(id, {
+        Highcharts.chart('stat_days_count_canvas', {
             chart: {
                 type: 'spline'
             },
