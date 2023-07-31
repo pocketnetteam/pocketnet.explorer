@@ -52,15 +52,12 @@ export class NodesListSelectComponent implements OnInit {
     ngOnInit(){
         this.dataService.getNodes((res: any) => {
             try {
-
-                // debugger;
-
                 const nodes = {};
                 
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && semver.gte(node.node.version, '0.21.2'))
+                    if (node.node.version && semver.gte(node.node.version, '0.21.3'))
                         // if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
@@ -101,10 +98,6 @@ export class NodesListSelectComponent implements OnInit {
                         this.selectNode(node);
                     })
                 }
-
-
-
-
             } catch(err){
                 console.log('err', err);
             }
