@@ -34,21 +34,7 @@ export class DataService {
             host: '3.pocketnet.app', 
             port: '8899',
             wss: '8099',
-            key: '1.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '4.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '2.pocketnet.app:8899:8099',
-            default: true
-        },
-        {
-            host: '5.pocketnet.app', 
-            port: '8899',
-            wss: '8099',
-            key: '5.pocketnet.app:8899:8099',
+            key: '3.pocketnet.app:8899:8099',
             default: true
         },
         {
@@ -70,7 +56,7 @@ export class DataService {
     public proxy = proxy ? JSON.parse(proxy) : this.defaultProxies[0]
 
     private explorerUrl = 'https://explorer.pocketnet.app/rest/'
-    public defaultNode = "65.21.57.14:38081";
+    public defaultNode = "65.21.56.203:38081";
     private node =  localStorage.getItem("explorerNode");
 
     public nodes: any[] = []
@@ -317,7 +303,7 @@ export class DataService {
                 for (var n in res.info.nodeManager.nodes)
                 {
                     let node = res.info.nodeManager.nodes[n];
-                    if (node.node.version && semver.gte(node.node.version, '0.20.27'))
+                    if (node.node.version && semver.gte(node.node.version, '0.22.4'))
                         if (node.status.difference > -10)
                             nodes[node.node.key] = node;
                 }
