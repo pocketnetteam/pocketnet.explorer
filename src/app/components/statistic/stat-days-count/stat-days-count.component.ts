@@ -361,9 +361,11 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                 opposite: false
             }
         ];
+
+        let opposite = [300,301,204,200,302];
         let datasets = [];
         for (let d in _datasets) {
-            _datasets[d].yAxis = d == "300" ? 0 : 1;
+            _datasets[d].yAxis = opposite.indexOf(+d) >= 0 ? 0 : 1;
             datasets.push(_datasets[d]);
         }
 
@@ -378,7 +380,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             xAxis: {
                 type: 'category',
                 categories: categories,
-                crosshair: true,
+                crosshair: false,
                 tickmarkPlacement: 'on',
                 labels: {
                     formatter: function() {
@@ -415,9 +417,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
             },
             plotOptions: {
                 area: {
-                    stacking: 'normal',
-                    lineColor: '#666666',
-                    lineWidth: 0,
+                    stacking: 'percent',
                     marker: {
                         enabled: false
                     }
@@ -442,7 +442,7 @@ export class StatDaysCountComponent implements OnInit, AfterViewInit {
                             }
 
                             return false;
-                        }
+                        },
                     }
                 },
                 series: {
