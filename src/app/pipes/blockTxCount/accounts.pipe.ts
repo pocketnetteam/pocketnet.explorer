@@ -8,7 +8,7 @@ import { Types } from 'src/app/types/Transaction';
 export class AccountsCntPipe implements PipeTransform {
 
     transform(block: BlockCompact, args?: any): number {
-        return ((block.types[Types.AccountUser]||0) + (block.types[Types.AccountVideoServer]||0) + (block.types[Types.AccountMessageServer]||0)) || 0;
+        return ((block.types[Types.AccountUser]||0) + (block.types[Types.AccountSetting]||0)) || 0;
     }
 
 }

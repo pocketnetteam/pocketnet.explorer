@@ -40,12 +40,15 @@ export const enum Types {
     Coinstake = 3,
 
     AccountUser = 100,
-    AccountVideoServer = 101,
-    AccountMessageServer = 102,
+    AccountSetting = 103,
+    AccountDelete = 170,
 
     Post = 200,
     Video = 201,
     Article = 202,
+    Stream = 209,
+    Audio = 210,
+    Collection = 220,
 
     Comment = 204,
     CommentEdit = 205,
@@ -67,10 +70,11 @@ export const enum Types {
 
     Complain = 307,
 
-    ModerationRequest = 400,
-    ModerationRegister = 401,
     ModerationFlag = 410,
     ModerationVote = 420,
+
+    BarteronAccount = 104,
+    BarteronOffer = 211,
 }
 
 /*

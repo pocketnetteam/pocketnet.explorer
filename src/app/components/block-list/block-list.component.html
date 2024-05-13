@@ -39,13 +39,12 @@
 
                         <th class="text-center" title="Users"><i class="fas fa-user-friends"></i></th>
                         <th class="text-center" title="Posts"><i class="far fa-file-alt"></i></th>
-                        <th class="text-center" title="Videos"><i class="fas fa-video"></i></th>
-                        <th class="text-center" title="Articles"><i class="fas fa-scroll"></i></th>
                         <th class="text-center" title="Boosts"><i class="fas fa-bolt"></i></th>
                         <th class="text-center" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
                         <th class="text-center" title="Follows"><i class="far fa-address-book"></i></th>
                         <th class="text-center" title="Comments"><i class="fas fa-comments"></i></th>
                         <th class="text-center" title="Flags"><i class="fas fa-exclamation-circle"></i></th>
+                        <th class="text-center" title="Barteron Offers"><i class="fas fa-exchange-alt"></i></th>
                         <th class="text-center" title="Coins"><i class="fas fa-coins"></i></th>
                     </tr>
                 </thead>
@@ -62,13 +61,12 @@
                             
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | AccountsCnt)}">{{ (bc | AccountsCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ContentsCnt)}">{{ (bc | ContentsCnt) || '-' }}</td>
-                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | VideosCnt)}">{{ (bc | VideosCnt) || '-' }}</td>
-                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ArticleCnt)}">{{ (bc | ArticleCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | BoostCnt)}">{{ (bc | BoostCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ScoresCnt)}">{{ (bc | ScoresCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | SubscribesCnt)}">{{ (bc | SubscribesCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | CommentsCnt)}">{{ (bc | CommentsCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | FlagsCnt)}">{{ (bc | FlagsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | BarteronOfferCnt)}">{{ (bc | BarteronOfferCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | PkoinsCnt)}">{{ (bc | PkoinsCnt) || '-' }}</td>
                     </tr>
                 </tbody>

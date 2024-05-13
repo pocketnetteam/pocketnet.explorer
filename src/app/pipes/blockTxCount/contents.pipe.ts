@@ -8,7 +8,14 @@ import { Types } from 'src/app/types/Transaction';
 export class ContentsCntPipe implements PipeTransform {
 
     transform(block: BlockCompact, args?: any): number {
-        return (block.types[Types.Post]||0) || 0;
+        return (
+            (block.types[Types.Post]||0) +
+            (block.types[Types.Article]||0) +
+            (block.types[Types.Video]||0) +
+            (block.types[Types.Audio]||0) +
+            (block.types[Types.Collection]||0) +
+            (block.types[Types.Stream]||0)
+        ) || 0;
     }
 
 }

@@ -13,15 +13,16 @@ export class TxTypePipe implements PipeTransform {
         2: 'Coinbase',
         3: 'Coinstake',
 
-        100: 'Account (User)',
-        101: 'Account (Video Server)',
-        102: 'Account (Message Server)',
-        103: 'Account Settings',
+        100: 'Account',
+        103: 'Account Setting',
+        170: 'Account Delete',
 
         200: 'Post',
         201: 'Video',
         202: 'Article',
-        // 203: 'Server Ping',
+        209: 'Stream',
+        210: 'Audio',
+        220: 'Collection',
 
         204: 'Comment',
         205: 'Comment (Edit)',
@@ -43,10 +44,11 @@ export class TxTypePipe implements PipeTransform {
 
         307: 'Complain',
 
-        400: 'Moderation Request',
-        401: 'Moderation Register',
         410: 'Moderation Flag',
         420: 'Moderation Vote',
+
+        104: 'Barteron Account',
+        211: 'Barteron Offer',
     }
 
     transform(tx: Transaction, args?: any): string {
