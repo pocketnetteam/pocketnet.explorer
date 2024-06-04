@@ -66,8 +66,14 @@ export class TxListComponent implements OnInit {
         }
 
         let _txs: Transaction[] = data;
+
+        const n = this.txs.length;
+        _txs.forEach((tx) => {
+            tx.rowNumber += n;
+        });
+
         this.txs.push(..._txs);
-        this.txs.sort((a,b) => (a.rowNumber > b.rowNumber) ? 0 : ((b.rowNumber > a.rowNumber) ? -1 : 0));
+        this.txs.sort((a,b) => a.rowNumber - b.rowNumber);
         this.loading = false;
     }
 
