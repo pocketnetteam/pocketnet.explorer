@@ -1,7 +1,7 @@
 <div class="row">
     <div class="w-100 mx-2 mb-1 px-2 pt-1 rounded" [ngClass]="{spent: vout.spent}">
         <span class="float-left" *ngIf="vout.scriptPubKey.addresses">
-            <a href="address/{{vout.scriptPubKey.addresses[0]}}">{{vout.scriptPubKey.addresses[0]}}</a>
+            <a href="address/{{vout.scriptPubKey.addresses[0]}}" class="mono txAddr">{{vout.scriptPubKey.addresses[0]}}</a>
         </span>
         <span class="float-right">{{vout.value | pkoin}}</span>
     </div>

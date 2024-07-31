@@ -9,7 +9,7 @@ import { Globals } from 'src/app/globals';
 })
 export class TxComponent implements OnInit {
     @Input() tx: Transaction;
-    extend: boolean = true;
+    extend: boolean = false;
     
     constructor(private global: Globals) { }
 

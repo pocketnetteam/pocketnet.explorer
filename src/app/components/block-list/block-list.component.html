@@ -31,7 +31,7 @@
                 <thead class="">
                     <tr class="">
                         <th class="text-left" title="Block height">Height</th>
-                        <th class="text-left d-none d-lg-table-cell" title="Block hash">Hash</th>
+                        <th class="text-left blHash d-none d-md-table-cell" title="Block hash">Hash</th>
 
                         <th class="text-right" title="Age">Age</th>
                         <!-- <th class="text-right d-none d-md-table-cell d-lg-none d-xl-table-cell" title="Time">Time</th> -->
@@ -39,6 +39,7 @@
 
                         <th class="text-center" title="Users"><i class="fas fa-user-friends"></i></th>
                         <th class="text-center" title="Posts"><i class="far fa-file-alt"></i></th>
+                        <th class="text-center" title="Video"><i class="fas fa-video"></i></th>
                         <th class="text-center" title="Boosts"><i class="fas fa-bolt"></i></th>
                         <th class="text-center" title="Ratings"><i class="fas fa-star-half-alt"></i></th>
                         <th class="text-center" title="Follows"><i class="far fa-address-book"></i></th>
@@ -50,17 +51,20 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let bc of blocks; trackBy: trackByBlock">
-                        <td><a href="block/{{bc.hash}}">{{bc.height}}</a></td>
-                        <td class="d-none d-lg-table-cell">
-                            <div class="ellipsis"><a href="block/{{bc.hash}}" class="">{{bc.hash}}</a></div>
+                        <td class="">
+                            <a href="block/{{bc.hash}}">{{bc.height}}</a>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            <div class="ellipsis blHash"><a href="block/{{bc.hash}}" class="mono">{{bc.hash}}</a></div>
                         </td>
 
-                        <td class="text-right nowrap">{{ bc.time * 1000 | timeAgo | rpl:' ago':'' }}</td>
+                        <td class="text-right nowrap">{{ bc.time * 1000 | timeAgo | rpl:' ago':'' | rpl:'minutes':'min' | rpl:'minute':'min' | rpl:'seconds':'sec' }}</td>
                         <!-- <td class="text-center d-none d-md-table-cell d-lg-none d-xl-table-cell">{{ bc.time * 1000 | date: 'dd/MM/yyyy HH:mm:ss' }}</td> -->
                         <td class="text-center">{{ bc.ntx }}</td>
                             
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | AccountsCnt)}">{{ (bc | AccountsCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ContentsCnt)}">{{ (bc | ContentsCnt) || '-' }}</td>
+                        <td class="text-center poc_type" [ngClass]="{'empty': !(bc | VideosCnt)}">{{ (bc | VideosCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | BoostCnt)}">{{ (bc | BoostCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | ScoresCnt)}">{{ (bc | ScoresCnt) || '-' }}</td>
                         <td class="text-center poc_type" [ngClass]="{'empty': !(bc | SubscribesCnt)}">{{ (bc | SubscribesCnt) || '-' }}</td>

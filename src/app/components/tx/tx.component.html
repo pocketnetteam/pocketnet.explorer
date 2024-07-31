@@ -2,7 +2,7 @@
     <div class="row pt-2 txHead">
         <div class="col-lg-auto col-md-8 col-sm-7 pb-2 ">
             <div class="ellipsis">
-                <a href="transaction/{{tx.txid}}">{{tx.txid}}</a>
+                <a href="transaction/{{tx.txid}}" class="mono">{{tx.txid}}</a>
             </div>
         </div>
         <div class="col align-self-end text-right pb-2 text-muted pointer" (click)="extend = !extend">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="row pt-1 pb-1 txFoot">
+    <div class="row pt-1 pb-1 txFoot pointer" (click)="extend = !extend">
         <div class="col">
             <div *ngIf="Global.blockchainInfo" class="mr-4 txvalues txvalues-type text-left">{{tx | txType}}</div>
             <div class="mr-5 txvalues txvalues-info text-left" *ngIf="(tx | txType) != ''">Confirmations: {{ (Global.blockchainInfo ? Global.blockchainInfo.lastblock.height : 0) - (tx.height ? tx.height : 0) }}</div>
