@@ -38,6 +38,20 @@ export class DataService {
             default: true
         },
         {
+            host: '4.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '4.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
+            host: '5.pocketnet.app', 
+            port: '8899',
+            wss: '8099',
+            key: '5.pocketnet.app:8899:8099',
+            default: true
+        },
+        {
             host: '6.pocketnet.app', 
             port: '8899',
             wss: '8099',
