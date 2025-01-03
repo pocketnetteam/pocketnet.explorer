@@ -28,6 +28,8 @@
                             "src/.htaccess",
                             "src/web.config",
                             "src/favicon.svg",
+                            "src/b_manifest.json",
+                            "src/b_icon.png",
                             "src/assets"
                         ],
                         "styles": [
@@ -97,6 +99,8 @@
                         "scripts": [],
                         "assets": [
                             "src/favicon.svg",
+                            "src/b_manifest.json",
+                            "src/b_icon.png",
                             "src/assets"
                         ]
                     }

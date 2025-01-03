@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { ScriptLoaderService } from 'src/app/services/script-loader.service';
 import { Globals } from 'src/app/globals';
 
 @Component({
@@ -10,7 +11,7 @@ import { Globals } from 'src/app/globals';
 export class AppComponent implements OnInit {
     title = 'Pocketcoin (PKOIN) Explorer';
 
-    constructor(private dataService: DataService, private global: Globals) {
+    constructor(private dataService: DataService, private global: Globals, private scriptLoader: ScriptLoaderService) {
 
     }
 
@@ -33,6 +34,18 @@ export class AppComponent implements OnInit {
 
         this.updateBlockchainInfo();
         this.updatePeersInfo();
+        this.loadAndInitBastyonSdk();
+    }
+
+     async loadAndInitBastyonSdk() {
+        try {
+            await this.scriptLoader.loadScript('https://bastyon.com/js/lib/apps/sdk.js');
+            const sdk = new (window as any).BastyonSdk();
+            await sdk.init();
+            sdk.emit('loaded');
+        } catch (error) {
+            console.error('Error while loading Bastyon SDK:', error);
+        }
     }
 
     updatePeersInfo() {
@@ -73,6 +86,6 @@ export class AppComponent implements OnInit {
         // $('.scrolled_head').toggleClass('fixed_head', head_fix);
         // $('.body').toggleClass('fixed_head_on', head_fix);
     }
-    
+
 }
 
