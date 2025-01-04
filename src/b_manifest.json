@@ -1,0 +1,15 @@
+{
+    "id": "app.pocketnet.blockexplorer",
+    "name": "PKOIN Explorer",
+    "version": "0.0.1",
+    "description": "Blockchain explorer for Pocketnet",
+    "descriptions" : {
+        "en" : "Blockchain explorer for Pocketnet",
+        "ru" : "Проводник блокчейна для Pocketnet"
+    },
+    "author": "PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC",
+    "develop": true,
+    "scope" : "bastyon.com/blockexplorer",
+    "start_url" : "index.html",
+    "permissions" : []
+}
