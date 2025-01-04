@@ -4,8 +4,8 @@
     "version": "0.0.1",
     "description": "Blockchain explorer for Pocketnet",
     "descriptions" : {
-        "en" : "Проводник блокчейна для Pocketnet",
-        "ru" : "Документация Bastyon"
+        "en" : "Blockchain explorer for Pocketnet",
+        "ru" : "Проводник блокчейна для Pocketnet"
     },
     "author": "PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC",
     "develop": true,
