@@ -21,7 +21,7 @@ jobs:
       - name: Prepare archive
         run: tar czf /tmp/explorer.tgz -C ./dist/blockexplorer/ .
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: explorer.tgz
           path: /tmp/explorer.tgz
