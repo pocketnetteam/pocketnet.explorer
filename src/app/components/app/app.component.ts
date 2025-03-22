@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
      async loadAndInitBastyonSdk() {
         try {
             await this.scriptLoader.loadScript('https://bastyon.com/js/lib/apps/sdk.js');
-            const sdk = new (window as any).BastyonSdk();
+            const sdk = new (window as any).BastyonSdk({publicPath: '/blockexplorer/'});
             await sdk.init();
             sdk.emit('loaded');
         } catch (error) {
