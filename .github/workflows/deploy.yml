@@ -5,7 +5,8 @@ on:
     tags: v*.*.*
 
 jobs:
-  build:
+
+  build_path:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,18 +17,39 @@ jobs:
       - name: Prepare
         run: |
           npm i
-          npm run build.prod
+          npm run build.prod.path
         
       - name: Prepare archive
         run: tar czf /tmp/explorer.tgz -C ./dist/blockexplorer/ .
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: explorer.tgz
-          path: /tmp/explorer.tgz
+          name: explorer.path.tgz
+          path: /tmp/explorer.path.tgz
+
+  build_sub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Prepare
+        run: |
+          npm i
+          npm run build.prod.sub
+        
+      - name: Prepare archive
+        run: tar czf /tmp/explorer.tgz -C ./dist/ .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: explorer.sub.tgz
+          path: /tmp/explorer.sub.tgz
 
   deploy_unix:
-    needs: build
+    needs: build_sub
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
@@ -36,15 +58,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: explorer.tgz
+          name: explorer.sub.tgz
       - name: Unpack artifact
-        run: tar xzf explorer.tgz -C /data/explorer.bastyon.com/ --no-same-owner
+        run: tar xzf explorer.sub.tgz -C /data/explorer.bastyon.com/ --no-same-owner
       - name: Clear
         run: rm -rf *
         shell: bash
 
   deploy_win:
-    needs: build
+    needs: build_path
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
@@ -53,10 +75,10 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: explorer.tgz
+          name: explorer.path.tgz
       - name: Unpack artifact
         run: |
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
           tar xzUf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner --recursive-unlink
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/blockexplorer/*
-          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner --recursive-unlink
+          tar xzUf explorer.path.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner --recursive-unlink
