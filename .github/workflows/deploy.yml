@@ -6,50 +6,32 @@ on:
 
 jobs:
 
-  build_path:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-
       - name: Prepare
         run: |
           npm i
           npm run build.prod.path
-        
-      - name: Prepare archive
+          npm run build.prod.sub
+      - name: Prepare archive path
         run: tar czf /tmp/explorer.path.tgz -C ./dist/blockexplorer/ .
+      - name: Prepare archive sub
+        run: tar czf /tmp/explorer.sub.tgz -C ./dist/ .
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: explorer.path.tgz
           path: /tmp/explorer.path.tgz
-
-  build_sub:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Prepare
-        run: |
-          npm i
-          npm run build.prod.sub
-        
-      - name: Prepare archive
-        run: tar czf /tmp/explorer.sub.tgz -C ./dist/ .
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
           name: explorer.sub.tgz
           path: /tmp/explorer.sub.tgz
 
   deploy_unix:
-    needs: build_sub
+    needs: build
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
@@ -66,7 +48,7 @@ jobs:
         shell: bash
 
   deploy_win:
-    needs: build_path
+    needs: build
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:

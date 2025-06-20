@@ -19,7 +19,7 @@
                     "options": {
                         "deployUrl": "/blockexplorer/",
                         "baseHref": "/blockexplorer/",
-                        "outputPath": "dist/blockexplorer",
+                        "outputPath": "dist/blockexplorer/",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -44,6 +44,33 @@
                     },
                     "configurations": {
                         "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                }
+                            ]
+                        },
+                        "root": {
+                            "deployUrl": "/",
+                            "baseHref": "/",
+                            "outputPath": "dist/root/",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",

@@ -5,9 +5,8 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
-        "build.prod.path": "ng build --prod --deployUrl=\"/blockexplorer/\"",
-        "build.prod.sub": "ng build --prod --deployUrl=\"/\"",
-        "ironbot": "ng build --outputPath I:\\www\\blockexplorer",
+        "build.prod.path": "ng build --prod",
+        "build.prod.sub": "ng build --prod --configuration=root",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
