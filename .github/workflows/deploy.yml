@@ -20,7 +20,7 @@ jobs:
           npm run build.prod.path
         
       - name: Prepare archive
-        run: tar czf /tmp/explorer.tgz -C ./dist/blockexplorer/ .
+        run: tar czf /tmp/explorer.path.tgz -C ./dist/blockexplorer/ .
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -41,7 +41,7 @@ jobs:
           npm run build.prod.sub
         
       - name: Prepare archive
-        run: tar czf /tmp/explorer.tgz -C ./dist/ .
+        run: tar czf /tmp/explorer.sub.tgz -C ./dist/ .
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -79,6 +79,6 @@ jobs:
       - name: Unpack artifact
         run: |
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/bastyon.com/blockexplorer/*
-          tar xzUf explorer.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner --recursive-unlink
+          tar xzUf explorer.path.tgz -C C:/inetpub/wwwroot/bastyon.com/blockexplorer/ --no-same-owner --recursive-unlink
           rm -Recurse -Force -ErrorAction SilentlyContinue C:/inetpub/wwwroot/blockexplorer/*
           tar xzUf explorer.path.tgz -C C:/inetpub/wwwroot/blockexplorer/ --no-same-owner --recursive-unlink
