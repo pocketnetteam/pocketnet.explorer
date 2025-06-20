@@ -31,16 +31,16 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ expl.3 ]
+        runner: [ explorer.bastyon.com ]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: explorer.tgz
       - name: Unpack artifact
-        run: tar xzf explorer.tgz -C /data/expl/ --no-same-owner
-      - name: Reset nginx cache
-        run: /data/reset_cache.sh
+        run: tar xzf explorer.tgz -C /data/explorer.bastyon.com/ --no-same-owner
+      - name: Clear
+        run: rm -rf *
         shell: bash
 
   deploy_win:
