@@ -21,12 +21,15 @@ jobs:
       - name: Prepare archive path
         run: tar czf /tmp/explorer.path.tgz -C ./dist/blockexplorer/ .
       - name: Prepare archive sub
-        run: tar czf /tmp/explorer.sub.tgz -C ./dist/ .
-      - name: Upload artifact
+        run: tar czf /tmp/explorer.sub.tgz -C ./dist/root/ .
+      - name: Upload artifact path
         uses: actions/upload-artifact@v4
         with:
           name: explorer.path.tgz
           path: /tmp/explorer.path.tgz
+      - name: Upload artifact sub
+        uses: actions/upload-artifact@v4
+        with:
           name: explorer.sub.tgz
           path: /tmp/explorer.sub.tgz
 
