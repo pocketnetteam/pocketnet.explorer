@@ -21,7 +21,7 @@ jobs:
       - name: Prepare archive
         run: tar czf /tmp/explorer.tgz -C ./dist/blockexplorer/ .
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: explorer.tgz
           path: /tmp/explorer.tgz
@@ -34,7 +34,7 @@ jobs:
         runner: [ explorer.bastyon.com ]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: explorer.tgz
       - name: Unpack artifact
@@ -51,7 +51,7 @@ jobs:
         runner: [ expl.bastyon.com ]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: explorer.tgz
       - name: Unpack artifact
